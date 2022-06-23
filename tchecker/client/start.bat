@@ -1,0 +1,1 @@
+php aw_server.php start

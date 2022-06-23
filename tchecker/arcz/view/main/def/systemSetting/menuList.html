@@ -1,0 +1,212 @@
+<import from="/layout/global" name="html5">
+	<extend name="title">
+		<if exp="$menuTitle['cate'] == 1">
+			{{menuTitle.title1}}
+		</if>
+		<if exp="$menuTitle['cate'] == 2">
+			{{menuTitle.title2}}
+		</if>
+		<if exp="$menuTitle['cate'] == 3">
+			{{menuTitle.title3}}
+		</if>
+	</extend>
+	<extend name="css">
+
+	</extend>
+
+	<extend name="breadcrumb">
+		<if exp="$menuTitle['cate'] == 1">
+			<li class="active">{{menuTitle.title1}}</li>
+		</if>
+		<if exp="$menuTitle['cate'] == 2">
+			<li>
+				<a href="#">{{menuTitle.title1}}</a>
+			</li>
+			<li class="active">{{menuTitle.title2}}</li>
+		</if>
+		<if exp="$menuTitle['cate'] == 3">
+			<li>
+				<a href="#">{{menuTitle.title1}}</a>
+			</li>
+			<li>
+				<a href="#">{{menuTitle.title2}}</a>
+			</li>
+			<li class="active">{{menuTitle.title3}}</li>
+		</if>
+	</extend>
+
+	<extend name="page-header-title">后台菜单列表</extend>
+	<extend name="body">
+
+		<button type="button" class="btn btn-white btn-success btn-xs" id="addMenu">添加菜单</button>
+		<div>菜单图标请参考http://www.fontawesome.com.cn/faicons/</div>
+		<table class="table table-hover table-condensed table-striped">
+			<thead>
+				<tr class="active">
+					<th>ID</th>
+					<th>菜单标题</th>
+					<th>链接</th>
+					<th>菜单说明</th>
+					<th>分类</th>
+					<th>父级菜单</th>
+					<th>排序值</th>
+					<th>是否开发者菜单</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<for exp="$key in $navlists" as="nav">
+				<tr>
+					<td>{{nav.id}}</td>
+					<td>
+						<li class="{{nav.icon}}">&nbsp;&nbsp;</li>
+						{{nav.title}}
+					</td>
+					<td>{{nav.href}}</td>
+					<td>{{nav.info}}</td>
+					<if exp="$nav['cate'] == 1">
+						<td>一级菜单</td>
+					</if>
+					<if exp="$nav['cate'] == 2">
+						<td>二级菜单</td>
+					</if>
+					<if exp="$nav['cate'] == 3">
+						<td>三级菜单</td>
+					</if>
+					<td>{{nav.fmenu}}</td>
+					<td>{{nav.num}}</td>
+					<td>{{nav.isdevswitch}}</td>
+					<td>
+						<button type="button" id="btne_{{nav.id}}" class="btn btn-white btn-primary btn-xs">编辑</button>
+						<if exp="$nav['issystem'] == 0">
+							<button type="button" id="btnd_{{nav.id}}" class="btn btn-white btn-danger btn-xs" data-toggle="modal" data-target="#del">删除</button>
+						</if>
+					</td>
+				</tr>
+			</for>
+			</tbody>
+		</table>
+		<!-- 删除 -->
+		<div class="modal fade cz_box" id="del" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">删除</h4>
+					</div>
+					<div class="modal-body" id="del_nav_context">
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="del_confirm">确认</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</extend>
+
+	<extend name="jsfoot">
+		<script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+		<script type="text/javascript">
+			jQuery(function($){
+				// 添加编辑菜单页面
+				function addMenu(data){
+					if(data){
+						var urladdr = SERVER_PATH + "systemSetting/menuAdd/issystem/" + data.issystem + "/id/" + data.id;
+						var title = '编辑菜单';
+					} else {
+						var urladdr = SERVER_PATH + "systemSetting/menuAdd/issystem/" + 0 + "/id/" + 0;
+						var title = '添加菜单';
+					}
+					layui.use(['form','layer','laydate','table','laytpl'],function(){
+						var layer = parent.layer === undefined ? layui.layer : top.layer;
+						layer.open({
+							title : title,
+							type: 2,
+							skin: '',  // 不加边框
+							area: ['800px', '600px'],  // 宽高
+							content: urladdr,
+							cancel: function () {  // 弹框关闭触发事件
+								window.location.reload();
+							}
+						});
+					});
+				}
+
+				// 添加菜单
+				$("#addMenu").click(function(){
+					addMenu();
+				});
+
+				// 编辑菜单
+				$("[id^=btne_]").click(function () {
+					var id = $(this).attr("id").split("btne_")[1];
+					fetch.getObject("server.ctl.arcz.Nav", "getNavById", [id], function (data) {
+						addMenu(data);
+					});
+				});
+
+				// 开关状态值设置
+				$(".switch_check").click(function(){
+					// 传入设置值
+					var checked = $(this).is(':checked');
+					var setval;
+					if (checked) {
+						setval = 1;
+					} else {
+						setval = 0;
+					}
+					// 传入id
+					var id = $(this).val();
+					var uk = "{{userAuthKeyNow}}";
+					var ip = "{{loginIpNow}}";
+
+					fetch.getObject("server.ctl.arcz.Nav", "navSetDevSwitch", [id, setval, uk, ip], function (data) {
+						if(data.errCode == 1000){
+							$(".cz_alert_success_center").text(data.errMsg);
+							$(".cz_alert_success_box").modal();
+						} else {
+							$(".cz_alert_danger_center").text(data.errMsg);
+							$(".cz_alert_danger_box").modal();
+							setTimeout(function(){
+								window.location.reload();
+							},1000);
+						}
+					});
+
+				});
+
+				// 删除菜单
+				$("[id^=btnd_]").click(function () {
+					var id = $(this).attr("id").split("btnd_")[1];
+					fetch.getObject("server.ctl.arcz.Nav", "getNavById", [id], function (data) {
+						$("#del_nav_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定删除菜单：' + data.title + ' ?</h3></div>');
+						// 确认删除按钮点击
+						$("#del_confirm").click(function(){
+							var id = data.id;
+							var uk = "{{userAuthKeyNow}}";
+							var ip = "{{loginIpNow}}";
+							fetch.getObject("server.ctl.arcz.Nav", "delNav", [id, uk, ip], function (data) {
+								if(data.errCode == 1000){
+									$("#del_nav_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								} else {
+									$("#del_nav_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								}
+							});
+						});
+					});
+				});
+
+			});
+		</script>
+	</extend>
+</import>

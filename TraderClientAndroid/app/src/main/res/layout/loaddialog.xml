@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="335dp"
+        android:layout_height="199dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/white_bg"
+            android:orientation="vertical"
+
+            >
+
+            <TextView
+                android:text="是否确认？"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="87dp"
+                >
+                <TextView
+                    android:id="@+id/login_cancel_dialog"
+                    android:text="再想想"
+                    android:textSize="16sp"
+                    android:textColor="#B2B1B1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/login_confirm_dialog"
+                    android:layout_marginRight="40dp"
+                    android:padding="12dp"
+                    />
+                <TextView
+                    android:id="@+id/login_confirm_dialog"
+                    android:text="确认"
+                    android:textSize="16sp"
+                    android:textColor="#005AFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:padding="12dp"
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

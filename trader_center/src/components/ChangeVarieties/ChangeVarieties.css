@@ -1,0 +1,87 @@
+body{
+	width: 100%;
+	height: 100%;
+	background-color: #f0f0f0;
+}
+.container9{
+	width: 100%;
+	height: 100%;
+}
+.title{
+	width: 100%;
+	height: 50px;
+	background-color: white;
+	text-align: center;
+	line-height:50px;
+}
+.title img{
+	width: 20px;
+	height: 20px;
+	margin-left: 15px;
+	display: inline;
+	position: absolute;
+	left: 0;
+	top: 15px;
+}
+.title p{
+	font-size: 18px;
+	color: #000000;
+	display: inline;
+}
+.item{
+	width: 100%;
+	height: 60px;
+	background-color: white;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #F6F7FA;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.item p{
+	font-size: 16px;
+	color: #000000;
+	margin: 0;
+	margin-left: 25px;
+}
+.dots{
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	border-radius: 10px;
+}
+.dots_img{
+	width: 20px;
+	height: 20px;
+}
+.btn{
+	width: 100%;
+	height: 60px;
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.change_cancel{
+	width: 50%;
+	height: 100%;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.change_ensure{
+	width: 50%;
+	height: 100%;
+	background-color: blue;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btn_p{
+	font-size: 20px;
+	color: black;
+}

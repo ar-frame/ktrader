@@ -1,0 +1,75 @@
+<import from="/layout/global" name="html5-layer-open">
+    <extend name="body">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" align="center">自定义显示列</h4>
+            </div>
+            <div class="modal-body" id="show_column_content">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr class="active">
+                            <th width="70%">字段名称</th><th width="30%">是否显示</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <for exp="$key in $allColName" as="col">
+                        <tr>
+                            <td>{{col.colshowname}}</td>
+                            <td id="btng_{{col.colname}}">
+                                <if exp="$col['isshow']==1">
+                                    <a id="n0id_{{col.colname}}" class="btn btn-danger btn-xs" title="点击取消显示">显示</a>
+                                </if>
+                                <if exp="$col['isshow']==0">
+                                    <a id="n1id_{{col.colname}}" class="btn btn-warning btn-xs" title="点击显示">未显示</a>
+                                </if>
+                            </td>
+                        </tr>
+                        <input class="tablename" type="hidden" value="{{col.tablename}}">
+                    </for>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </extend>
+
+
+    <extend name="jsfoot">
+        <script type="text/javascript">
+            var uk = "{{userAuthKeyNow}}";
+            var ip = "{{loginIpNow}}";
+            var tablename = $(".tablename").val();
+
+            // 取消显示
+            $("[id^=n0id_]").click(function () {
+                var colname = $(this).attr("id").split("n0id_")[1];
+                var type = 0;
+                fetch.getObject("server.ctl.arcz.Data", "editShowCol", [tablename, colname, type, uk, ip], function (data) {
+                    if(data.errCode == 1000){
+                        $("#btng_" + colname).html('<a id="n1id_' + colname + '" class="btn btn-warning btn-xs" title="点击显示">未显示</a>');
+                        setTimeout(function(){
+                            location.reload();
+                        },100);
+                    }
+                });
+            });
+
+            // 显示
+            $("[id^=n1id_]").click(function () {
+                var colname = $(this).attr("id").split("n1id_")[1];
+                var type = 1;
+                fetch.getObject("server.ctl.arcz.Data", "editShowCol", [tablename, colname, type, uk, ip], function (data) {
+                    if(data.errCode == 1000){
+                        $("#btng_" + colname).html('<a id="n0id_' + colname + '" class="btn btn-danger btn-xs" title="点击取消显示">显示</a>');
+                        setTimeout(function(){
+                            location.reload();
+                        },100);
+                    }
+                });
+            });
+        </script>
+    </extend>
+</import>
+

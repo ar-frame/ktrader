@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">上上策S</string>
+    <string name="one">通知等级：Lv</string>
+    <string name="two">参数一：</string>
+    <string name="three">参数二：</string>
+</resources>

@@ -1,0 +1,529 @@
+<import from="/layout/global" name="html5">
+    <extend name="title">
+        <if exp="$menuTitle['cate'] == 1">
+            {{menuTitle.title1}}
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            {{menuTitle.title2}}
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            {{menuTitle.title3}}
+        </if>
+    </extend>
+    <extend name="css">
+
+    </extend>
+
+    <extend name="breadcrumb">
+        <if exp="$menuTitle['cate'] == 1">
+            <li class="active">{{menuTitle.title1}}</li>
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            <li>
+                <a href="#">{{menuTitle.title1}}</a>
+            </li>
+            <li class="active">{{menuTitle.title2}}</li>
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            <li>
+                <a href="#">{{menuTitle.title1}}</a>
+            </li>
+            <li>
+                <a href="#">{{menuTitle.title2}}</a>
+            </li>
+            <li class="active">{{menuTitle.title3}}</li>
+        </if>
+    </extend>
+
+    <extend name="page-header-title">
+        <if exp="$menuTitle['cate'] == 1">
+            {{menuTitle.title1}}
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            {{menuTitle.title2}}
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            {{menuTitle.title3}}
+        </if>
+    </extend>
+    <extend name="body">
+
+        <if exp="$modelData['count']>0">
+            {{headForm}}
+            <div class="form-group">
+                <div class="input-group">
+                    <if exp="$modelDetail['isadd']==1">
+                        <button type="button" class="btn btn-pink btn-sm addDatas">添加</button>
+                    </if>
+                    <if exp="$modelDetail['iscostom']==1">
+                        <button type="button" class="btn btn-info btn-sm defineShowColumn">自定义显示列</button>
+                    </if>
+                    <if exp="$modelDetail['isloadexcel']==1">
+                        <button type="button" class="btn btn-success btn-sm downAsExcel">导出Excel</button>
+                    </if>
+                    <if exp="$modelDetail['isprint']==1">
+                        <button type="button" class="btn btn-default btn-sm doPrint">打印列表</button>
+                    </if>
+                    <if exp="$hasFunc==1">
+                        <for exp="$kf in $func" as="f">
+                            <if exp="$f['type_button']==1">
+                                <if exp="$f['type_window']==0">
+                                    <button type="button" id="topBtn_{{f.name}}_{{mid}}_window0" class="btn btn-warning btn-sm func-type_{{f.name}}">{{f.title}}</button>
+                                </if>
+                                <if exp="$f['type_window']==1">
+                                    <button type="button" id="topBtn_{{f.name}}_{{mid}}_window1" class="btn btn-info btn-sm func-type_{{f.name}}">{{f.title}}</button>
+                                </if>
+                            </if>
+                        </for>
+                    </if>
+                </div>
+            </div>
+
+            <!--startprint-->
+            <table class="table table-hover table-condensed table-striped table-bordered">
+                <thead>
+                <tr class="active">
+                    <for exp="$header_key in $columns" as="column">
+                        <if exp="$column['isshow']==1">
+                            <td>{{column.colshowname}}</td>
+                        </if>
+                    </for>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <for exp="$r_key in $modelData['data']" as="dataRow">
+                    <tr>
+                        <for exp="$d_key in $dataRow" as="d">
+                            <td align="center">{{d}}</td>
+                        </for>
+                        <php>
+                            $uniK = $dataRow[$uniKey];
+                            $trwidth = 60*$funcCount;
+                        </php>
+                        <td width="{{trwidth}}">
+                            <if exp="$modelDetail['isedit']==1">
+                                <button type="button" id="edit_{{uniK}}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit">编辑</button>
+                            </if>
+                            <if exp="$modelDetail['isview']==1">
+                                <button type="button" id="view_{{uniK}}" class="btn btn-white btn-info btn-xs" data-toggle="modal" data-target="#view">查看</button>
+                            </if>
+                            <if exp="$modelDetail['isdel']==1">
+                                <button type="button" id="del_{{uniK}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#del">删除</button>
+                            </if>
+                            <if exp="$hasFunc==1">
+                                <for exp="$kf in $func" as="f">
+                                    <if exp="$f['type_button']==0">
+                                        <if exp="$f['type_window']==0">
+                                            <button type="button" id="func_{{f.name}}_{{uniK}}_window0" class="btn btn-warning btn-xs func-type_{{f.name}}">{{f.title}}</button>
+                                        </if>
+                                        <if exp="$f['type_window']==1">
+                                            <button type="button" id="func_{{f.name}}_{{uniK}}_window1" class="btn btn-info btn-xs func-type_{{f.name}}">{{f.title}}</button>
+                                        </if>
+                                    </if>
+                                </for>
+                            </if>
+                        </td>
+                    </tr>
+                </for>
+                </tbody>
+            </table>
+            <!--endprint-->
+            {{pageShow}}
+        <else/>
+            <div class="form-group">
+                <div class="input-group">
+                    <if exp="$modelDetail['isadd']==1">
+                        <button type="button" class="btn btn-pink btn-sm addDatas">添加</button>
+                    </if>
+                    <if exp="$modelDetail['iscostom']==1">
+                        <button type="button" class="btn btn-info btn-sm defineShowColumn">自定义显示列</button>
+                    </if>
+                    <if exp="$modelDetail['isloadexcel']==1">
+                        <button type="button" class="btn btn-success btn-sm downAsExcel">导出Excel</button>
+                    </if>
+                    <if exp="$modelDetail['isprint']==1">
+                        <button type="button" class="btn btn-default btn-sm doPrint">打印列表</button>
+                    </if>
+                    <if exp="$hasFunc==1">
+                        <for exp="$kf in $func" as="f">
+                            <if exp="$f['type_button']==1">
+                                <if exp="$f['type_window']==0">
+                                    <button type="button" id="topBtn_{{f.name}}_{{mid}}_window0" class="btn btn-warning btn-sm func-type_{{f.name}}">{{f.title}}</button>
+                                </if>
+                                <if exp="$f['type_window']==1">
+                                    <button type="button" id="topBtn_{{f.name}}_{{mid}}_window1" class="btn btn-info btn-sm func-type_{{f.name}}">{{f.title}}</button>
+                                </if>
+                            </if>
+                        </for>
+                    </if>
+                </div>
+            </div>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+                </li>
+            </ul>
+            <div class="jumbotron">
+                <h1 align="center">暂无数据！</h1>
+            </div>
+        </if>
+
+        <!-- 查看文章 -->
+        <div class="modal fade cz_box" id="checkContent" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" style="width:80%" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="checkContentTitle">查看内容</h4>
+                    </div>
+                    <div class="modal-body" id="checkContentHtml">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 删除 -->
+        <div class="modal fade cz_box" id="del" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">删除</h4>
+                    </div>
+                    <div class="modal-body" id="del_nav_context">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="del_confirm">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </extend>
+
+    <extend name="jsfoot">
+        <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+        <script type="text/javascript">
+            jQuery(function($){
+                // 关闭弹出框刷新页面
+                $('.cz_alert').on('hide.bs.modal', function () {
+                    window.location.reload();
+                });
+
+                // 关闭模态框刷新页面
+                $('.cz_box').on('hide.bs.modal', function () {
+                    window.location.reload();
+                });
+
+                // 输入警告框
+                function alertModel(str,type) {
+                    $('#alert-model' + type).removeClass('hide').addClass('in');
+                    $("#alert" + type + "-text").text(str);
+
+                    $("#alert" + type + "-close").click(function(){
+                        $('#alert-model' + type).removeClass('in').addClass('hide');
+                    });
+                }
+
+                // 分页切换
+                $('#pageCount').change(function(){
+                    var count = $("#pageCount").val();
+                    window.location.href = "{{\ar\core\url('Data/dlist/mid/')}}" + "/{{mid}}" + "/count/" + count + "/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+                });
+
+                // 跳转指定页面
+                $('#pageTo').change(function(){
+                    var page = $("#pageTo").val();
+                    window.location.href = "{{\ar\core\url('Data/dlist/mid/')}}" + "/{{mid}}" + "/count/{{count}}/page/" + page + "/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+                });
+
+                // 搜索
+                $('#search').click(function(){
+                    var keyword = $("#keyword").val();
+                    var search_col = $("#search_col").val();
+                    window.location.href = "{{\ar\core\url('Data/dlist/mid/')}}" + "/{{mid}}" + "/count/{{count}}/page/1/search_col/" + search_col + "/keyword/" + keyword + "/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+                });
+
+                // 升序
+                $('#sorting_asc').click(function(){
+                    var sort_col = $("#sorting").val();
+                    var sort_type = 'asc';
+                    window.location.href = "{{\ar\core\url('Data/dlist/mid/')}}" + "/{{mid}}" + "/count/{{count}}/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/" + sort_col + "/sort_type/" + sort_type;
+                });
+
+                // 降序
+                $('#sorting_desc').click(function(){
+                    var sort_col = $("#sorting").val();
+                    var sort_type = 'desc';
+                    window.location.href = "{{\ar\core\url('Data/dlist/mid/')}}" + "/{{mid}}" + "/count/{{count}}/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/" + sort_col + "/sort_type/" + sort_type;
+                });
+
+                // 添加编辑数据页面
+                function addData(mid, id){
+                    if(id>0){
+                        var urladdr = SERVER_PATH + "data/edit/mid/" + mid + "/id/" + id;
+                        var title = '编辑数据';
+                    } else {
+                        var urladdr = SERVER_PATH + "data/edit/mid/" + mid + "/id/0";
+                        var title = '添加数据';
+                    }
+                    layui.use(['form','layer','laydate','table','laytpl'],function(){
+                        var layer = parent.layer === undefined ? layui.layer : top.layer;
+                        layer.open({
+                            title : title,
+                            type: 2,
+                            skin: '',  // 不加边框
+                            area: ['1200px', '900px'],  // 宽高
+                            content: urladdr,
+                            cancel: function () {  // 弹框关闭触发事件
+                                window.location.reload();
+                            }
+                        });
+                    });
+                }
+
+                // 查看详情数据页面
+                function viewData(mid, id){
+                    var urladdr = SERVER_PATH + "data/viewMore/mid/" + mid + "/id/" + id;
+                    var title = '查看详情';
+                    layui.use(['form','layer','laydate','table','laytpl'],function(){
+                        var layer = parent.layer === undefined ? layui.layer : top.layer;
+                        layer.open({
+                            title : title,
+                            type: 2,
+                            skin: '',  // 不加边框
+                            area: ['1200px', '900px'],  // 宽高
+                            content: urladdr,
+                            cancel: function () {  // 弹框关闭触发事件
+                                window.location.reload();
+                            }
+                        });
+                    });
+                }
+
+                // 自定义显示列页面
+                function showColumnPage(mid){
+                    var urladdr = SERVER_PATH + "data/define_show_column/mid/" + mid;
+                    var title = '自定义显示列';
+                    layui.use(['form','layer','laydate','table','laytpl'],function(){
+                        var layer = parent.layer === undefined ? layui.layer : top.layer;
+                        layer.open({
+                            title : title,
+                            type: 2,
+                            skin: '',  // 不加边框
+                            area: ['800px', '600px'],  // 宽高
+                            content: urladdr,
+                            cancel: function () {  // 弹框关闭触发事件
+                                window.location.reload();
+                            }
+                        });
+                    });
+                }
+
+                // 新标签页打开自定义功能页面
+                function newTab(url, title){
+                    if(top.layui.index){
+                        top.layui.index.openTabsPage(url, title)
+                    } else {
+                        window.open(url)
+                    }
+                }
+
+                // 自定义功能弹窗
+                function costomPage(addr, id, title, mid, type, href){
+                    var urladdr = SERVER_PATH + "costomFunc/" + addr + "/res/" + id + "/mid/" + mid + "/type/" + type + "/href/" + href;
+                    layui.use(['form','layer','laydate','table','laytpl'],function(){
+                        var layer = parent.layer === undefined ? layui.layer : top.layer;
+                        layer.open({
+                            title : title,
+                            type: 2,
+                            skin: '',  // 不加边框
+                            area: ['800px', '600px'],  // 宽高
+                            content: urladdr,
+                            cancel: function () {  // 弹框关闭触发事件
+                                window.location.reload();
+                            }
+                        });
+                    });
+                }
+
+
+                // 自定义显示列
+                $(".defineShowColumn").click(function () {
+                    var mid = {{mid}};
+                    showColumnPage(mid);
+                });
+                // 添加
+                $(".addDatas").click(function () {
+                    var mid = {{mid}};
+                    addData(mid, 0);
+                });
+                // 导出Excel
+                $(".downAsExcel").click(function () {
+                    var mid = {{mid}};
+                    var str = '确认导出 ' + ' {{menuTitle.title3}} ' + ' 的数据?';
+                    if(confirm(str)){
+                        window.location.href = SERVER_PATH + "data/downAsExcel/mid/" + mid;
+                    }
+                });
+                // 打印列表
+                $(".doPrint").click(function () {
+                    var mid = {{mid}};
+                    var str = "确认打印列表 mid " + mid + ' {{menuTitle.title3}} ';
+                    if(confirm(str)){
+                        doPrint();
+                    }
+                });
+                // 顶部自定义功能
+                $("[id^=topBtn_]").click(function () {
+                    var data = $(this).attr("id").split("topBtn_")[1];
+                    var str = data.split('_');
+                    // 权限验证
+                    var mid = {{mid}};
+                    var type = 0;
+                    var href = str[0];
+                    var addr = str[0];
+                    var title = $(this).html();
+                    var funcType = str[2];
+                    if(funcType=='window0'){
+                        newTab(SERVER_PATH + "costomFunc/" + addr + "/res/0" +  "/mid/" + mid + "/type/" + type + "/href/" + href, title);
+                    } else if(funcType=='window1') {
+                        costomPage(addr, "", title, mid, type, href);
+                    }
+                });
+
+
+                // 编辑
+                $("[id^=edit_]").click(function () {
+                    var mid = {{mid}};
+                    var id = $(this).attr("id").split("edit_")[1];
+                    addData(mid, id);
+                });
+                // 查看
+                $("[id^=view_]").click(function () {
+                    var mid = {{mid}};
+                    var id = $(this).attr("id").split("view_")[1];
+                    viewData(mid, id);
+                });
+                // 删除
+                $("[id^=del_]").click(function () {
+                    var mid = {{mid}};
+                    var id = $(this).attr("id").split("del_")[1];
+                    fetch.getObject("server.ctl.arcz.Data", "getDataByUniKey", [mid, id, 'view'], function (datam) {
+                        $("#del_nav_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定删除?</h3></div>');
+                        // 确认删除按钮点击
+                        $("#del_confirm").click(function(){
+                            var uk = "{{userAuthKeyNow}}";
+                            var ip = "{{loginIpNow}}";
+                            fetch.getObject("server.ctl.arcz.Data", "delModelData", [mid, id, uk, ip], function (data) {
+                                if(data.errCode == 1000){
+                                    $("#del_nav_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    },1000);
+                                } else {
+                                    $("#del_nav_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    },1000);
+                                }
+                            });
+                        });
+                    });
+                });
+                // 列表自定义功能
+                $("[id^=func_]").click(function () {
+                    var data = $(this).attr("id").split("func_")[1];
+                    var str = data.split('_');
+                    // 权限验证
+                    var mid = {{mid}};
+                    var type = 0;
+                    var href = str[0];
+                    var addr = str[0];
+                    var id = str[1];
+                    var title = $(this).html();
+                    var funcType = str[2];
+                    if(funcType=='window0'){
+                        newTab(SERVER_PATH + "costomFunc/" + addr + "/res/" + id + "/mid/" + mid + "/type/" + type + "/href/" + href, title);
+                    } else if(funcType=='window1') {
+                        costomPage(addr, id, title, mid, type, href);
+                    }
+                });
+
+                // 列表开关状态值设置
+                $(".switch_model").click(function(){
+                    // 传入设置值
+                    var checked = $(this).is(':checked');
+                    var name = $(this).attr("name");
+                    var setval;
+                    if (checked) {
+                        setval = 1;
+                    } else {
+                        setval = 0;
+                    }
+                    // 传入id
+                    var id = $(this).val();
+                    var mid = {{mid}};
+                    var uk = "{{userAuthKeyNow}}";
+                    var ip = "{{loginIpNow}}";
+                    fetch.getObject("server.ctl.arcz.Data", "setSwitchNow", [mid, name, id, setval, uk, ip], function (data) {
+                        if(data.errCode == 1000){
+                            $(".cz_alert_success_center").text(data.errMsg);
+                            $(".cz_alert_success_box").modal();
+                        } else {
+                            $(".cz_alert_danger_center").text(data.errMsg);
+                            $(".cz_alert_danger_box").modal();
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1000);
+                        }
+                    });
+                });
+
+                // 列表查看文章
+                $("[id^=typeContent_]").click(function () {
+                    var mid = {{mid}};
+                    var modelunikey = "{{uniKey}}";
+                    var data = $(this).attr("id").split("typeContent_")[1];
+                    var str = data.split('_');
+                    var colname = '';
+                    var id = '';
+                    if (str.length > 2) {
+                        var lindex = data.lastIndexOf('_');
+                        id = data.substr(lindex + 1);
+                        colname = data.substr(0, lindex);
+                    } else {
+                        colname = str[0];
+                        id = str[1];
+                    }
+                    fetch.getObject("server.ctl.arcz.Data", "getColContent", [mid, colname, id], function (datac) {
+                        $("#checkContentTitle").text('查看内容  ' + modelunikey + ' : ' + id);
+                        var cstring = datac.contentView;
+                        // cstring = cstring.replace(/\r\n/g,"<br>")
+                        // cstring = cstring.replace(/\n/g,"<br>")
+                        // cstring = cstring.replaceAll("."," .")
+                        $("#checkContentHtml").html('<pre>'+cstring+'</pre>');
+                    });
+                });
+
+                function doPrint() {
+                    bdhtml = window.document.body.innerHTML;
+                    sprnstr = "<!--startprint-->";
+                    eprnstr = "<!--endprint-->";
+                    prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr)+17);
+                    prnhtml = prnhtml.substring(0,prnhtml.indexOf(eprnstr));
+                    window.document.body.innerHTML = prnhtml;
+                    window.print();
+                }
+
+            });
+        </script>
+    </extend>
+</import>

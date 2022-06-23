@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="135dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    android:background="#f2f2f2f2"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ffffffff">
+
+        <TextView
+            android:id="@+id/loaditem_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无载入设置"
+            android:textColor="#ff000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageView
+            android:id="@+id/loaditem_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/moren"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="0.5dp"
+        android:background="#ffffffff">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="45dp">
+
+            <TextView
+                android:id="@+id/loaditem_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/loaditem_notifylevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="级"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                android:layout_marginEnd="15dp"
+
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ffffffff">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="±"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/loaditem_sun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="end|center_vertical">
+            <TextView
+                android:id="@+id/loaditem_kong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="%"
+                android:textColor="#ff000000"
+                android:textSize="14sp"
+                android:layout_marginEnd="15dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

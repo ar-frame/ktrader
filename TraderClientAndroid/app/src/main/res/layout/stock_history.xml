@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="#ffffff"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+    <ImageView
+        android:id="@+id/history_fanhui"
+        android:src="@mipmap/jiatou_fanhui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="历史统计"
+        android:textSize="17sp"
+        android:textColor="#000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+
+
+        />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+
+            >
+            <TextView
+                android:id="@+id/stock_name_a"
+                android:text="深圳机场"
+                android:textSize="17sp"
+                android:textColor="#2E2C3C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/stock_name_a"
+                android:src="@mipmap/purchase"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                />
+            <TextView
+
+                android:textSize="12sp"
+                android:textColor="#7E7C90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:gravity="center_horizontal|center"
+                android:layout_height="50dp"
+
+                >
+                <TextView
+                    android:id="@+id/new_price_a"
+                    android:text="8.47"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="%"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/new_price_a"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <TextView
+                    android:text="平均收益"
+                    android:textSize="12sp"
+                    android:textColor="#9C9CAC"
+                    android:layout_below="@id/new_price_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <ImageView
+
+                    android:layout_width="9dp"
+                    android:layout_height="8dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                >
+                <TextView
+                    android:id="@+id/forecast_price_a"
+                    android:text="36.20"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="%"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/forecast_price_a"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/forecast_price_a"
+                    android:layout_alignStart="@id/forecast_price_a"
+                    android:layout_marginStart="0dp"
+                    android:text="期间最高涨幅"
+                    android:textColor="#9C9CAC"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/recommendation_rate_a"
+                    android:text="92.56"
+                    android:textSize="17sp"
+                    android:textColor="#005AFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="%"
+                    android:textSize="11sp"
+                    android:textColor="#005AFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/recommendation_rate_a"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recommendation_rate_a"
+                    android:layout_alignStart="@id/recommendation_rate_a"
+                    android:layout_marginStart="0dp"
+                    android:text="推荐准确率"
+                    android:textColor="#9C9CAC"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F6F7FA"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            >
+            <ImageView
+               android:background="#F2030202"
+                android:layout_width="2dp"
+                android:layout_height="13dp"
+                android:layout_centerVertical="true"
+                />
+            <TextView
+                android:id="@+id/recommend_txt"
+                android:text="历史推荐"
+                android:textSize="14sp"
+                android:textColor="#2E2C3C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+
+
+                />
+            <TextView
+                android:id="@+id/recommend_int"
+                android:text="45"
+                android:textSize="14sp"
+                android:textColor="#005AFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/recommend_txt"
+                />
+            <TextView
+                android:text="次"
+                android:textSize="14sp"
+                android:textColor="#2E2C3C"
+                android:layout_toRightOf="@id/recommend_int"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            >
+            <TextView
+                android:id="@+id/stock_name_b"
+                android:text="深圳机场"
+                android:textSize="17sp"
+                android:textColor="#2E2C3C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/stock_name_b"
+                android:src="@mipmap/purchase"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                />
+
+            <ImageView
+                android:src="@mipmap/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/stock_wait_time_b"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                />
+            <TextView
+                android:id="@+id/stock_wait_time_b"
+                android:text="昨天"
+                android:textSize="12sp"
+                android:textColor="#7E7C90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+
+
+            >
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center_horizontal|center"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:id="@+id/new_price_b"
+                    android:text="8.47"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="元"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/new_price_b"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <TextView
+                    android:text="今日最新价"
+                    android:textSize="12sp"
+                    android:textColor="#9C9CAC"
+                    android:layout_below="@id/new_price_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@mipmap/arrow_line"
+                    android:layout_width="9dp"
+                    android:layout_height="8dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/forecast_price_b"
+                    android:text="14.59"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="元"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/forecast_price_b"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/forecast_price_b"
+                    android:layout_alignStart="@id/forecast_price_b"
+                    android:layout_marginStart="0dp"
+                    android:text="预测目标价"
+                    android:textColor="#9C9CAC"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                >
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp">
+                <TextView
+                    android:id="@+id/accuracy_b"
+                    android:text=""
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    />
+                <TextView
+                    android:text=""
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/accuracy_b"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/accuracy_b"
+                    android:layout_alignStart="@id/accuracy_b"
+                    >
+                    <ImageView
+
+                        android:src="@mipmap/accuracy_img"
+                        android:layout_width="11dp"
+                        android:layout_height="8dp"
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                <TextView
+                    android:id="@+id/accuracy_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:text="准确"
+                    android:textColor="#29C367"
+                    android:textSize="12sp"
+                    android:paddingLeft="5dp"
+                    />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F5F4F9"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+
+
+        android:layout_marginTop="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            >
+            <TextView
+                android:id="@+id/stock_name_c"
+                android:text="深圳机场"
+                android:textSize="17sp"
+                android:textColor="#2E2C3C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/stock_name_c"
+                android:src="@mipmap/purchase"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                />
+
+            <ImageView
+                android:src="@mipmap/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/stock_wait_time_c"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                />
+            <TextView
+                android:id="@+id/stock_wait_time_c"
+                android:text="昨天"
+                android:textSize="12sp"
+                android:textColor="#7E7C90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+
+
+            >
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center_horizontal|center"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:id="@+id/new_price_c"
+                    android:text="8.47"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="元"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/new_price_c"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <TextView
+                    android:text="今日最新价"
+                    android:textSize="12sp"
+                    android:textColor="#9C9CAC"
+                    android:layout_below="@id/new_price_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@mipmap/arrow_line"
+                    android:layout_width="9dp"
+                    android:layout_height="8dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/forecast_price_c"
+                    android:text="14.59"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="元"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/forecast_price_c"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/forecast_price_c"
+                    android:layout_alignStart="@id/forecast_price_c"
+                    android:layout_marginStart="0dp"
+                    android:text="预测目标价"
+                    android:textColor="#9C9CAC"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                >
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp">
+                <TextView
+                    android:id="@+id/accuracy_c"
+                    android:text=""
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    />
+                <TextView
+                    android:text=""
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/accuracy_c"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/accuracy_c"
+                    android:layout_alignStart="@id/accuracy_c"
+                    >
+                    <ImageView
+
+                        android:src="@mipmap/accuracy_img"
+                        android:layout_width="11dp"
+                        android:layout_height="8dp"
+
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <TextView
+                        android:id="@+id/accuracy_txt_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:text="准确"
+                        android:textColor="#29C367"
+                        android:textSize="12sp"
+                        android:paddingLeft="5dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F5F4F9"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+
+
+        android:layout_marginTop="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            >
+            <TextView
+                android:id="@+id/stock_name_d"
+                android:text="深圳机场"
+                android:textSize="17sp"
+                android:textColor="#2E2C3C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/stock_name_d"
+                android:src="@mipmap/purchase"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                />
+
+            <ImageView
+                android:src="@mipmap/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/stock_wait_time_d"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                />
+            <TextView
+                android:id="@+id/stock_wait_time_d"
+                android:text="昨天"
+                android:textSize="12sp"
+                android:textColor="#7E7C90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+
+
+            >
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center_horizontal|center"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:id="@+id/new_price_d"
+                    android:text="8.47"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="元"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/new_price_d"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <TextView
+                    android:text="今日最新价"
+                    android:textSize="12sp"
+                    android:textColor="#9C9CAC"
+                    android:layout_below="@id/new_price_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@mipmap/arrow_line"
+                    android:layout_width="9dp"
+                    android:layout_height="8dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/forecast_price_d"
+                    android:text="14.59"
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:text="元"
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/forecast_price_d"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/forecast_price_d"
+                    android:layout_alignStart="@id/forecast_price_d"
+                    android:layout_marginStart="0dp"
+                    android:text="预测目标价"
+                    android:textColor="#9C9CAC"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                >
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp">
+                <TextView
+                    android:id="@+id/accuracy_d"
+                    android:text=""
+                    android:textSize="17sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    />
+                <TextView
+                    android:text=""
+                    android:textSize="11sp"
+                    android:textColor="#F72424"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/accuracy_d"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="3dp"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/accuracy_d"
+                    android:layout_alignStart="@id/accuracy_d"
+                    >
+                    <ImageView
+
+                        android:src="@mipmap/accuracy_img"
+                        android:layout_width="11dp"
+                        android:layout_height="8dp"
+
+                        android:layout_gravity="center_vertical"
+
+                        />
+
+
+                    <TextView
+                        android:id="@+id/accuracy_txt_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:text="准确"
+                        android:textColor="#29C367"
+                        android:textSize="12sp"
+                        android:paddingLeft="5dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F5F4F9"
+
+        />
+</LinearLayout>

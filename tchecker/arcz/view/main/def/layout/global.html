@@ -1,0 +1,870 @@
+<export name="html5">
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>
+      <extend name="title"/>
+    </title>
+
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <script src="{{C.PATH.PUBLIC}}js/fetch.js"></script>
+    <script>
+      var JS_BASE = '{{C.PATH.PUBLIC}}js/';
+      var JSON_API = '{{C.PATH.APP_SERVER_PATH}}json/';
+      var SERVER_PATH = '{{C.PATH.APP_SERVER_PATH}}';
+      var PUBLIC_PATH = '{{C.PATH.PUBLIC}}';
+    </script>
+
+    <extend name="css"/>
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/fonts.googleapis.com.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-skins.min.css" />
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <extend name="jshead"/>
+    <!-- ace settings handler -->
+    <script src="{{C.PATH.GPUBLIC}}js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="{{C.PATH.GPUBLIC}}js/html5shiv.min.js"></script>
+    <script src="{{C.PATH.GPUBLIC}}js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="no-skin">
+  <div id="navbar" class="navbar navbar-default ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+      <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+        <span class="sr-only">Toggle sidebar</span>
+
+        <span class="icon-bar"></span>
+
+        <span class="icon-bar"></span>
+
+        <span class="icon-bar"></span>
+      </button>
+
+      <div class="navbar-header pull-left">
+        <a ap-href="index/index" class="navbar-brand">
+          <small>
+            <i class="fa fa-grav"></i>
+            {{systemInfo.title}}
+            <small>{{systemInfo.version}}</small>
+          </small>
+        </a>
+      </div>
+
+      <div class="navbar-buttons navbar-header pull-right" role="navigation">
+        <ul class="nav ace-nav">
+
+          <li class="light-blue dropdown-modal">
+            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+              <if exp="$user['admin_face']">
+                <img class="nav-user-photo" src="{{user.admin_face}}" width="35" height="35" />
+              <else/>
+                <img class="nav-user-photo" src="{{C.PATH.GPUBLIC}}images/avatars/newuser.jpg" width="35" height="35" />
+              </if>
+              <span class="user-info">
+                  <small>你好！</small>
+                  {{user.nickname}}
+              </span>
+
+              <i class="ace-icon fa fa-caret-down"></i>
+            </a>
+
+            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+              <if exp="$setSys == 1">
+                <li>
+                  <a ap-href="systems/setSystem">
+                    <i class="ace-icon fa fa-cog"></i>
+                    系统设置
+                  </a>
+                </li>
+              </if>
+
+              <li>
+                <a ap-href="user/userInfo">
+                  <i class="ace-icon fa fa-user"></i>
+                  个人资料
+                </a>
+              </li>
+
+              <li class="divider"></li>
+
+              <li>
+                <a ap-href="login/loginout">
+                  <i class="ace-icon fa fa-power-off"></i>
+                  退出
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div><!-- /.navbar-container -->
+  </div>
+
+  <div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+      try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+      <script type="text/javascript">
+        try{ace.settings.loadState('sidebar')}catch(e){}
+      </script>
+
+      <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+          <button class="btn btn-success">
+            <i class="ace-icon fa fa-signal"></i>
+          </button>
+
+          <button class="btn btn-info">
+            <i class="ace-icon fa fa-pencil"></i>
+          </button>
+
+          <button class="btn btn-warning">
+            <i class="ace-icon fa fa-users"></i>
+          </button>
+
+          <button class="btn btn-danger">
+            <i class="ace-icon fa fa-cogs"></i>
+          </button>
+        </div>
+
+        <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+          <span class="btn btn-success"></span>
+
+          <span class="btn btn-info"></span>
+
+          <span class="btn btn-warning"></span>
+
+          <span class="btn btn-danger"></span>
+        </div>
+      </div><!-- /.sidebar-shortcuts -->
+
+      <ul class="nav nav-list">
+        <li class="active">
+          <a ap-href="index/index">
+            <i class="menu-icon fa fa-tachometer"></i>
+            <span class="menu-text"> 回到首页 </span>
+          </a>
+          <b class="arrow"></b>
+        </li>
+        <for exp="$key in $topMenu" as="top">
+
+          <li class="">  <!-- 一级菜单 -->
+
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon {{top.icon}}"></i>
+                <span class="menu-text">
+                    {{top.title}}
+                </span>
+              <if exp="$top['children_code'] == 1">
+                <b class="arrow fa fa-angle-down"></b>
+              </if>
+            </a>
+            <b class="arrow"></b>
+
+            <ul class="submenu">  <!-- 二级菜单 -->
+              <if exp="$top['children_code'] == 1">
+                <for exp="$key in $top['children']['menu']" as="m2">
+
+                  <li class="">
+
+                    <if exp="$m2['children_code'] == 1">
+                      <a ap-href="{{m2.href}}" class="dropdown-toggle">
+                        <i class="{{m2.icon}}"></i>
+                        {{m2.title}}
+                        <if exp="$m2['children_code'] == 1">
+                          <b class="arrow fa fa-angle-down"></b>
+                        </if>
+                      </a>
+                      <b class="arrow"></b>
+                    <else/>
+                      <a ap-href="{{m2.href}}" class="">
+                        <i class="{{m2.icon}}"></i>
+                        {{m2.title}}
+                        <if exp="$m2['children_code'] == 1">
+                          <b class="arrow fa fa-angle-down"></b>
+                        </if>
+                      </a>
+                      <b class="arrow"></b>
+                    </if>
+
+                    <ul class="submenu">  <!-- 三级菜单 -->
+
+                      <if exp="$m2['children_code'] == 1">
+                        <for exp="$key in $m2['children']" as="m3">
+                          <li class="">
+                            <a ap-href="{{m3.href}}">
+                              <i class="{{m3.icon}}"></i>
+                              {{m3.title}}
+                            </a>
+                            <b class="arrow"></b>
+                          </li>
+                        </for>
+                      </if>
+
+                    </ul>
+
+                  </li>
+
+                </for>
+              </if>
+            </ul>
+          </li>
+        </for>
+      </ul><!-- /.nav-list -->
+
+      <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+        <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+      </div>
+    </div>
+
+
+    <!-- page -->
+
+    <div class="main-content">
+      <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+
+            <ul class="breadcrumb">
+              <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a ap-href="index/index">首页</a>
+              </li>
+              <extend name="breadcrumb">
+                <li class="active">arcz</li>
+              </extend>
+            </ul><!-- /.breadcrumb -->
+
+
+
+          <!--<div class="nav-search" id="nav-search">-->
+            <!--<form class="form-search">-->
+                <!--<span class="input-icon">-->
+                    <!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
+                    <!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+                <!--</span>-->
+            <!--</form>-->
+          <!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
+
+        </div>
+
+        <div class="page-content">
+
+          <div class="ace-settings-container" id="ace-settings-container">
+            <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+              <i class="ace-icon fa fa-cog bigger-130"></i>
+            </div>
+
+            <div class="ace-settings-box clearfix" id="ace-settings-box">
+              <div class="pull-left width-50">
+                <div class="ace-settings-item">
+                  <div class="pull-left">
+                    <select id="skin-colorpicker" class="hide">
+                      <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                      <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                      <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                      <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                    </select>
+                  </div>
+                  <span>&nbsp; Choose Skin</span>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-add-container">
+                    Inside
+                    <b>.container</b>
+                  </label>
+                </div>
+              </div><!-- /.pull-left -->
+
+              <div class="pull-left width-50">
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                  <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
+                  <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+                </div>
+              </div><!-- /.pull-left -->
+            </div><!-- /.ace-settings-box -->
+          </div><!-- /.ace-settings-container -->
+
+          <!-- main page context -->
+
+          <div class="page-header">
+            <h1>
+              {{systemInfo.simplename}}
+              <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <extend name="page-header-title">奥力给</extend>
+              </small>
+            </h1>
+          </div><!-- /.page-header -->
+
+          <extend name="body">
+
+
+
+
+          </extend>
+
+        </div><!-- /.page-content -->
+      </div>
+    </div><!-- /.main-content -->
+
+    <!-- 成功弹出框 -->
+    <div class="modal fade cz_alert cz_alert_success_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">提示</h4>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-success cz_alert_success_center" role="alert"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 一般弹出框 -->
+    <div class="modal fade cz_alert cz_alert_info_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">提示</h4>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-info cz_alert_info_center" role="alert"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 警告弹出框 -->
+    <div class="modal fade cz_alert cz_alert_warning_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">提示</h4>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning cz_alert_warning_center" role="alert"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 错误弹出框 -->
+    <div class="modal fade cz_alert cz_alert_danger_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">提示</h4>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger cz_alert_danger_center" role="alert"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="footer">
+      <div class="footer-inner">
+        <div class="footer-content">
+            <span class="bigger-120">
+                <span class="blue bolder">CDC</span>
+               {{systemInfo.copyright}} &copy; {{systemInfo.copyrightyears}}
+            </span>
+          &nbsp; &nbsp;
+            <span class="action-buttons">
+
+            </span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+      <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+  </div><!-- /.main-container -->
+
+  </body>
+  <!-- basic scripts -->
+
+  <!--[if !IE]> -->
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-2.1.4.min.js"></script>
+
+  <!-- <![endif]-->
+
+  <!--[if IE]>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-1.11.3.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='{{C.PATH.GPUBLIC}}js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+  <script src="{{C.PATH.GPUBLIC}}js/bootstrap.min.js"></script>
+
+  <!-- page specific plugin scripts -->
+
+  <!--[if lte IE 8]>
+  <script src="{{C.PATH.GPUBLIC}}js/excanvas.min.js"></script>
+  <![endif]-->
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-ui.custom.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.ui.touch-punch.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.easypiechart.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.sparkline.index.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.flot.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.flot.pie.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.flot.resize.min.js"></script>
+
+  <extend name="jsfoot_include"></extend>
+
+  <!-- ace scripts -->
+  <script src="{{C.PATH.GPUBLIC}}js/ace-elements.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/ace.min.js"></script>
+
+  <script>
+    function getDateDiff(stamptime) {
+
+      var current_time = Date.parse(new Date()) / 1000;
+      var diff = current_time - stamptime;
+
+      var agoAt = '刚刚';
+      var timePoints = [
+        { value: 60 * 60 * 24 * 365, suffix: '年前', max: 2 },
+        { value: 60 * 60 * 24 * 30,  suffix: '月前', max: 11 },
+        { value: 60 * 60 * 24 * 7,   suffix: '周前', max: 4 },
+        { value: 60 * 60 * 24,       suffix: '天前', max: 6 },
+        { value: 60 * 60,            suffix: '小时前', max: 23 },
+        { value: 60 * 10,            suffix: '0分钟前', max: 5 }
+      ];
+
+      for (var i = 0; i < timePoints.length; i++) {
+        var point = timePoints[i];
+        var mode = Math.floor(diff / point.value);
+        if (mode > 1) {
+          agoAt = Math.min(mode, point.max) + point.suffix;
+          break;
+        }
+      }
+      return agoAt;
+    }
+
+  </script>
+  <extend name="jsfoot"></extend>
+
+  </html>
+
+
+</export>
+
+<export name="html5-outer">
+  <!DOCTYPE html>
+  <html class="loginHtml">
+
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <extend name="title" />
+    </title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+
+    <script src="{{C.PATH.PUBLIC}}/js/fetch.js"></script>
+    <script>
+      var JS_BASE = '{{C.PATH.PUBLIC}}js/';
+      var SERVER_PATH = '{{C.PATH.APP_SERVER_PATH}}';
+      var JSON_API = '{{C.PATH.APP_SERVER_PATH}}json/';
+      var PUBLIC_PATH = '{{C.PATH.PUBLIC}}';
+    </script>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/fonts.googleapis.com.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-ie.min.css" />
+    <![endif]-->
+
+    <extend name="css" />
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="{{C.PATH.GPUBLIC}}js/html5shiv.min.js"></script>
+    <script src="{{C.PATH.GPUBLIC}}js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}bootstrap/js/bootstrap.min.js"></script>
+    <extend name="jshead" />
+  </head>
+
+
+  <extend name="body" />
+
+  <script src="{{C.PATH.PUBLIC}}js/global.js"></script>
+
+  <!-- basic scripts -->
+
+  <!--[if !IE]> -->
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-2.1.4.min.js"></script>
+
+  <!-- <![endif]-->
+
+  <!--[if IE]>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-1.11.3.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='{{C.PATH.GPUBLIC}}js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!-- inline scripts related to this page -->
+  <script type="text/javascript">
+    jQuery(function($) {
+
+      fetch.getObject("server.ctl.arcz.View", "systemSetting", [], function (data) {
+        // 返回数组
+        if(data.loginbgnum == 1){
+          $('body').attr('class', 'login-layout');
+          $('#id-text2').attr('class', 'white');
+          $('#id-company-text').attr('class', 'blue');
+        } else if(data.loginbgnum == 2){
+          $('body').attr('class', 'login-layout blur-login');
+          $('#id-text2').attr('class', 'white');
+          $('#id-company-text').attr('class', 'light-blue');
+        } else if(data.loginbgnum == 3){
+          $('body').attr('class', 'login-layout light-login');
+          $('#id-text2').attr('class', 'grey');
+          $('#id-company-text').attr('class', 'blue');
+        }
+      });
+
+      $(document).on('click', '.toolbar a[data-target]', function(e) {
+        e.preventDefault();
+        var target = $(this).data('target');
+        $('.widget-box.visible').removeClass('visible');//hide others
+        $(target).addClass('visible');//show target
+      });
+    });
+
+
+
+    // you don't need this, just used for changing background
+    jQuery(function($) {
+      $('#btn-login-dark').on('click', function(e) {
+        $('body').attr('class', 'login-layout');
+        $('#id-text2').attr('class', 'white');
+        $('#id-company-text').attr('class', 'blue');
+
+        fetch.getInt("server.ctl.arcz.View", "loginBg", [1], function (data) {
+          // 返回数组
+        });
+
+        e.preventDefault();
+      });
+      $('#btn-login-blur').on('click', function(e) {
+        $('body').attr('class', 'login-layout blur-login');
+        $('#id-text2').attr('class', 'white');
+        $('#id-company-text').attr('class', 'light-blue');
+
+        fetch.getInt("server.ctl.arcz.View", "loginBg", [2], function (data) {
+          // 返回数组
+        });
+
+        e.preventDefault();
+      });
+      $('#btn-login-light').on('click', function(e) {
+        $('body').attr('class', 'login-layout light-login');
+        $('#id-text2').attr('class', 'grey');
+        $('#id-company-text').attr('class', 'blue');
+
+        fetch.getInt("server.ctl.arcz.View", "loginBg", [3], function (data) {
+          // 返回数组
+        });
+
+        e.preventDefault();
+      });
+
+    });
+  </script>
+
+  <extend name="jsfoot" />
+
+  </html>
+</export>
+
+<export name="html5-layer-open">
+  <!DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <extend name="title" />
+    </title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+
+    <script src="{{C.PATH.PUBLIC}}/js/fetch.js"></script>
+    <script>
+      var JS_BASE = '{{C.PATH.PUBLIC}}js/';
+      var SERVER_PATH = '{{C.PATH.APP_SERVER_PATH}}';
+      var JSON_API = '{{C.PATH.APP_SERVER_PATH}}json/';
+      var PUBLIC_PATH = '{{C.PATH.PUBLIC}}';
+    </script>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/fonts.googleapis.com.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace.min.css" />
+
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}layui/css/layui.css" media="all" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}css/ace-ie.min.css" />
+    <![endif]-->
+
+    <extend name="css" />
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="{{C.PATH.GPUBLIC}}js/html5shiv.min.js"></script>
+    <script src="{{C.PATH.GPUBLIC}}js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}bootstrap/js/bootstrap.min.js"></script>
+    <extend name="jshead" />
+  </head>
+
+  <!-- 成功弹出框 -->
+  <div class="modal fade cz_alert cz_alert_success_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-success cz_alert_success_center" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 一般弹出框 -->
+  <div class="modal fade cz_alert cz_alert_info_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info cz_alert_info_center" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 警告弹出框 -->
+  <div class="modal fade cz_alert cz_alert_warning_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning cz_alert_warning_center" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 错误弹出框 -->
+  <div class="modal fade cz_alert cz_alert_danger_box" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close cz_alert_close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger cz_alert_danger_center" role="alert"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary cz_alert_close" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <extend name="body" />
+
+  <!-- basic scripts -->
+
+  <!--[if !IE]> -->
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-2.1.4.min.js"></script>
+
+  <!-- <![endif]-->
+
+  <!--[if IE]>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-1.11.3.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='{{C.PATH.GPUBLIC}}js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+  <script src="{{C.PATH.GPUBLIC}}js/bootstrap.min.js"></script>
+
+  <!-- page specific plugin scripts -->
+
+  <!--[if lte IE 8]>
+  <script src="{{C.PATH.GPUBLIC}}js/excanvas.min.js"></script>
+  <![endif]-->
+  <script src="{{C.PATH.GPUBLIC}}js/jquery-ui.custom.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.ui.touch-punch.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.easypiechart.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.sparkline.index.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.flot.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.flot.pie.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/jquery.flot.resize.min.js"></script>
+
+  <extend name="jsfoot_include"></extend>
+
+  <!-- ace scripts -->
+  <script src="{{C.PATH.GPUBLIC}}js/ace-elements.min.js"></script>
+  <script src="{{C.PATH.GPUBLIC}}js/ace.min.js"></script>
+  <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+
+  <!-- inline scripts related to this page -->
+  <script type="text/javascript">
+
+  </script>
+
+  <extend name="jsfoot" />
+  </html>
+</export>

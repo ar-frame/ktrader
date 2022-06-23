@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="#ffffffff"
+    android:layout_marginBottom="0.5dp"
+    >
+    
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/scheme_item_time"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="1968-02-25
+09:41:25"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:layout_marginStart="15dp"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+        <TextView
+            android:id="@+id/scheme_item_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="买入"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:layout_centerInParent="true"
+            />
+        <ImageView
+            android:id="@+id/scheme_item_flag"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_toEndOf="@+id/scheme_item_direction"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="6dp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/scheme_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥5.60"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/scheme_item_suc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="白菜"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/scheme_item_profit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12.00"
+            android:gravity="end"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            />
+    </RelativeLayout>
+</LinearLayout>

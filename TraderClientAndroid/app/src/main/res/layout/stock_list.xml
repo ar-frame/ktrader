@@ -1,0 +1,1141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/ly_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_bg"
+
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    >
+                    <TextView
+                        android:id="@+id/stock_name_a"
+                        android:text="深科技"
+                        android:textSize="17sp"
+                        android:textColor="#2E2C3C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@id/stock_name_a"
+                        android:src="@mipmap/purchase"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        />
+
+                    <ImageView
+                        android:src="@mipmap/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/stock_wait_time_a"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/stock_wait_time_a"
+                        android:text="昨天"
+                        android:textSize="12sp"
+                        android:textColor="#7E7C90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/stock_detail_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+
+                    >
+
+                    <RelativeLayout
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/new_price_a"
+                            android:text="10.50"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/new_price_a"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+                        <TextView
+                            android:text="今日最新价"
+                            android:textSize="12sp"
+                            android:textColor="#9C9CAC"
+                            android:layout_below="@id/new_price_a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:src="@mipmap/arrow_line"
+                            android:layout_width="9dp"
+                            android:layout_height="8dp"
+                            android:layout_centerVertical="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:id="@+id/forecast_price_a"
+                            android:text="11.72"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/forecast_price_a"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/forecast_price_a"
+                            android:layout_alignStart="@id/forecast_price_a"
+                            android:layout_marginStart="0dp"
+                            android:text="预测目标价"
+                            android:textColor="#9C9CAC"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:text="准确率：83.4%"
+                        android:textSize="12sp"
+                        android:textColor="#005AFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+
+                        />
+                    <TextView
+                        android:id="@+id/history_txt_a"
+                        android:text="历史"
+                        android:textSize="12sp"
+                        android:textColor="#21212B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/arrow_history"
+                        android:layout_marginRight="5dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+
+                        />
+                    <ImageView
+                        android:id="@+id/arrow_history"
+                        android:src="@mipmap/arrow_history"
+                        android:layout_width="4dp"
+                        android:layout_height="7dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_bg"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:id="@+id/stock_name_b"
+                        android:text="银之杰"
+                        android:textSize="17sp"
+                        android:textColor="#2E2C3C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@id/stock_name_b"
+                        android:src="@mipmap/increase"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        />
+
+                    <ImageView
+                        android:src="@mipmap/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/stock_wait_time_b"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/stock_wait_time_b"
+                        android:text="昨天"
+                        android:textSize="12sp"
+                        android:textColor="#7E7C90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        />
+
+                </RelativeLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/stock_detail_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+
+
+                    >
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/new_price_b"
+                            android:text="12.55"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/new_price_b"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+                        <TextView
+                            android:text="今日最新价"
+                            android:textSize="12sp"
+                            android:textColor="#9C9CAC"
+                            android:layout_below="@id/new_price_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:src="@mipmap/arrow_line"
+                            android:layout_width="9dp"
+                            android:layout_height="8dp"
+                            android:layout_centerVertical="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:id="@+id/forecast_price_b"
+                            android:text="14.31"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/forecast_price_b"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/forecast_price_b"
+                            android:layout_alignStart="@id/forecast_price_b"
+                            android:layout_marginStart="0dp"
+                            android:text="预测目标价"
+                            android:textColor="#9C9CAC"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:text="准确率：85.6%"
+                        android:textSize="12sp"
+                        android:textColor="#005AFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+
+                        />
+                    <TextView
+                        android:id="@+id/history_txt_b"
+                        android:text="历史"
+                        android:textSize="12sp"
+                        android:textColor="#21212B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/arrow_history_b"
+                        android:layout_marginRight="5dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+
+
+                        />
+                    <ImageView
+                        android:id="@+id/arrow_history_b"
+                        android:src="@mipmap/arrow_history"
+                        android:layout_width="4dp"
+                        android:layout_height="7dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_bg"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:id="@+id/stock_name"
+                        android:text="深圳机场"
+                        android:textSize="17sp"
+                        android:textColor="#2E2C3C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@id/stock_name"
+                        android:src="@mipmap/neutral"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        />
+
+                    <ImageView
+                        android:src="@mipmap/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/stock_wait_time_c"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/stock_wait_time_c"
+                        android:text="昨天"
+                        android:textSize="12sp"
+                        android:textColor="#7E7C90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/stock_detail_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+
+                    >
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/new_price_c"
+                            android:text="8.47"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/new_price_c"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+                        <TextView
+                            android:text="今日最新价"
+                            android:textSize="12sp"
+                            android:textColor="#9C9CAC"
+                            android:layout_below="@id/new_price_c"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:src="@mipmap/arrow_line"
+                            android:layout_width="9dp"
+                            android:layout_height="8dp"
+                            android:layout_centerVertical="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:id="@+id/forecast_price_c"
+                            android:text="未公开"
+                            android:textSize="15sp"
+                            android:textColor="#21212B"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/forecast_price_c"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/forecast_price_c"
+                            android:layout_alignStart="@id/forecast_price_c"
+                            android:layout_marginStart="0dp"
+                            android:text="预测目标价"
+                            android:textColor="#9C9CAC"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+                <!--  <RelativeLayout
+
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+
+                      >
+                      <TextView
+                          android:id="@+id/new_price_c"
+                          android:text="8.47"
+                          android:textSize="17sp"
+                          android:textColor="#F72424"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="15dp"
+                          />
+                      <TextView
+                          android:layout_toRightOf="@id/new_price_c"
+                          android:text="元"
+                          android:textSize="11sp"
+                          android:textColor="#F72424"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="5dp"
+                          android:layout_marginLeft="3dp"
+
+                          />
+                      <RelativeLayout
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginRight="175dp"
+                          >
+                          <TextView
+
+                              android:text="未完成"
+                              android:textSize="15sp"
+                              android:textColor="#21212B"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_toLeftOf="@id/stock_yuan_c"
+
+                              />
+                          <TextView
+                              android:id="@+id/stock_yuan_c"
+
+                              android:textSize="11sp"
+                              android:textColor="#F72424"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginTop="5dp"
+                              android:layout_marginLeft="3dp"
+                              android:layout_alignParentRight="true"
+
+                              />
+                      </RelativeLayout>
+
+
+                  </RelativeLayout>
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+                      <ImageView
+                          android:src="@mipmap/arrow_line"
+                          android:layout_width="9dp"
+                          android:layout_height="6dp"
+                          android:layout_marginLeft="115dp"
+                          />
+
+                  </RelativeLayout>
+
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+
+                      >
+                      <TextView
+                          android:text="今日最新价"
+                          android:textSize="12sp"
+                          android:textColor="#9C9CAC"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="15dp"
+                          />
+                      <TextView
+                          android:text="预测目标价"
+                          android:textSize="12sp"
+                          android:textColor="#9C9CAC"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_alignParentRight="true"
+                          android:layout_marginRight="160dp"
+
+                          />
+
+                  </RelativeLayout>-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:text="准确率：87.2%"
+                        android:textSize="12sp"
+                        android:textColor="#005AFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+
+                        />
+                    <TextView
+                        android:id="@+id/history_txt_c"
+                        android:text="历史"
+                        android:textSize="12sp"
+                        android:textColor="#21212B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/arrow_history_c"
+                        android:layout_marginRight="5dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+
+                        />
+                    <ImageView
+                        android:id="@+id/arrow_history_c"
+                        android:src="@mipmap/arrow_history"
+                        android:layout_width="4dp"
+                        android:layout_height="7dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_bg"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    >
+                    <TextView
+                        android:id="@+id/stock_name_d"
+                        android:text="市北高新"
+                        android:textSize="17sp"
+                        android:textColor="#2E2C3C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@id/stock_name_d"
+                        android:src="@mipmap/purchase"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        />
+
+                    <ImageView
+                        android:src="@mipmap/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/stock_wait_time_d"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/stock_wait_time_d"
+                        android:text="昨天"
+                        android:textSize="12sp"
+                        android:textColor="#7E7C90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/stock_detail_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <RelativeLayout
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/new_price_d"
+                            android:text="9.52"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/new_price_d"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+                        <TextView
+                            android:text="今日最新价"
+                            android:textSize="12sp"
+                            android:textColor="#9C9CAC"
+                            android:layout_below="@id/new_price_d"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:src="@mipmap/arrow_line"
+                            android:layout_width="9dp"
+                            android:layout_height="8dp"
+                            android:layout_centerVertical="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:id="@+id/forecast_price_d"
+                            android:text="10.17"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/forecast_price_d"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/forecast_price_d"
+                            android:layout_alignStart="@id/forecast_price_d"
+                            android:layout_marginStart="0dp"
+                            android:text="预测目标价"
+                            android:textColor="#9C9CAC"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:text="准确率：83.9%"
+                        android:textSize="12sp"
+                        android:textColor="#005AFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+
+                        />
+                    <TextView
+                        android:id="@+id/history_txt_d"
+                        android:text="历史"
+                        android:textSize="12sp"
+                        android:textColor="#21212B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/arrow_history_d"
+                        android:layout_marginRight="5dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+
+                        />
+                    <ImageView
+                        android:id="@+id/arrow_history_d"
+                        android:src="@mipmap/arrow_history"
+                        android:layout_width="4dp"
+                        android:layout_height="7dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_bg"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    >
+                    <TextView
+                        android:id="@+id/stock_name_e"
+                        android:text="深科技"
+                        android:textSize="17sp"
+                        android:textColor="#2E2C3C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@id/stock_name_e"
+                        android:src="@mipmap/purchase"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        />
+
+                    <ImageView
+                        android:src="@mipmap/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/stock_wait_time_e"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/stock_wait_time_e"
+                        android:text="昨天"
+                        android:textSize="12sp"
+                        android:textColor="#7E7C90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/stock_detail_e"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <RelativeLayout
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        >
+                        <TextView
+                            android:id="@+id/new_price_e"
+                            android:text="10.50"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/new_price_e"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+                        <TextView
+                            android:text="今日最新价"
+                            android:textSize="12sp"
+                            android:textColor="#9C9CAC"
+                            android:layout_below="@id/new_price_e"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:src="@mipmap/arrow_line"
+                            android:layout_width="9dp"
+                            android:layout_height="8dp"
+                            android:layout_centerVertical="true"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:id="@+id/forecast_price_e"
+                            android:text="11.72"
+                            android:textSize="17sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <TextView
+                            android:text="元"
+                            android:textSize="11sp"
+                            android:textColor="#F72424"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/forecast_price_e"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginLeft="3dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/forecast_price_e"
+                            android:layout_alignStart="@id/forecast_price_e"
+                            android:layout_marginStart="0dp"
+                            android:text="预测目标价"
+                            android:textColor="#9C9CAC"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:text="准确率：83.4%"
+                        android:textSize="12sp"
+                        android:textColor="#005AFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+
+                        />
+                    <TextView
+                        android:id="@+id/history_txt_e"
+                        android:text="历史"
+                        android:textSize="12sp"
+                        android:textColor="#21212B"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/arrow_history_e"
+                        android:layout_marginRight="5dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+
+                        />
+                    <ImageView
+                        android:id="@+id/arrow_history_e"
+                        android:src="@mipmap/arrow_history"
+                        android:layout_width="4dp"
+                        android:layout_height="7dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{{/*引入公共head meta头*/}}	
+	<import from="/layout/public" name="head-met-info" />
+	<link rel="stylesheet" type="text/css" href="{{C.PATH.PUBLIC}}css/readhelp.css">
+	<script type="text/javascript" src="{{C.PATH.GPUBLIC}}jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="{{C.PATH.PUBLIC}}js/readhelp.js"></script>
+	<script type="text/javascript" src="{{C.PATH.GPUBLIC}}swiper.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{C.PATH.GPUBLIC}}swiper.min.css"> 
+</head>
+<body>
+	<import from="/layout/public" name="seo-link" />
+	<div class="container">
+		<!-- 成功案例 -->
+		<div class="success_cases">
+			
+			<div class="top">
+				<img src="{{C.PATH.PUBLIC}}images/logo.png" id="top_img">
+				<div class="top_right">
+					<div class="top_right_area" id="success_top_right_div_one">
+						<div class="top_right_div" style="border-top-width: 2px;border-top-color: transparent;border-top-style: solid;" id="success_top_right_div_one1"><p style="color: #000000;">产品</p>
+						</div>
+					</div>
+
+					<div class="top_right_area" id="success_top_right_div_two">
+						<div class="top_right_div" style="border-top-width: 2px;border-top-color: transparent;border-top-style: solid;" id="success_top_right_div_two1"><p>价格</p>
+						</div>
+					</div>
+
+					<div class="top_right_area" id="success_top_right_div_three">
+						<div class="top_right_div" style="border-top-width: 2px;border-top-color: blue;border-top-style: solid;" id="success_top_right_div_three1">
+							<p style="color: blue;">帮助</p>
+						</div>
+					</div>
+					
+					<div class="top_right_area" id="success_top_right_div_four">	
+						<div class="top_right_div" style="border-top-width: 2px;border-top-color: transparent;border-top-style: solid;"id="success_top_right_div_four1">
+							<p>下载</p>
+						</div>
+					</div>
+					<div class="top_right_area" id="success_top_right_div_five">
+						<div class="top_right_div" style="border-top-width: 2px;border-top-color: transparent;border-top-style: solid;" id="success_top_right_div_five1">
+							<p>股票</p>
+						</div>
+					</div>
+				</div>
+			</div>
+						
+			<div class="success_middle">
+				<div class="success_middle_area">
+					<!--展示详细说明图片-->
+					<!-- <div class="show_img_ins">	 -->
+							
+						<!-- <div class="swiper-container" id="app"> -->
+							    <!-- <div class="swiper-wrapper" id="swiper-wrapper"> -->
+							      <!-- <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_02.jpg" style="width: 400px;">
+							      </div>
+							      <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_03.jpg" style="width: 400px;">
+							      </div>
+							      <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_04.jpg" style="width: 400px;">
+							      </div>
+							      <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_05.jpg" style="width: 400px;">
+							      </div>
+							      <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_06.jpg" style="width: 400px;">
+							      </div>
+							      <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_07.jpg" style="width: 400px;">
+							      </div>
+							      <div class="swiper-slide">
+							      	<img src="{{C.PATH.PUBLIC}}images/instructions_8.jpg" style="width: 400px;">
+							      </div> -->
+							  
+							    <!-- </div> -->
+						
+							    <!-- <div class="swiper-pagination"></div> -->
+						<!-- </div> -->
+						
+					<!-- </div> -->
+
+					<div class="new_show_img_ins" id="new_show_img_ins">
+						<!-- <img src="{{C.PATH.PUBLIC}}images/instructions_02.jpg" style="width: 400px;">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_03.jpg" style="width: 400px;">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_04.jpg" style="width: 400px;">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_05.jpg" style="width: 400px;">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_06.jpg" style="width: 400px;">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_07.jpg" style="width: 400px;"> -->
+					</div>
+
+					<div class="success_middle_area_item" id="item1">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_01.png" class="success_middle_area_item_img1">
+						<img src="{{C.PATH.PUBLIC}}images/readhelp.png" class="success_middle_area_item_img2" id="read1">
+						<div class="success_middle_area_item_ins">
+							<p class="success_middle_area_item_ins_left">上上策APP使用说明</p>
+							<p class="success_middle_area_item_ins_right">2019-07-16</p>
+						</div>
+
+						<div class="shade" id="shade1"></div>
+					</div>
+
+					<div class="success_middle_area_item" id="item2">
+						<img src="{{C.PATH.PUBLIC}}images/panic_01.png" class="success_middle_area_item_img1">
+						<img src="{{C.PATH.PUBLIC}}images/readhelp.png" class="success_middle_area_item_img2" id="read2">
+						<div class="success_middle_area_item_ins">
+							<p class="success_middle_area_item_ins_left">恐慌指数能级说明</p>
+							<p class="success_middle_area_item_ins_right">2019-07-16</p>
+						</div>
+						<div class="shade" id="shade2"></div>
+					</div>
+
+			<!-- 		<div class="success_middle_area_item" id="item3">
+						<img src="{{C.PATH.PUBLIC}}images/instructions_01.png" class="success_middle_area_item_img1">
+						<img src="{{C.PATH.PUBLIC}}images/readhelp.png" class="success_middle_area_item_img2" id="read3">
+						<div class="success_middle_area_item_ins">
+							<p class="success_middle_area_item_ins_left">上上策APP使用说明</p>
+							<p class="success_middle_area_item_ins_right">2019-07-16</p>
+						</div>
+						<div class="shade" id="shade3"></div>
+					</div> -->
+				</div>
+			</div>
+			<div class="footer">
+				<div style="width: 50px;height: 50px;position: absolute;right: 5%;bottom: 70%;display: flex;justify-content: center;align-items: center;cursor: pointer;z-index: 50000000;background-color: rgba(204,204,204,1);border-radius: 25px;" id="backToTop">
+							<img src="{{C.PATH.PUBLIC}}images/backToTop.png" style="width: 30px;">
+				</div>
+				<div class="footer_top">
+					<div class="footer_top_top">
+						<img src="{{C.PATH.PUBLIC}}images/logo-1.png" class="logo-1">
+						<div class="footer_top_top_right">
+							<!-- <p class="footer_p" id="footer_1p">价格</p> -->
+							<!-- <p class="footer_p" id="footer_2p">成功案例</p> -->
+							<!-- <p class="footer_p" id="footer_3p">更新日志</p> -->
+						</div>
+					</div>
+
+					<div class="footer_top_bottom">
+						<div class="footer_top_bottom_left">
+							<p class="footer_top_bottom_left_p">合作热线：  杨先生18502878090</p>
+							<p class="footer_top_bottom_left_p">企业邮箱：  service@028cdc.cn</p>
+						</div>
+						<div class="footer_top_bottom_right">
+							<p class="footer_top_bottom_right_p">新用户下载和购买使用权请使用右侧的客服电话、QQ、微信咨询客服人员</p>
+							<p class="footer_top_bottom_right_p">深入了解合作请拨打合作热线，咨询区域发展经理杨先生，或者发送邮件到我们的企业邮箱</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="footer_bottom">
+					<p>Copyright © 2016-2018 成都成达传网络科技有限公司</p>
+					<p>蜀ICP备16009459号-5</p>
+				</div>
+			</div>
+		</div>
+		<div class="contact">
+				<div class="contact_left">
+					<img src="{{C.PATH.PUBLIC}}images/dachuancheng.jpg" style="width: 100%;">
+				</div>
+				<div class="kefu_phone">
+					<p style="font-size: 13px;color: white">客服电话：18502878090</p>
+				</div>
+				<div class="contact_right">
+					<!-- <img src=".{{C.PATH.PUBLIC}}images/qq.png" id="qq"> -->
+					<img src="{{C.PATH.PUBLIC}}images/wx-1.png" id="wx">
+					<img src="{{C.PATH.PUBLIC}}images/kefu.png" id="kefu">
+				</div>
+		</div>
+	</div>
+</body>
+</html>

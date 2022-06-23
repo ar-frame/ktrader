@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
+
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#21212B"
+        >
+        <ImageView
+            android:id="@+id/search_img"
+            android:src="@mipmap/search_img_black"
+            android:layout_width="48dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:text="股票研报"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="visible"
+
+        >
+        <RelativeLayout
+            android:id="@+id/recommend_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            >
+            <TextView
+                android:id="@+id/recommend_date_txt"
+                android:text="推荐日期"
+                android:textSize="14sp"
+                android:textColor="#005AFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/recommend_date_txt"
+                android:id="@+id/recommend_date_img"
+                android:src="@mipmap/arrow_blue"
+                android:layout_width="5dp"
+                android:layout_height="4dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            >
+            <TextView
+                android:id="@+id/accuracy_txt"
+                android:text="准确率"
+                android:textSize="14sp"
+                android:textColor="#9C9CAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/accuracy_txt"
+                android:id="@+id/accuracy_img"
+                android:src="@mipmap/arrow_grey"
+                android:layout_width="5dp"
+                android:layout_height="4dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/profit_space"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            >
+            <TextView
+                android:id="@+id/profit_space_txt"
+                android:text="套利空间"
+                android:textSize="14sp"
+                android:textColor="#9C9CAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_toRightOf="@id/profit_space_txt"
+                android:id="@+id/profit_space_img"
+                android:src="@mipmap/arrow_grey"
+                android:layout_width="5dp"
+                android:layout_height="4dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                />
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_stock"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+
+    </FrameLayout>
+
+</LinearLayout>

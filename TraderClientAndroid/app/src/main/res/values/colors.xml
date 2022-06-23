@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorSoftware">#F6F6F6</color>
+
+    <color name="colorDefault">#FFFFFFFF</color>
+
+    <color name="colorNew">#F6F6F6</color>
+
+    <color name="txt_black_light">#333333</color>
+    <color name="bg_white">#FFFFFF</color>
+    <color name="bg_blue">#58ACED</color>
+    <color name="text_yellow">#FFC800</color>
+    <color name="share_text_red">#FF566A</color>
+    <color name="share_text_green">#29C367</color>
+    <color name="total_blue">#005AFF</color>
+    <color name="total_txt_hui">#717591</color>
+    <color name="total_txt_qianhui">#ACAEC0</color>
+    <color name="total_txt_black">#2B2B3A</color>
+    <color name="total_bg_hui">#F7F8FC</color>
+</resources>

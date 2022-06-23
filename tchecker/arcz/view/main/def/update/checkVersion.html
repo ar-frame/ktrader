@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>更新程序</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="{{C.PATH.GPUBLIC}}layui/css/layui.css"  media="all">
+
+  <style type="text/css">
+    body {
+      padding: 16px;
+    }
+
+    .show-succ {
+      margin: 8px;
+      padding: 16px;
+      max-height: 200px;
+      overflow: scroll;
+      display: none;
+    }
+
+    .show-error {
+      margin: 8px;
+      padding: 16px;
+      max-height: 200px;
+      overflow: scroll;
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+              
+<h3>当前版本：{{\ar\core\cfg('czweb_version')}}</h3>
+
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>即将升级的版本<span class="upedition"></span>更新内容如下:</legend>
+</fieldset>
+
+<div class="upcontent hide">
+</div>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>更新进度条</legend>
+</fieldset>
+ 
+<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="checkupdateprogress">
+  <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+</div>
+<div class="show-succ layui-bg-green">
+</div>
+
+<div class="show-error layui-bg-red">
+</div>
+ 
+<div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">
+  <button class="layui-btn site-demo-active" data-type="loading">开始更新</button>
+</div>
+ 
+<script type="text/javascript" src="{{C.PATH.GPUBLIC}}jquery.min.js"></script>
+<script src="{{C.PATH.GPUBLIC}}layui/layui.js" charset="utf-8"></script>
+<script>
+layui.use(['element','layer'], function(){
+  var $ = layui.jquery
+  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+  var layer = layui.layer;
+  
+  //触发事件
+  var active = {
+    setPercent: function(){
+      //设置50%进度
+      element.progress('checkupdateprogress', '50%')
+    }
+    ,loading: function(othis){
+      var DISABLED = 'layui-btn-disabled';
+      if(othis.hasClass(DISABLED)) return;
+    
+      //模拟loading
+      // var n = 0, timer = setInterval(function(){
+      //   n = n + Math.random()*10|0;  
+      //   if(n>100){
+      //     n = 100;
+      //     clearInterval(timer);
+      //     othis.removeClass(DISABLED);
+      //     layer.msg('更新完成')
+      //   }
+      //   element.progress('checkupdateprogress', n+'%');
+      // }, 300+Math.random()*1000);
+      
+      // othis.addClass(DISABLED);
+    }
+  };
+  
+  $('.site-demo-active').on('click', function(){
+    if (!$(this).hasClass('layui-btn-disabled')) {
+      checkUpdate();
+    }
+    var othis = $(this), type = $(this).data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+
+  setTimeout(function() {
+    checkUpdate()
+  }, 1000)
+
+
+
+
+ var apiurl = 'https://api.coopcoder.com/';
+ var localapi = "{{C.PATH.APP_SERVER_PATH}}"
+ var version = "{{\ar\core\cfg('czweb_version')}}";
+ var isupdating = false
+ var updateCount = 0;
+ var upError = false;
+
+ function checkUpdate() {
+    $('.site-demo-active').addClass('layui-btn-disabled')
+    console.log('坚持是否可以更新')
+    $.get(apiurl + 'Update/checkVersion', {'name': 'czweb', version: version} , function (res) {
+      if (res.success == '1') {
+        var edition = res.data[0];
+        updateCount = 0;
+        if (edition) {
+
+            $.get(apiurl + 'Update/getVersionContent', {name: 'czweb', version: edition}, function(res) {
+              $('.upedition').html(edition).show()
+              $('.upcontent').html(res.data.content).show()
+            }, 'json')
+
+            var index = layer.confirm('当前可升级到'+edition+'，是否升级?', {icon: 3, title:'更新提示'}, function(index){
+              console.log('获取更新文件')
+
+              layer.close(index);
+              isupdating = true;
+
+              // 文件
+              $.post(apiurl + 'Update/checkVersionDetail', {name: 'czweb', toversion: edition}, function(res) {
+                console.log(res)
+                var taskfile = res.data;
+                console.log('文件总数:' + taskfile.length)
+                console.log('开始更新文件')
+                        // return;
+
+                // element.progress('checkupdateprogress', '0%')
+
+                for (var i = 0; i < taskfile.length; i++) {
+                    var filename = taskfile[i]
+                    $.ajax(
+                    {
+                      url: localapi + 'update/updateRaw', 
+                      type:'post',
+                      async: true,
+                      dataType:'json',
+                      data:{name: 'czweb', version: edition, filename: taskfile[i]}, 
+                      success: function(res) {
+                        if (res.success == '1') {
+                          updateCount++;
+                          var cpint = parseInt(updateCount / taskfile.length * 100)
+                          var cp = parseInt(updateCount / taskfile.length * 100).toString() + '%'
+                          $('.show-succ').prepend('更新' + res.data.filename + ' OK <br>').show()
+                          element.progress('checkupdateprogress', cp)
+                          if (cpint == 100) {
+                            if (!upError) {
+                              $.get(localapi + 'update/setUpdateSuccEdition', {version: edition}, function(res) {
+                                if (res.success == '1') {
+                                  $('.show-succ').prepend('更新完成' + '  <br>').show()
+                                  layer.msg('升级完成, 2秒后自动刷新')
+                                  setTimeout(function() {
+                                    location.reload()
+                                  }, 2000)
+                                } else {
+                                  layer.alert(res.ret_msg)
+                                }
+                              }, 'json');
+                              
+                            }
+                          }
+
+                        } else {
+                          upError = true
+
+                          $('.show-error').prepend(res.ret_msg + res.filename + '  failed <br>').show()
+                        }
+                      }
+                    })
+
+                }
+
+            }, 'json')
+          });
+
+        } else {
+
+        }
+      
+      } else {
+        layer.msg(res.ret_msg)
+      }
+      console.log(res)
+    }, 'json');
+  }
+
+
+});
+
+
+</script>
+
+</body>
+</html>

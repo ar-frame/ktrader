@@ -1,0 +1,8 @@
+timeStart = '2019-01-26 16:00:00'
+    timeEnd = '2019-01-29 00:00:00'
+
+indexcode equal
+
+        timeStart = '2019-01-31 09:00:00'
+    timeEnd = '2019-02-01 10:00:00'
+    # timeEnd = now

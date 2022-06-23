@@ -1,0 +1,63 @@
+<import from="/layout/global" name="html5">
+    <extend name="title">
+        ar service模式接口调试工具
+    </extend>
+    <extend name="body">
+        <style>
+            h6 {
+                margin: 0;
+            }
+            .request-btn {
+                width: 120px;
+                height: 60px;
+            }
+            form div {
+                margin: 4px;
+                float: left;
+                min-width: 220px;
+            }
+            form div input {
+                min-width: 220px;
+            }
+        </style>
+        <h3>
+            ar service模式接口调试工具
+            接口地址：{{C.components.rpc.service.config.wsFile}}
+        </h3>
+        <form action="" method="post">
+          
+           
+            <div>
+                <h6>接口名称</h6>
+                <input type="text" name="name" value="{{\ar\core\request('name')}}" />
+            </div>
+
+            <div>
+                <h6>函数</h6>
+                <input type="text" name="funcname" value="{{\ar\core\request('funcname')}}" />
+            </div>
+
+            <div>
+                <h6>参数</h6>
+                <input type="text" name="params" value="{{\ar\core\request('params')}}" />
+                形如a|b|c
+            </div>
+            
+           
+            <p>
+                <input class="request-btn" type="submit"  value="发送请求" />
+                TIME:{{date('Y-m-d H:i:s', time())}}
+            </p>
+        </form>
+        <div style="height: 500px;width: 400px;float: left;margin: 10px">
+            <h6>请求示例：</h6>
+            <textarea style="height: 500px;width: 400px;float: left;margin: 10px">{{showFunc}}</textarea>
+        </div>
+        <div style="height: 500px;width: 800px;float: left;margin: 10px">
+            <h6>返回结果：</h6>
+            <textarea style="height: 500px;width: 800px;float: left;margin: 10px">{{returnData}}</textarea>
+        </div>
+      
+    </extend>
+    
+</import>

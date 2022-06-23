@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#ffffffff"
+    android:layout_marginBottom="1dp"
+    >
+
+    <TextView
+        android:id="@+id/vatiety_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GT - USDT"
+        android:textColor="#ff000000"
+        android:textSize="15sp"
+        android:layout_marginStart="15dp"
+        android:layout_centerVertical="true"
+        />
+
+    <RadioButton
+        android:id="@+id/vatiety_item_btn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/selector_radio"
+        android:button="@null"
+        android:layout_marginEnd="15dp"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

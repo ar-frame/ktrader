@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        >
+        <ImageView
+            android:background="#F2030202"
+            android:layout_width="2dp"
+            android:layout_height="13dp"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:text="搜索历史"
+            android:textSize="14sp"
+            android:textColor="#2E2C3C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+
+            />
+        <ImageView
+            android:id="@+id/delete_history_img"
+            android:src="@mipmap/delete_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            />
+
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_shares_search_history"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        tools:itemCount="9"
+        tools:layoutManager="GridLayoutManager"
+        tools:listitem="@layout/rv_item_share_searchhistory"
+        tools:spanCount="3"
+        />
+
+
+</LinearLayout>

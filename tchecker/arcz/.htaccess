@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
+
+
+#apache Rewrite 规则
+RewriteRule !\.(ico|js|gif|jpeg|jpg|png|css|swf|flv)$ index.php
+
+#iis 排除js,css等文件
+#RewriteRule (.*\.(js|ico|gif|jpg|png|flv|swf|css))$ /$1 [L,U]
+#arphp的全部请求转发到index.php
+#RewriteRule (.*) /index.php [L,U]
+ </IfModule>

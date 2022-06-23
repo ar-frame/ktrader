@@ -1,0 +1,464 @@
+<import from="/layout/global" name="html5">
+    <extend name="title">
+        <if exp="$menuTitle['cate'] == 1">
+            {{menuTitle.title1}}
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            {{menuTitle.title2}}
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            {{menuTitle.title3}}
+        </if>
+    </extend>
+    <extend name="css">
+
+    </extend>
+
+    <extend name="breadcrumb">
+        <if exp="$menuTitle['cate'] == 1">
+            <li class="active">{{menuTitle.title1}}</li>
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            <li>
+                <a href="#">{{menuTitle.title1}}</a>
+            </li>
+            <li class="active">{{menuTitle.title2}}</li>
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            <li>
+                <a href="#">{{menuTitle.title1}}</a>
+            </li>
+            <li>
+                <a href="#">{{menuTitle.title2}}</a>
+            </li>
+            <li class="active">{{menuTitle.title3}}</li>
+        </if>
+    </extend>
+
+    <extend name="page-header-title">管理员列表</extend>
+    <extend name="body">
+
+        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add">添加管理员</button>
+        <if exp="count($users)>0">
+            {{headForm}}
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr class="active">
+                    <th>登录名称</th>
+                    <th>昵称</th>
+                    <th>用户邮箱</th>
+                    <th>用户电话</th>
+                    <if exp="$isDev==1">
+                        <th>是否开发者</th>
+                    </if>
+                    <th>用户角色</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <for exp="$key in $users" as="u">
+                    <tr>
+                        <td>{{u.username}}</td>
+                        <td>{{u.nickname}}</td>
+                        <td>{{u.email}}</td>
+                        <td>{{u.tel}}</td>
+                        <if exp="$isDev==1">
+                            <td>{{u.isdev}}</td>
+                        </if>
+                        <td>{{u.group}}</td>
+                        <td>
+                            <button type="button" id="group_{{u.id}}" class="btn btn-warning btn-xs">分配角色</button>
+                            <button type="button" id="edit_{{u.id}}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit">编辑</button>
+                            <if exp="$isadmin1==1">
+                                <button type="button" id="del_{{u.id}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#del">删除</button>
+                            </if>
+                        </td>
+                    </tr>
+                </for>
+                </tbody>
+            </table>
+            {{pageShow}}
+        <else/>
+            <ul class="pager">
+                <li class="previous">
+                    <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+                </li>
+            </ul>
+            <div class="jumbotron">
+                <h1 align="center">暂无数据！</h1>
+            </div>
+        </if>
+
+        <!-- 添加 -->
+        <div class="modal fade cz_box" id="add" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">添加管理员</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="add_username" class="col-sm-2 control-label">登录账号</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="add_username" placeholder="请输入登录账号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="add_nickname" class="col-sm-2 control-label">昵称</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="add_nickname" placeholder="请输入管理员昵称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="add_realname" class="col-sm-2 control-label">真实姓名</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="add_realname" placeholder="请输入真实姓名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="add_email" class="col-sm-2 control-label">邮箱</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="add_email" placeholder="请输入邮箱">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="add_tel" class="col-sm-2 control-label">电话</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="add_tel" placeholder="请输入联系电话">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <button type="button" class="btn btn-primary" id="add_confirm">确认</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="alert alert-danger alert-dismissable hide" id="alert-model-add">
+                            <button type="button" class="close"  id="alert-add-close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong id="alert-add-text"></strong>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="alert alert-info" role="alert" align="center">新添加管理员登录密码默认为管理员登录账号+123456</div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 编辑 -->
+        <div class="modal fade cz_box" id="edit" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">编辑</h4>
+                    </div>
+                    <div class="modal-body" id="edit_user_context">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">登录账号</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="edit_username" value="" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">昵称</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="edit_nickname" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">真实姓名</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="edit_realname" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">邮箱</label>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" id="edit_email" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">电话</label>
+                                <div class="col-sm-6">
+                                    <input type="tel" class="form-control" id="edit_tel" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <button type="button" class="btn btn-primary" id="edit_confirm">确认</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="alert alert-danger alert-dismissable hide" id="alert-model-edit">
+                            <button type="button" class="close"  id="alert-edit-close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong id="alert-edit-text"></strong>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <if exp="$isadmin1==1">
+            <!-- 删除 -->
+            <div class="modal fade cz_box" id="del" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">删除</h4>
+                        </div>
+                        <div class="modal-body" id="del_user_context">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="del_confirm">确认</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+
+
+    </extend>
+
+    <extend name="jsfoot">
+        <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+        <script type="text/javascript">
+            jQuery(function($){
+                // 分页切换
+                $('#pageCount').change(function(){
+                    var count = $("#pageCount").val();
+                    window.location.href = "{{\ar\core\url('users/userList')}}" + "/count/" + count + "/page/1/keyword/{{keyword}}";
+                });
+
+                // 跳转指定页面
+                $('#pageTo').change(function(){
+                    var page = $("#pageTo").val();
+                    window.location.href = "{{\ar\core\url('users/userList')}}" + "/count/{{count}}/page/" + page + "/keyword/{{keyword}}";
+                });
+
+                // 搜索
+                $('#search').click(function(){
+                    var keyword = $("#keyword").val();
+                    window.location.href = "{{\ar\core\url('users/userList')}}" + "/count/{{count}}/page/1/keyword/" + keyword;
+                });
+
+                // 开关状态值设置
+                $(".dev_check").click(function(){
+                    // 传入设置值
+                    var checked = $(this).is(':checked');
+                    var setval;
+                    if (checked) {
+                        setval = 1;
+                    } else {
+                        setval = 0;
+                    }
+                    // 传入id
+                    var id = $(this).val();
+                    var uk = "{{userAuthKeyNow}}";
+                    var ip = "{{loginIpNow}}";
+                    fetch.getObject("server.ctl.arcz.User", "isdevSetSwitch", [id, setval, uk, ip], function (data) {
+                        if(data.errCode == 1000){
+                            $(".cz_alert_success_center").text(data.errMsg);
+                            $(".cz_alert_success_box").modal();
+                        } else {
+                            $(".cz_alert_danger_center").text(data.errMsg);
+                            $(".cz_alert_danger_box").modal();
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1000);
+                        }
+                    });
+
+                });
+
+                // 关闭弹出框刷新页面
+                $('.cz_alert').on('hide.bs.modal', function () {
+                    window.location.reload();
+                });
+
+                // 关闭模态框刷新页面
+                $('.cz_box').on('hide.bs.modal', function () {
+                    window.location.reload();
+                });
+
+                // 输入警告框
+                function alertModel(str,type) {
+                    $('#alert-model' + type).removeClass('hide').addClass('in');
+                    $("#alert" + type + "-text").text(str);
+
+                    $("#alert" + type + "-close").click(function(){
+                        $('#alert-model' + type).removeClass('in').addClass('hide');
+                    });
+                }
+
+                // 添加管理员提交数据
+                $("#add_confirm").click(function(){
+                    var username = $("#add_username").val();
+                    var nickname = $("#add_nickname").val();
+                    var realname = $("#add_realname").val();
+                    var email = $("#add_email").val();
+                    var tel = $("#add_tel").val();
+
+                    var regEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                    // 调用正则验证test()函数验证Email
+                    isokEmail = regEmail.test(email);
+
+                    if(!username){
+                        alertModel('登录账号不能为空！','-add');
+                    } else if(!nickname){
+                        alertModel('昵称不能为空！','-add');
+                    } else if(!realname){
+                        alertModel('真实姓名不能为空！','-add');
+                    } else if(!email){
+                        alertModel('邮箱不能为空！','-add');
+                    } else if(!isokEmail){
+                        alertModel('邮箱格式不正确，请重新输入！','-add');
+                    } else if(!tel){
+                        alertModel('联系电话不能为空！','-add');
+                    } else {
+                        var uk = "{{userAuthKeyNow}}";
+                        var ip = "{{loginIpNow}}";
+                        fetch.getObject("server.ctl.arcz.User", "addUser", [username, nickname, realname, email, tel, uk, ip], function (data) {
+                            if(data.errCode == 1000){
+                                $(".cz_alert_success_center").text(data.errMsg);
+                                $(".cz_alert_success_box").modal();
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },1000);
+                            } else {
+                                $(".cz_alert_danger_center").text(data.errMsg);
+                                $(".cz_alert_danger_box").modal();
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },1000);
+                            }
+                        });
+                    }
+                });
+
+                // 分配角色
+                $("[id^=group_]").click(function () {
+                    var uid = $(this).attr("id").split("group_")[1];
+                    fetch.getObject("server.ctl.arcz.User", "userDetail", [uid], function (data) {
+                        if(data.hasUser==1){
+                            layui.use(['form','layer','laydate','table','laytpl'],function(){
+                                var layer = parent.layer === undefined ? layui.layer : top.layer;
+                                layer.open({
+                                    title : "向管理员" + data.username + "分配角色",
+                                    type: 2,
+                                    skin: '',  // 不加边框
+                                    area: ['600px', '600px'],  // 宽高
+                                    content: SERVER_PATH + "user/graupAdd/uid/" + uid,
+                                    cancel: function () {  // 弹框关闭触发事件
+                                        window.location.reload();
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+
+                // 编辑
+                $("[id^=edit_]").click(function () {
+                    var id = $(this).attr("id").split("edit_")[1];
+                    fetch.getObject("server.ctl.arcz.User", "userDetail", [id], function (data) {
+                        if(data.hasUser==1){
+                            $("#edit_username").val(data.username);
+                            $("#edit_nickname").val(data.nickname);
+                            $("#edit_realname").val(data.realname);
+                            $("#edit_email").val(data.email);
+                            $("#edit_tel").val(data.tel);
+                            // 确认编辑按钮点击
+                            $("#edit_confirm").click(function(){
+                                var id = data.id;
+                                var username = $("#edit_username").val();
+                                var nickname = $("#edit_nickname").val();
+                                var realname = $("#edit_realname").val();
+                                var email = $("#edit_email").val();
+                                var tel = $("#edit_tel").val();
+
+                                var regEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+                                // 调用正则验证test()函数验证Email
+                                isokEmail = regEmail.test(email);
+
+                                if(!nickname){
+                                    alertModel('昵称不能为空！','-edit');
+                                } else if(!realname){
+                                    alertModel('真实姓名不能为空！','-edit');
+                                } else if(!email){
+                                    alertModel('邮箱不能为空！','-edit');
+                                } else if(!isokEmail){
+                                    alertModel('邮箱格式不正确，请重新输入！','-edit');
+                                } else if(!tel){
+                                    alertModel('联系电话不能为空！','-edit');
+                                } else {
+                                    var uk = "{{userAuthKeyNow}}";
+                                    var ip = "{{loginIpNow}}";
+                                    fetch.getObject("server.ctl.arcz.User", "editUser", [id, username, nickname, realname, email, tel, uk, ip], function (data) {
+                                        if(data.errCode == 1000){
+                                            $(".cz_alert_success_center").text(data.errMsg);
+                                            $(".cz_alert_success_box").modal();
+                                            setTimeout(function(){
+                                                window.location.reload();
+                                            },1000);
+                                        } else {
+                                            $(".cz_alert_danger_center").text(data.errMsg);
+                                            $(".cz_alert_danger_box").modal();
+                                            setTimeout(function(){
+                                                window.location.reload();
+                                            },1000);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+
+                // 删除
+                $("[id^=del_]").click(function () {
+                    var id = $(this).attr("id").split("del_")[1];
+                    fetch.getObject("server.ctl.arcz.User", "userDetail", [id], function (data) {
+                        if(data.hasUser==1){
+                            $("#del_user_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定删除管理员：' + data.username + ' ?</h3></div>');
+                            // 确认删除按钮点击
+                            $("#del_confirm").click(function(){
+                                var id = data.id;
+                                var uk = "{{userAuthKeyNow}}";
+                                var ip = "{{loginIpNow}}";
+                                fetch.getObject("server.ctl.arcz.User", "delUser", [id, uk, ip], function (data) {
+                                    if(data.errCode == 1000){
+                                        $("#del_user_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        },1000);
+                                    } else {
+                                        $("#del_user_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        },1000);
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+
+            });
+        </script>
+    </extend>
+</import>

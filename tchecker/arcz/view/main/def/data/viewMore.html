@@ -1,0 +1,153 @@
+<import from="/layout/global" name="html5-layer-open">
+    <extend name="body">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" align="center">{{pageTitle}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+
+                    <for exp="$key in $columns" as="column">
+                        <if exp="$column['isview']==1">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">{{column.colshowname}}</label>
+                                <div class="col-sm-6">
+
+                                    <php>
+                                        if($doedit==1){
+                                        $cval = $row[$column['colname']];
+                                            if($column['type']==3){
+                                                $cval = stripslashes($cval);
+                                                $cval = stripcslashes($cval);
+                                            }
+                                        } else if($column['type']==5){
+                                            $cval = 0;
+                                        } else {
+                                            $cval = "";
+                                        }
+                                    </php>
+
+                                    <if exp="$column['type']==0">
+                                        <input type="text" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}" disabled>
+                                    </if>
+
+                                    <if exp="$column['type']==1">
+                                        <select name="{{column.colname}}" class="form-control {{column.colname}}" disabled>
+                                            <php>
+                                                // 字段类型说明
+                                                $typeex = $column['typeexplain'];
+                                                // 根据'|'截取字符串并放入数组
+                                                $str1 = explode("|",$typeex);
+                                                foreach($str1 as $t){
+                                                    // 截取':'前面的内容
+                                                    $tn1 = substr($t,0,strpos($t, ':'));
+                                                    // 截取':'后面的内容
+                                                    $tn2 = substr($t,strpos($t, ':')+1);
+                                                    $sel = '';
+                                                    if($cval==$tn1){
+                                                        $sel = 'selected';
+                                                    }
+                                                    echo '<option value="'.$tn1.'"  '.$sel.'>'.$tn2.'</option>';
+                                                }
+                                            </php>
+                                        </select>
+                                    </if>
+
+                                    <if exp="$column['type']==2">
+                                        <php>
+                                            $check3 = '';
+                                            // 判断值
+                                            if($cval==1){
+                                                $check3 = 'checked';
+                                            }
+                                            echo '<input type="checkbox" class="ace ace-switch ace-switch-6 switch_check" value="'.$rowId.'" name="'.$column['colname'].'"  '.$check3.' disabled><span class="lbl middle"></span>';
+                                        </php>
+                                    </if>
+
+                                    <if exp="$column['type']==3">
+                                        <div id="editor" class="{{column.colname}}">{{cval}}</div>
+                                    </if>
+
+                                    <if exp="$column['type']==4">
+                                        <if exp="$doedit==1">
+                                            <img id="imgView_{{column.colname}}" class="" height="180px" width="180px" src="{{\ar\core\cfg('CZ_PUB_SERVER_PATH')}}{{cval}}" />
+                                        </if>
+                                    </if>
+
+                                    <if exp="$column['type']==5">
+                                        <input type="text" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}" disabled>
+                                    </if>
+
+                                    <if exp="$column['type']==6">
+                                        <input type="number" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}" disabled>
+                                    </if>
+
+                                    <if exp="$column['type']==7">
+                                        <input type="number" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}" disabled>
+                                    </if>
+
+                                    <if exp="$column['type']==8">
+                                        <select name="{{column.colname}}" class="form-control {{column.colname}}" disabled>
+                                            <php>
+                                                // 根据表名及字段名称查找模型外键关联表信息
+                                                $mtablename = $column['tablename'];
+                                                $mcolname = $column['colname'];
+                                                try {
+                                                    $apiname = 'Ws'.'server.ctl.arcz.Data';
+                                                    $res = \ar\core\comp('rpc.service')->$apiname("getFkDataList", array($mtablename, $mcolname, $cval));
+                                                    $option = $res['option'];
+                                                    echo $option;
+                                                } catch (\ar\core\Exception $e) {
+                                                    // todos 异常处理
+                                                    echo $e->getMessage();
+                                                }
+                                            </php>
+                                        </select>
+                                    </if>
+
+                                </div>
+                            </div>
+                        </if>
+                    </for>
+
+                </form>
+                <div class="alert alert-danger alert-dismissable hide" id="alert-model-add">
+                    <button type="button" class="close"  id="alert-add-close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong id="alert-add-text"></strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </extend>
+
+    <extend name="jsfoot_include">
+
+    </extend>
+
+
+    <extend name="jsfoot">
+        <script type="text/javascript" src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+        <script type="text/javascript">
+            var uk = "{{userAuthKeyNow}}";
+            var ip = "{{loginIpNow}}";
+
+            // 输入警告框
+            function alertModel(str,type)
+            {
+                $('#alert-model' + type).removeClass('hide').addClass('in');
+                $("#alert" + type + "-text").text(str);
+
+                $("#alert" + type + "-close").click(function(){
+                    $('#alert-model' + type).removeClass('in').addClass('hide');
+                });
+            }
+
+
+        </script>
+    </extend>
+</import>
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#F7F8FC"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="#F7F8FC"
+
+            >
+            <ImageView
+                android:id="@+id/strock_fanhui"
+                android:src="@mipmap/fanhui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/strock_fanhui"
+                android:background="@drawable/select_bg"
+                >
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_stock"
+                android:hint="股票代码、简称"
+                android:textSize="14sp"
+                android:background="@drawable/select_bg"
+                android:layout_width="262dp"
+                android:layout_height="33dp"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_choose_list"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+
+                >
+
+
+                <ImageView
+                    android:id="@+id/confirm_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/search_img"
+                    />
+
+            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/strock_clear"
+                    android:src="@mipmap/delete_yuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/strock_fanhui"
+                    android:layout_marginLeft="265dp"
+                    />
+
+
+        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,346 @@
+<import from="/layout/global" name="html5">
+  <extend name="title">
+    <if exp="$menuTitle['cate'] == 1">
+      {{menuTitle.title1}}
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      {{menuTitle.title2}}
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      {{menuTitle.title3}}
+    </if>
+  </extend>
+  <extend name="css">
+
+  </extend>
+
+  <extend name="breadcrumb">
+    <if exp="$menuTitle['cate'] == 1">
+      <li class="active">{{menuTitle.title1}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li class="active">{{menuTitle.title2}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li>
+        <a href="#">{{menuTitle.title2}}</a>
+      </li>
+      <li class="active">{{menuTitle.title3}}</li>
+    </if>
+  </extend>
+
+  <extend name="page-header-title">模型表</extend>
+  <extend name="body">
+    <if exp="count($modelLists)>0">
+      {{headForm}}
+      <div>菜单图标请参考http://www.fontawesome.com.cn/faicons/</div>
+      <table class="table table-hover table-condensed table-striped table-bordered">
+        <thead>
+        <tr class="active">
+          <th>模型名称</th>
+          <th>数据表名称</th>
+          <th>菜单名称</th>
+          <th>添加</th>
+          <th>编辑</th>
+          <th>删除</th>
+          <th>显示详情</th>
+          <th>搜索</th>
+          <th>自定义显示列</th>
+          <th>导出Excel</th>
+          <th>打印列表</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <for exp="$key in $modelLists" as="m">
+          <tr>
+            <td align="center">{{m.modelname}}</td>
+            <td align="center">{{m.tablename}}</td>
+            <td align="center">{{m.menu_name}}</td>
+            <td>
+              <button type="button" id="funcType1_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType2_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType3_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType4_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType5_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType6_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType7_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="funcType8_{{m.id}}" class="btn btn-primary btn-xs">分配权限</button>
+            </td>
+            <td>
+              <button type="button" id="btviewfield_{{m.id}}" class="btn btn-white btn-warning btn-xs">管理模型</button>
+              <if exp="$m['menu'] == 0">
+                <button type="button" id="btaddmenu_{{m.id}}" class="btn btn-white btn-purple btn-xs">生成菜单</button>
+              </if>
+              <if exp="$m['menu'] != 0">
+                <button type="button" id="btfunc_{{m.id}}" class="btn btn-white btn-primary btn-xs">自定义功能</button>
+              </if>
+              <button type="button" id="btdev_{{m.id}}" class="btn btn-white btn-danger btn-xs" data-toggle="modal" data-target="#del">删除模型</button>
+            </td>
+          </tr>
+        </for>
+        </tbody>
+      </table>
+      {{pageShow}}
+      <else/>
+      <ul class="pager">
+        <li class="previous">
+          <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+        </li>
+      </ul>
+      <div class="jumbotron">
+        <h1 align="center">暂无数据！</h1>
+      </div>
+    </if>
+
+    <!-- 删除模型 -->
+    <div class="modal fade cz_box" id="del" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">删除</h4>
+          </div>
+          <div class="modal-body" id="del_model_context">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="del_confirm">确认</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </extend>
+
+  <extend name="jsfoot">
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+    <script type="text/javascript">
+      jQuery(function($){
+        // 分页切换
+        $('#pageCount').change(function(){
+          var count = $("#pageCount").val();
+          window.location.href = "{{\ar\core\url('systems/modelList')}}" + "/count/" + count + "/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+        });
+
+        // 跳转指定页面
+        $('#pageTo').change(function(){
+          var page = $("#pageTo").val();
+          window.location.href = "{{\ar\core\url('systems/modelList')}}" + "/count/{{count}}/page/" + page + "/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+        });
+
+        // 搜索
+        $('#search').click(function(){
+          var keyword = $("#keyword").val();
+          var search_col = $("#search_col").val();
+          window.location.href = "{{\ar\core\url('systems/modelList')}}" + "/count/{{count}}/page/1/search_col/" + search_col + "/keyword/" + keyword + "/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+        });
+
+        // 升序
+        $('#sorting_asc').click(function(){
+          var sort_col = $("#sorting").val();
+          var sort_type = 'asc';
+          window.location.href = "{{\ar\core\url('systems/modelList')}}" + "/count/{{count}}/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/" + sort_col + "/sort_type/" + sort_type;
+        });
+
+        // 降序
+        $('#sorting_desc').click(function(){
+          var sort_col = $("#sorting").val();
+          var sort_type = 'desc';
+          window.location.href = "{{\ar\core\url('systems/modelList')}}" + "/count/{{count}}/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/" + sort_col + "/sort_type/" + sort_type;
+        });
+
+        // 关闭弹出框刷新页面
+        $('.cz_alert').on('hide.bs.modal', function () {
+          window.location.reload();
+        });
+
+        // 关闭模态框刷新页面
+        $('.cz_box').on('hide.bs.modal', function () {
+          window.location.reload();
+        });
+
+        // 输入警告框
+        function alertModel(str,type) {
+          $('#alert-model' + type).removeClass('hide').addClass('in');
+          $("#alert" + type + "-text").text(str);
+
+          $("#alert" + type + "-close").click(function(){
+            $('#alert-model' + type).removeClass('in').addClass('hide');
+          });
+        }
+
+        // 删除模型
+        $("[id^=btdev_]").click(function () {
+          var id = $(this).attr("id").split("btdev_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getModelRow", [id], function (data) {
+            if(data){
+              $("#del_model_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定删除模型：' + data.modelname + ' ?</h3></div>');
+              // 确认删除按钮点击
+              $("#del_confirm").click(function(){
+                var id = data.id;
+                var uk = "{{userAuthKeyNow}}";
+                var ip = "{{loginIpNow}}";
+                fetch.getObject("server.ctl.arcz.DBModel", "delModel", [id, uk, ip], function (data) {
+                  if(data.errCode == 1000){
+                    $("#del_model_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                    setTimeout(function(){
+                      window.location.reload();
+                    },1000);
+                  } else {
+                    $("#del_model_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                    setTimeout(function(){
+                      window.location.reload();
+                    },1000);
+                  }
+                });
+              });
+            }
+          });
+        });
+
+        // 添加编辑菜单页面
+        function addMenu(mid){
+
+          var urladdr = SERVER_PATH + "systemSetting/menuAdd/issystem/" + 0 + "/id/" + 0 + "/mid/" + mid;
+          var title = '模型生成菜单';
+
+          layui.use(['form','layer','laydate','table','laytpl'],function(){
+            var layer = parent.layer === undefined ? layui.layer : top.layer;
+            layer.open({
+              title : title,
+              type: 2,
+              skin: '',  // 不加边框
+              area: ['800px', '600px'],  // 宽高
+              content: urladdr,
+              cancel: function () {  // 弹框关闭触发事件
+                window.location.reload();
+              }
+            });
+          });
+        }
+
+        // 功能权限分配页面
+        function editFunc(id ,type){
+          var typename;
+          if(type == 1){
+            typename = '添加';
+          } else if(type == 2){
+            typename = '编辑';
+          } else if(type == 3){
+            typename = '删除';
+          } else if(type == 4){
+            typename = '显示详情';
+          } else if(type == 5){
+            typename = '搜索';
+          } else if(type == 6){
+            typename = '自定义显示列';
+          } else if(type == 7){
+            typename = '导出Excel';
+          } else if(type == 8){
+            typename = '打印列表';
+          }
+
+            layui.use(['form','layer','laydate','table','laytpl'],function(){
+              var layer = parent.layer === undefined ? layui.layer : top.layer;
+              layer.open({
+                title : "配置功能 " + typename + " 的权限",
+                type: 2,
+                skin: '',  // 不加边框
+                area: ['600px', '600px'],  // 宽高
+                content: SERVER_PATH + "user/editFunc/mid/" + id + "/type/" + type + "/fid/0",
+                cancel: function () {  // 弹框关闭触发事件
+                  window.location.reload();
+                }
+              });
+            });
+
+        }
+
+        // 自定义功能
+        $("[id^=btfunc_]").click(function () {
+          var id = $(this).attr("id").split("btfunc_")[1];
+          window.location.href = "{{\ar\core\url('systemSetting/coustomFunc')}}" + "/id/" + id;
+        });
+
+        // 管理模型
+        $("[id^=btviewfield_]").click(function () {
+          var id = $(this).attr("id").split("btviewfield_")[1];
+          window.location.href = "{{\ar\core\url('systemSetting/showFields')}}" + "/id/" + id;
+        });
+
+        // 生成菜单
+        $("[id^=btaddmenu_]").click(function () {
+          var id = $(this).attr("id").split("btaddmenu_")[1];
+            addMenu(id);
+        });
+
+        // 分配功能权限
+        $("[id^=funcType1_]").click(function () {  // 添加
+          var id = $(this).attr("id").split("funcType1_")[1];
+          var type = 1;
+          editFunc(id, type);
+        });
+        $("[id^=funcType2_]").click(function () {  // 编辑
+          var id = $(this).attr("id").split("funcType2_")[1];
+          var type = 2;
+          editFunc(id, type);
+        });
+        $("[id^=funcType3_]").click(function () {  // 删除
+          var id = $(this).attr("id").split("funcType3_")[1];
+          var type = 3;
+          editFunc(id, type);
+        });
+        $("[id^=funcType4_]").click(function () {  // 显示详情
+          var id = $(this).attr("id").split("funcType4_")[1];
+          var type = 4;
+          editFunc(id, type);
+        });
+        $("[id^=funcType5_]").click(function () {  // 搜索
+          var id = $(this).attr("id").split("funcType5_")[1];
+          var type = 5;
+          editFunc(id, type);
+        });
+        $("[id^=funcType6_]").click(function () {  // 自定义显示列
+          var id = $(this).attr("id").split("funcType6_")[1];
+          var type = 6;
+          editFunc(id, type);
+        });
+        $("[id^=funcType7_]").click(function () {  // 导出Excel
+          var id = $(this).attr("id").split("funcType7_")[1];
+          var type = 7;
+          editFunc(id, type);
+        });
+        $("[id^=funcType8_]").click(function () {  // 打印列表
+          var id = $(this).attr("id").split("funcType8_")[1];
+          var type = 8;
+          editFunc(id, type);
+        });
+
+
+      });
+    </script>
+  </extend>
+</import>

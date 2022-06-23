@@ -1,0 +1,53 @@
+<import from="/layout/global" name="html5-layer-open">
+	<extend name="body">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" align="center">分配权限</h4>
+			</div>
+			<div class="modal-body" id="user_group_content">
+				{{roleList.rolestr}}
+			</div>
+			<div class="modal-footer">
+				<input class="rid" type="hidden" value="{{rid}}">
+			</div>
+		</div>
+	</extend>
+
+
+	<extend name="jsfoot">
+		<script type="text/javascript">
+			var uk = "{{userAuthKeyNow}}";
+			var ip = "{{loginIpNow}}";
+			var rid = $(".rid").val();
+
+			// 取消分配角色
+			$("[id^=n0id_]").click(function () {
+				var nav_id = $(this).attr("id").split("n0id_")[1];
+				var type = 0;
+				fetch.getObject("server.ctl.arcz.User", "changeRoleNav", [rid, nav_id, type, uk, ip], function (data) {
+					if(data.errCode == 1000){
+						$("#btng_" + nav_id).html('<a id="n1id_' + nav_id + '" class="btn btn-warning btn-xs" title="点击分配权限">分配</a>');
+						setTimeout(function(){
+							location.reload();
+						},100);
+					}
+				});
+			});
+
+			// 分配角色
+			$("[id^=n1id_]").click(function () {
+				var nav_id = $(this).attr("id").split("n1id_")[1];
+				var type = 1;
+				fetch.getObject("server.ctl.arcz.User", "changeRoleNav", [rid, nav_id, type, uk, ip], function (data) {
+					if(data.errCode == 1000){
+						$("#btng_" + nav_id).html('<a id="n0id_' + nav_id + '" class="btn btn-danger btn-xs" title="点击取消分配权限">已分配</a>');
+						setTimeout(function(){
+							location.reload();
+						},100);
+					}
+				});
+			});
+		</script>
+	</extend>
+</import>
+

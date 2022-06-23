@@ -1,0 +1,440 @@
+2019-05-12 11:09:35 pid:18956 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 11:09:51 pid:18957 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #30)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(509): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#13 {main}
+2019-05-12 11:09:51 pid:18957 Worker[18957] process terminated
+2019-05-12 11:09:51 pid:18956 worker[WebServer:18957] exit with status 64000
+2019-05-12 11:09:51 pid:18984 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:09:51 pid:18984 Worker[18984] process terminated
+2019-05-12 11:09:51 pid:18956 worker[WebServer:18984] exit with status 64000
+2019-05-12 11:09:51 pid:18985 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #29)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:09:51 pid:18985 Worker[18985] process terminated
+2019-05-12 11:09:51 pid:18956 worker[WebServer:18985] exit with status 64000
+2019-05-12 11:09:56 pid:18986 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #30)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:09:56 pid:18986 Worker[18986] process terminated
+2019-05-12 11:09:56 pid:18956 worker[WebServer:18986] exit with status 64000
+2019-05-12 11:09:57 pid:19008 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #31)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:09:57 pid:19008 Worker[19008] process terminated
+2019-05-12 11:09:57 pid:18956 worker[WebServer:19008] exit with status 64000
+2019-05-12 11:10:27 pid:19012 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #32)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:10:27 pid:19012 Worker[19012] process terminated
+2019-05-12 11:10:27 pid:18956 worker[WebServer:19012] exit with status 64000
+2019-05-12 11:11:27 pid:19088 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #33)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:11:27 pid:19088 Worker[19088] process terminated
+2019-05-12 11:11:27 pid:18956 worker[WebServer:19088] exit with status 64000
+2019-05-12 11:12:09 pid:19174 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #34)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:12:09 pid:19174 Worker[19174] process terminated
+2019-05-12 11:12:09 pid:18956 worker[WebServer:19174] exit with status 64000
+2019-05-12 11:32:58 pid:18956 Workerman[aw_server.php] stopping ...
+2019-05-12 11:32:58 pid:18956 Workerman[aw_server.php] has been stopped
+2019-05-12 11:32:59 pid:20944 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 11:33:03 pid:20946 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #27)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(509): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#13 {main}
+2019-05-12 11:33:03 pid:20946 Worker[20946] process terminated
+2019-05-12 11:33:03 pid:20944 worker[WebServer:20946] exit with status 64000
+2019-05-12 11:33:03 pid:21013 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #28)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:33:03 pid:21013 Worker[21013] process terminated
+2019-05-12 11:33:03 pid:20944 worker[WebServer:21013] exit with status 64000
+2019-05-12 11:33:03 pid:21014 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #29)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:33:03 pid:21014 Worker[21014] process terminated
+2019-05-12 11:33:03 pid:20944 worker[WebServer:21014] exit with status 64000
+2019-05-12 11:33:03 pid:21016 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #30)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:33:03 pid:21016 Worker[21016] process terminated
+2019-05-12 11:33:03 pid:20944 worker[WebServer:21016] exit with status 64000
+2019-05-12 11:33:16 pid:21017 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #31)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:33:16 pid:21017 Worker[21017] process terminated
+2019-05-12 11:33:16 pid:20944 worker[WebServer:21017] exit with status 64000
+2019-05-12 11:33:16 pid:21043 Error: Call to a member function add() on boolean in /var/www/html/task/vendor/assnr/arphp/src/ar/core/Ar.php:56
+Stack trace:
+#0 /var/www/html/task/web/index.php(21): ar\core\Ar::init(true)
+#1 /var/www/html/task/vendor/workerman/workerman/WebServer.php(208): include('/var/www/html/t...')
+#2 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#3 /var/www/html/task/vendor/workerman/workerman/Connection/TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#4 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #32)
+#5 /var/www/html/task/vendor/workerman/workerman/Events/Select.php(294): call_user_func_array(Array, Array)
+#6 /var/www/html/task/vendor/workerman/workerman/Worker.php(2357): Workerman\Events\Select->loop()
+#7 /var/www/html/task/vendor/workerman/workerman/WebServer.php(84): Workerman\Worker->run()
+#8 /var/www/html/task/vendor/workerman/workerman/Worker.php(1488): Workerman\WebServer->run()
+#9 /var/www/html/task/vendor/workerman/workerman/Worker.php(1318): Workerman\Worker::forkOneWorkerForLinux(Object(Workerman\WebServer))
+#10 /var/www/html/task/vendor/workerman/workerman/Worker.php(1292): Workerman\Worker::forkWorkersForLinux()
+#11 /var/www/html/task/vendor/workerman/workerman/Worker.php(1622): Workerman\Worker::forkWorkers()
+#12 /var/www/html/task/vendor/workerman/workerman/Worker.php(1571): Workerman\Worker::monitorWorkersForLinux()
+#13 /var/www/html/task/vendor/workerman/workerman/Worker.php(511): Workerman\Worker::monitorWorkers()
+#14 /var/www/html/task/web/aw_server.php(18): Workerman\Worker::runAll()
+#15 {main}
+2019-05-12 11:33:16 pid:21043 Worker[21043] process terminated
+2019-05-12 11:33:16 pid:20944 worker[WebServer:21043] exit with status 64000
+2019-05-12 11:33:53 pid:20944 Workerman[aw_server.php] stopping ...
+2019-05-12 11:33:53 pid:20944 Workerman[aw_server.php] has been stopped
+2019-05-12 11:33:54 pid:21095 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 20:31:14 pid:21095 Workerman[aw_server.php] stopping ...
+2019-05-12 20:31:14 pid:21095 Workerman[aw_server.php] has been stopped
+2019-05-12 20:31:15 pid:4284 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 20:32:16 pid:4284 Workerman[aw_server.php] stopping ...
+2019-05-12 20:32:16 pid:4284 Workerman[aw_server.php] has been stopped
+2019-05-12 20:32:17 pid:4455 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 20:32:31 pid:4455 Workerman[aw_server.php] stopping ...
+2019-05-12 20:32:31 pid:4455 Workerman[aw_server.php] has been stopped
+2019-05-12 20:32:32 pid:4516 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 20:48:34 pid:4516 Workerman[aw_server.php] stopping ...
+2019-05-12 20:48:34 pid:4516 Workerman[aw_server.php] has been stopped
+2019-05-12 20:48:35 pid:5888 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 20:51:40 pid:5888 Workerman[aw_server.php] stopping ...
+2019-05-12 20:51:40 pid:5888 Workerman[aw_server.php] has been stopped
+2019-05-12 20:51:41 pid:6279 Workerman[aw_server.php] start in DEBUG mode
+2019-05-12 20:51:55 pid:6280 Worker[6280] process terminated
+2019-05-12 20:51:55 pid:6315 Worker[6315] process terminated
+2019-05-12 20:51:55 pid:6316 Worker[6316] process terminated
+2019-05-12 20:51:55 pid:6318 Worker[6318] process terminated
+2019-05-12 20:52:00 pid:6319 Worker[6319] process terminated
+2019-05-12 20:52:00 pid:6336 Worker[6336] process terminated
+2019-05-12 20:52:30 pid:6339 Worker[6339] process terminated
+2019-05-12 20:52:30 pid:6423 Worker[6423] process terminated
+2019-05-12 21:07:27 pid:6279 Workerman[aw_server.php] stopping ...
+2019-05-12 21:07:27 pid:6279 Workerman[aw_server.php] has been stopped
+2019-05-12 21:07:28 pid:7776 Workerman[aw_server.php] start in DEBUG mode
+2019-05-13 09:39:13 pid:1 Worker process terminated
+2019-05-30 07:29:11 pid:1 ParseError: syntax error, unexpected 'getCdFiProduct' (T_STRING), expecting function (T_FUNCTION) in E:\web\task\server\ctl\wallet\service\WalletCD.php:93
+Stack trace:
+#0 E:\web\task\vendor\composer\ClassLoader.php(322): Composer\Autoload\includeFile('E:\\web\\task\\ser...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('server\\ctl\\wall...')
+#2 E:\web\task\vendor\assnr\arphp\src\ar\core\alias.func.php(216): spl_autoload_call('server\\ctl\\wall...')
+#3 E:\web\task\server\ctl\wallet\WalletCDService.php(74): ar\core\service('WalletCD')
+#4 [internal function]: server\ctl\wallet\WalletCDService->getCdAccountWorker()
+#5 E:\web\task\vendor\assnr\arphp\src\ar\core\ApplicationServiceHttp.php(103): call_user_func_array(Array, Array)
+#6 E:\web\task\vendor\assnr\arphp\src\ar\core\ApplicationServiceHttp.php(44): ar\core\ApplicationServiceHttp->runService(Array)
+#7 E:\web\task\vendor\assnr\arphp\src\ar\core\App.php(53): ar\core\ApplicationServiceHttp->start()
+#8 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(132): ar\core\App::run()
+#9 E:\web\task\server\arws.php(15): ar\core\Ar::init(Object(Composer\Autoload\ClassLoader))
+#10 E:\web\task\vendor\workerman\workerman\WebServer.php(247): include('E:\\web\\task\\ser...')
+#11 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#12 E:\web\task\vendor\workerman\workerman\Connection\TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#13 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #315)
+#14 E:\web\task\vendor\workerman\workerman\Events\Select.php(294): call_user_func_array(Array, Array)
+#15 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#16 E:\web\task\vendor\workerman\workerman\WebServer.php(89): Workerman\Worker->run()
+#17 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\WebServer->run()
+#18 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#19 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#20 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(147): Workerman\Worker::runAll()
+#21 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(52): ar\core\Ar::startWorkermanWebServer(Array)
+#22 E:\web\task\server\aw_server.php(16): ar\core\Ar::init(Object(Composer\Autoload\ClassLoader), Array)
+#23 {main}
+2019-05-30 07:29:11 pid:1 Worker process terminated
+2019-05-30 08:48:20 pid:1 ParseError: syntax error, unexpected 'buyProduct' (T_STRING), expecting variable (T_VARIABLE) in E:\web\task\server\ctl\wallet\service\WalletCD.php:109
+Stack trace:
+#0 E:\web\task\vendor\composer\ClassLoader.php(322): Composer\Autoload\includeFile('E:\\web\\task\\ser...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('server\\ctl\\wall...')
+#2 E:\web\task\vendor\assnr\arphp\src\ar\core\alias.func.php(216): spl_autoload_call('server\\ctl\\wall...')
+#3 E:\web\task\server\ctl\wallet\WalletCDService.php(74): ar\core\service('WalletCD')
+#4 [internal function]: server\ctl\wallet\WalletCDService->getCdAccountWorker()
+#5 E:\web\task\vendor\assnr\arphp\src\ar\core\ApplicationServiceHttp.php(103): call_user_func_array(Array, Array)
+#6 E:\web\task\vendor\assnr\arphp\src\ar\core\ApplicationServiceHttp.php(44): ar\core\ApplicationServiceHttp->runService(Array)
+#7 E:\web\task\vendor\assnr\arphp\src\ar\core\App.php(53): ar\core\ApplicationServiceHttp->start()
+#8 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(132): ar\core\App::run()
+#9 E:\web\task\server\arws.php(15): ar\core\Ar::init(Object(Composer\Autoload\ClassLoader))
+#10 E:\web\task\vendor\workerman\workerman\WebServer.php(247): include('E:\\web\\task\\ser...')
+#11 [internal function]: Workerman\WebServer->onMessage(Object(Workerman\Connection\TcpConnection), Array)
+#12 E:\web\task\vendor\workerman\workerman\Connection\TcpConnection.php(658): call_user_func(Array, Object(Workerman\Connection\TcpConnection), Array)
+#13 [internal function]: Workerman\Connection\TcpConnection->baseRead(Resource id #67)
+#14 E:\web\task\vendor\workerman\workerman\Events\Select.php(294): call_user_func_array(Array, Array)
+#15 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#16 E:\web\task\vendor\workerman\workerman\WebServer.php(89): Workerman\Worker->run()
+#17 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\WebServer->run()
+#18 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#19 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#20 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(147): Workerman\Worker::runAll()
+#21 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(52): ar\core\Ar::startWorkermanWebServer(Array)
+#22 E:\web\task\server\aw_server.php(16): ar\core\Ar::init(Object(Composer\Autoload\ClassLoader), Array)
+#23 {main}
+2019-05-30 08:48:20 pid:1 Worker process terminated
+2019-06-05 09:17:24 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Error: Call to undefined function ar\core\service() in E:\web\task\server\aw_timer.php:31
+Stack trace:
+#0 [internal function]: {closure}()
+#1 E:\web\task\vendor\workerman\workerman\Events\Select.php(239): call_user_func_array(Object(Closure), Array)
+#2 E:\web\task\vendor\workerman\workerman\Events\Select.php(282): Workerman\Events\Select->tick()
+#3 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#4 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\Worker->run()
+#5 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#6 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#7 E:\web\task\server\aw_timer.php(37): Workerman\Worker::runAll()
+#8 {main}
+  thrown in E:\web\task\server\aw_timer.php on line 31"
+2019-06-05 09:29:42 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Error: Call to undefined function ar\core\service() in E:\web\task\server\aw_timer.php:31
+Stack trace:
+#0 [internal function]: {closure}()
+#1 E:\web\task\vendor\workerman\workerman\Events\Select.php(239): call_user_func_array(Object(Closure), Array)
+#2 E:\web\task\vendor\workerman\workerman\Events\Select.php(282): Workerman\Events\Select->tick()
+#3 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#4 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\Worker->run()
+#5 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#6 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#7 E:\web\task\server\aw_timer.php(37): Workerman\Worker::runAll()
+#8 {main}
+  thrown in E:\web\task\server\aw_timer.php on line 31"
+2019-06-05 09:29:48 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Error: Call to undefined function ar\core\service() in E:\web\task\server\aw_timer.php:31
+Stack trace:
+#0 [internal function]: {closure}()
+#1 E:\web\task\vendor\workerman\workerman\Events\Select.php(239): call_user_func_array(Object(Closure), Array)
+#2 E:\web\task\vendor\workerman\workerman\Events\Select.php(282): Workerman\Events\Select->tick()
+#3 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#4 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\Worker->run()
+#5 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#6 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#7 E:\web\task\server\aw_timer.php(37): Workerman\Worker::runAll()
+#8 {main}
+  thrown in E:\web\task\server\aw_timer.php on line 31"
+2019-06-05 09:44:57 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Error: Class '.\ctl\\service\Repo' not found in E:\web\task\vendor\assnr\arphp\src\ar\core\alias.func.php:216
+Stack trace:
+#0 E:\web\task\server\aw_timer.php(33): ar\core\service('Repo')
+#1 [internal function]: {closure}()
+#2 E:\web\task\vendor\workerman\workerman\Events\Select.php(239): call_user_func_array(Object(Closure), Array)
+#3 E:\web\task\vendor\workerman\workerman\Events\Select.php(282): Workerman\Events\Select->tick()
+#4 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#5 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\Worker->run()
+#6 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#7 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#8 E:\web\task\server\aw_timer.php(39): Workerman\Worker::runAll()
+#9 {main}
+  thrown in E:\web\task\vendor\assnr\arphp\src\ar\core\alias.func.php on line 216"
+2019-06-05 10:00:55 pid:1 Worker process terminated with ERROR: E_ERROR "Uncaught Error: Class 'server\ctl\\service\Repo' not found in E:\web\task\vendor\assnr\arphp\src\ar\core\alias.func.php:216
+Stack trace:
+#0 E:\web\task\server\aw_timer.php(39): ar\core\service('Repo')
+#1 [internal function]: {closure}()
+#2 E:\web\task\vendor\workerman\workerman\Events\Select.php(239): call_user_func_array(Object(Closure), Array)
+#3 E:\web\task\vendor\workerman\workerman\Events\Select.php(282): Workerman\Events\Select->tick()
+#4 E:\web\task\vendor\workerman\workerman\Worker.php(2357): Workerman\Events\Select->loop()
+#5 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\Worker->run()
+#6 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#7 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#8 E:\web\task\server\aw_timer.php(45): Workerman\Worker::runAll()
+#9 {main}
+  thrown in E:\web\task\vendor\assnr\arphp\src\ar\core\alias.func.php on line 216"
+2019-06-05 10:49:11 pid:1 Error: Class 'Timer' not found in E:\web\task\server\aw_timer.php:14
+Stack trace:
+#0 [internal function]: {closure}(Object(Workerman\Worker))
+#1 E:\web\task\vendor\workerman\workerman\Worker.php(2342): call_user_func(Object(Closure), Object(Workerman\Worker))
+#2 E:\web\task\vendor\workerman\workerman\Worker.php(1351): Workerman\Worker->run()
+#3 E:\web\task\vendor\workerman\workerman\Worker.php(1294): Workerman\Worker::forkWorkersForWindows()
+#4 E:\web\task\vendor\workerman\workerman\Worker.php(509): Workerman\Worker::forkWorkers()
+#5 E:\web\task\vendor\assnr\arphp\src\ar\core\Ar.php(136): Workerman\Worker::runAll()
+#6 E:\web\task\server\aw_timer.php(24): ar\core\Ar::init(Object(Composer\Autoload\ClassLoader), Array)
+#7 {main}
+2019-06-05 10:49:12 pid:1 Worker process terminated
+2019-06-21 13:27:41 pid:31722 Workerman[aw_server.php] start in DEBUG mode
+2019-06-21 13:27:45 pid:31722 Workerman[aw_server.php] stopping ...
+2019-06-21 13:27:45 pid:31722 Workerman[aw_server.php] has been stopped

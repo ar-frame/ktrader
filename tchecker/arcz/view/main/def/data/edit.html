@@ -1,0 +1,351 @@
+<import from="/layout/global" name="html5-layer-open">
+  <extend name="body">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" align="center">{{pageTitle}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <form class="form-horizontal">
+
+          <for exp="$key in $columns" as="column">
+            <if exp="$column['isedit']==1">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">{{column.colshowname}}</label>
+                <div class="col-sm-6">
+
+                  <php>
+                    if($doedit==1){
+                      $cval = $row[$column['colname']];
+                      if($column['type']==3){
+                        $cval = stripslashes($cval);
+                        $cval = stripcslashes($cval);
+                      }
+                    } else if($column['type']==5){
+                      $cval = 0;
+                    } else {
+                      $cval = "";
+                    }
+                  </php>
+
+                  <if exp="$column['type']==0">
+                    <input type="text" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}">
+                  </if>
+
+                  <if exp="$column['type']==1">
+                    <select name="{{column.colname}}" class="form-control {{column.colname}}">
+                      <php>
+                        // 字段类型说明
+                        $typeex = $column['typeexplain'];
+                        // 根据'|'截取字符串并放入数组
+                        $str1 = explode("|",$typeex);
+                        foreach($str1 as $t){
+                          // 截取':'前面的内容
+                          $tn1 = substr($t,0,strpos($t, ':'));
+                          // 截取':'后面的内容
+                          $tn2 = substr($t,strpos($t, ':')+1);
+                          $sel = '';
+                          if($cval==$tn1){
+                            $sel = 'selected';
+                          }
+                        echo '<option value="'.$tn1.'"  '.$sel.'>'.$tn2.'</option>';
+                        }
+                      </php>
+                    </select>
+                  </if>
+
+                  <if exp="$column['type']==2">
+                    <if exp="$doedit==1">
+                      <select name="{{column.colname}}" class="form-control {{column.colname}}">
+                        <php>
+                          $sel0 = '';
+                          // 判断值
+                          if($cval==1){
+                            $sel0 = 'selected';
+                          }
+                          echo '<option value="0"  '.$sel0.'>否</option>';
+                        </php>
+                        <php>
+                          $sel1 = '';
+                          // 判断值
+                          if($cval==1){
+                            $sel1 = 'selected';
+                          }
+                          echo '<option value="1"  '.$sel1.'>是</option>';
+                        </php>
+                      </select>
+                    </if>
+                    <if exp="$doedit==0">
+                      <select name="{{column.colname}}" class="form-control {{column.colname}}">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                      </select>
+                    </if>
+                  </if>
+
+                  <if exp="$column['type']==3">
+                    <textarea id="editor" class="form-control {{column.colname}}" style="display: none;">{{cval}}</textarea>
+                  </if>
+
+                  <if exp="$column['type']==4">
+                    <if exp="$doedit==1">
+                      <img id="imgView_{{column.colname}}" class="" height="180px" width="180px" src="{{\ar\core\cfg('CZ_PUB_SERVER_PATH')}}{{cval}}" />
+                      <input accept="image/gif,image/jpeg,image/png,image/x-icon" type="file" id="imgFile_{{column.colname}}" style="opacity:0;width:50%;height:50%;position:absolute;top:35px;left:35px" class="form-control imgfile">
+                      <input type="hidden" id="imgVal_{{column.colname}}" class="{{column.colname}}" value="{{cval}}">
+                    </if>
+                    <if exp="$doedit==0">
+                      <img id="imgView_{{column.colname}}" class="" height="180px" width="180px" src="" />
+                      <input accept="image/gif,image/jpeg,image/png,image/x-icon" type="file" id="imgFile_{{column.colname}}" style="opacity:0;width:50%;height:50%;position:absolute;top:35px;left:35px" class="form-control imgfile">
+                      <input type="hidden" id="imgVal_{{column.colname}}" class="{{column.colname}}" value="{{cval}}">
+                      请添加图片
+                    </if>
+                  </if>
+
+                  <if exp="$column['type']==5">
+                    <if exp="$doedit==1">
+                      <input type="text" class="form-control {{column.colname}} dateinput" value="{{cval}}" placeholder="yyyy-MM-dd">
+                    </if>
+                    <if exp="$doedit==0">
+                      <input type="text" class="form-control {{column.colname}} dateinput" placeholder="yyyy-MM-dd">
+                    </if>
+                  </if>
+
+                  <if exp="$column['type']==6">
+                    <input type="number" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}">
+                  </if>
+
+                  <if exp="$column['type']==7">
+                    <input type="number" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}">
+                  </if>
+
+                  <if exp="$column['type']==8">
+                    <select name="{{column.colname}}" class="form-control {{column.colname}}">
+                      <php>
+                        // 根据表名及字段名称查找模型外键关联表信息
+                        $mtablename = $column['tablename'];
+                        $mcolname = $column['colname'];
+                        try {
+                          $apiname = 'Ws'.'server.ctl.arcz.Data';
+                          $res = \ar\core\comp('rpc.service')->$apiname("getFkDataList", array($mtablename, $mcolname, $cval));
+                          $option = $res['option'];
+                          echo $option;
+                        } catch (\ar\core\Exception $e) {
+                          // todos 异常处理
+                          echo $e->getMessage();
+                        }
+                      </php>
+                    </select>
+                  </if>
+
+                  <if exp="$column['type']==9">
+                    <input type="file" id="fielinput" class="form-control" value="{{cval}}" placeholder="{{column.explain}}">
+                    <input type="hidden" class="form-control {{column.colname}}" value="{{cval}}" placeholder="{{column.explain}}">
+                    <script>
+
+function readSgFile() {
+        var file = this.files[0];
+
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) { $(".{{column.colname}}").val(this.result) }
+
+    
+    }
+              var fielinput = document.getElementById("fielinput");
+              fielinput.addEventListener('change', readSgFile, false);
+
+                    </script>
+                  </if>
+
+                </div>
+              </div>
+            </if>
+          </for>
+
+
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+              <button type="button" class="btn btn-primary" id="confirm">确认</button>
+            </div>
+          </div>
+
+        </form>
+        <div class="alert alert-danger alert-dismissable hide" id="alert-model-add">
+          <button type="button" class="close"  id="alert-add-close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong id="alert-add-text"></strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </extend>
+
+  <extend name="jsfoot_include">
+
+  </extend>
+
+
+  <extend name="jsfoot">
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+    <script type="text/javascript">
+      var uk = "{{userAuthKeyNow}}";
+      var ip = "{{loginIpNow}}";
+
+      // 输入警告框
+      function alertModel(str,type)
+      {
+        $('#alert-model' + type).removeClass('hide').addClass('in');
+        $("#alert" + type + "-text").text(str);
+
+        $("#alert" + type + "-close").click(function(){
+          $('#alert-model' + type).removeClass('in').addClass('hide');
+        });
+      }
+
+
+    layui.use(['form', 'layer', 'layedit', 'laydate', 'upload'],function(){
+        var form = layui.form,layedit = layui.layedit,laydate = layui.laydate;
+        // 日期时间
+        $('.dateinput').focus(function(){
+          laydate.render({
+            elem: this,
+            type: 'datetime',
+            trigger: 'click',
+            theme: '#393D49'
+          });
+        });
+        // 富文本编辑器
+        layedit.set({
+          uploadImage: {
+            url: JSON_API + "uploadImgByArtice",
+            type: 'post'
+          }
+        });
+        var editindex = layedit.build('editor', {
+
+        });
+
+
+
+
+      // 上传图片
+      $('[id^=imgFile_]').change(function () {
+        var colname = $(this).attr("id").split("imgFile_")[1];
+
+        var file = this.files[0];
+        //文件类型
+        var fileType = this.files[0].type;
+        var type = getFileType(fileType);
+        //文件大小
+        var fileSize = (this.files[0].size/ 1024).toFixed(2);
+        if(type != "jpg" && type != "gif" && type != "jpeg" && type != "png" && type != "x-icon"){
+          // alert(type)
+          alert("您上传的文件不合法");
+          return false;
+        }
+        if(fileSize>10240){ // 定义不能超过10MB
+          alert("文件太大，请重新选择！！");
+          return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) { // 上传成功，执行上传成功之后的事件
+          var str = e.target.result;
+
+          var origin_address = fetch.config.SERVER_ADDRESS;
+          fetch.getObject('server.ctl.arcz.Data', "uploadPic", [str],function (data) {
+            var img = data.picurl;
+            var photo = img;
+            // 将上传成功后的图片显示在特定位置
+            $("#imgView_"+colname).attr('src', "{{\ar\core\cfg('CZ_PUB_SERVER_PATH')}}"+photo);
+            $("#imgVal_"+colname).val(photo);
+          });
+
+          fetch.config.SERVER_ADDRESS = origin_address;
+
+        };
+        reader.onerror = function () {
+          alert("上传失败！！！");
+        }
+      });
+
+      // 获取上传文件的类型
+      function getFileType(filePath) {
+        var startIndex = filePath.lastIndexOf("/");
+        if(startIndex != -1){
+          return filePath.substring(startIndex+1,filePath.length).toLowerCase();
+        }else {
+          return "";
+        }
+      }
+
+
+
+      // 确认提交
+      $("#confirm").click(function(){
+        // 富文本编辑器内容
+        layedit.sync(editindex);
+        var editContent = layedit.getContent(editindex);
+        var editArr = {};
+        <php>
+          foreach ($columns as $column) {
+            if($column['isedit']==1){
+              //if($column['type']==3){
+                //echo 'var ' . $column['colname'] . ' = editContent;';
+              //} else {
+                echo 'var ' . $column['colname'] . ' = $(".'.$column['colname'].'").val();';
+              //}
+              echo 'editArr["' . $column['colname'] . '"] = $(".'.$column['colname'].'").val();';
+            }
+          }
+        </php>
+
+        var {{uniKey}} = {{rowId}};
+        var mid = {{rowMid}};
+
+        editArr["uniKeyName"] = '{{uniKey}}';
+        editArr["uniKeyVal"] = '{{rowId}}';
+        // editArr["mid"] = mid; 表名称冲突
+        editArr["uni_primary_mid"] = mid;
+        editArr["uk"] = "{{userAuthKeyNow}}";
+        editArr["ip"] = "{{loginIpNow}}";
+
+        var editStr = JSON.stringify(editArr);
+        var editData = JSON.parse(editStr);
+
+        fetch.getObject("server.ctl.arcz.Data", "modelDataEdit", [editData], function (data) {
+          if(data.errCode == 1000){
+            $(".cz_alert_success_center").text(data.errMsg + ' 请关闭编辑弹框');
+            $(".cz_alert_success_box").modal();
+            setTimeout(function(){
+              var index1 = parent.layer.getFrameIndex(window.name);
+              parent.layer.close(index1);
+              parent.location.reload();
+            },2000);
+          } else if(data.errCode == 3005){
+            alertModel(data.errMsg,'-add');
+            var t = document.body.clientHeight;
+            window.scroll({ top: t, left: 0, behavior: 'smooth' });
+          } else {
+            $(".cz_alert_danger_center").text(data.errMsg + ' 请关闭编辑弹框');
+            $(".cz_alert_danger_box").modal();
+            setTimeout(function(){
+              var index1 = parent.layer.getFrameIndex(window.name);
+              parent.layer.close(index1);
+              parent.location.reload();
+            },2000);
+          }
+        });
+
+      });
+
+    });
+
+
+    </script>
+  </extend>
+</import>
+

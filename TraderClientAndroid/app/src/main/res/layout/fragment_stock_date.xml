@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_blur"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F7FA">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/scroll_stock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+
+        >
+
+    </android.support.v7.widget.RecyclerView>
+   <!-- <com.github.mmin18.widget.RealtimeBlurView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:realtimeBlurRadius="5dp"
+        />-->
+
+    <FrameLayout
+        android:id="@+id/fl_hide_stock"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="visible"
+        android:layout_gravity="bottom"
+        android:background="#F6F7FA"
+
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="普通用户仅能获取3支推荐股票"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textSize="13sp"
+            android:textColor="#9C9CAC"
+
+            />
+
+
+    </FrameLayout>
+
+
+</FrameLayout>

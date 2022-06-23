@@ -1,0 +1,829 @@
+<import from="/layout/global" name="html5">
+  <extend name="title">
+    <if exp="$menuTitle['cate'] == 1">
+      {{menuTitle.title1}}
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      {{menuTitle.title2}}
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      {{menuTitle.title3}}
+    </if>
+  </extend>
+  <extend name="css">
+
+  </extend>
+
+  <extend name="breadcrumb">
+    <if exp="$menuTitle['cate'] == 1">
+      <li class="active">{{menuTitle.title1}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li class="active">{{menuTitle.title2}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li>
+        <a href="#">{{menuTitle.title2}}</a>
+      </li>
+      <li class="active">{{menuTitle.title3}}</li>
+    </if>
+  </extend>
+
+  <extend name="page-header-title">模型字段列表</extend>
+  <extend name="body">
+
+    <if exp="count($data)>0">
+      <ul class="pager">
+        <li class="previous">
+          <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+        </li>
+      </ul>
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="sr-only">添加模型字段</label>
+          <input type="text" class="form-control" id="add_col_name" placeholder="请输入新增数据表字段">
+        </div>
+        <button type="button" id="add_col" class="btn btn-sm btn-primary">添加字段</button>
+        <div class="alert alert-danger alert-dismissable hide" id="alert-model-addcol">
+          <button type="button" class="close"  id="alert-addcol-close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong id="alert-addcol-text"></strong>
+        </div>
+      </form>
+      <table class="table table-hover table-condensed table-striped table-bordered">
+        <thead>
+          <tr class="active">
+            <th>字段名称</th>
+            <th>字段说明</th>
+            <th>是否显示</th>
+            <th>是否唯一键</th>
+            <th>是否可编辑</th>
+            <th>是否详情页显示</th>
+            <th>字段类型</th>
+            <th>字段类型设置</th>
+            <th>排序</th>
+            <th>字段是否支持排序</th>
+            <th>字段是否为必填项</th>
+          </tr>
+        </thead>
+        <tbody>
+        <for exp="$key in $data" as="d">
+          <tr>
+            <td align="center">{{d.colname}}</td>
+            <td align="center">{{d.explainbtn}}</td>
+            <td align="center">{{d.isshowswitch}}</td>
+            <td align="center">{{d.isuniqueswitch}}</td>
+            <td align="center">{{d.iseditswitch}}</td>
+            <td align="center">{{d.isviewswitch}}</td>
+            <td align="center">{{d.typebtn}}</td>
+            <td align="center">{{d.typeexplainbtn}}</td>
+            <td align="center">{{d.ordernumbtn}}</td>
+            <td align="center">{{d.issortswitch}}</td>
+            <td align="center">{{d.isrequireswitch}}</td>
+          </tr>
+        </for>
+        </tbody>
+      </table>
+
+    <else/>
+      <ul class="pager">
+        <li class="previous">
+          <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+        </li>
+      </ul>
+      <div class="jumbotron">
+        <h1 align="center">暂无数据！</h1>
+      </div>
+    </if>
+
+    <!-- 编辑字段说明 -->
+    <div class="modal fade cz_box" id="explainbtn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑字段说明</h4>
+          </div>
+          <div class="modal-body" id="explainbtn_context">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_col" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段说明</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_explain" value="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <button type="button" class="btn btn-primary" id="edit_explain_confirm">确认</button>
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-danger alert-dismissable hide" id="alert-model-explain">
+              <button type="button" class="close"  id="alert-explain-close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong id="alert-explain-text"></strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 编辑字段类型说明 -->
+    <div class="modal fade cz_box" id="typeexplainbtn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑字段类型说明</h4>
+          </div>
+          <div class="modal-body" id="typeexplainbtn_context">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_typeexplain_col" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <div>多个状态值格式 “字段值1:显示值1|字段值2:显示值2|字段值3:显示值3”</div>
+                <div>开关状态值说明 “0:No|1:Yes” 数据值为0只能代表No 数据值为1只能代表Yes</div>
+                <div>时间戳格式说明 “Y-m-d H:i:s” 年-月-日 时:分:秒</div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">说明</label>
+                <div class="col-sm-6">
+                  <textarea class="form-control" id="edit_typeexplain" rows="3" cols="20"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <button type="button" class="btn btn-primary" id="edit_typeexplain_confirm">确认</button>
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-danger alert-dismissable hide" id="alert-model-typeexplain">
+              <button type="button" class="close"  id="alert-typeexplain-close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong id="alert-typeexplain-text"></strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 编辑排序 -->
+    <div class="modal fade cz_box" id="ordernumbtn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑排序</h4>
+          </div>
+          <div class="modal-body" id="ordernumbtn_context">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_ordernum_col" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">排序</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_ordernum" value="">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <button type="button" class="btn btn-primary" id="edit_ordernum_confirm">确认</button>
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-danger alert-dismissable hide" id="alert-model-ordernum">
+              <button type="button" class="close"  id="alert-ordernum-close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong id="alert-ordernum-text"></strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 编辑字段类型 -->
+    <div class="modal fade cz_box" id="typebtn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑字段类型</h4>
+          </div>
+          <div class="modal-body" id="typebtn_context">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_type_col" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">字段类型</label>
+                <div class="col-sm-6">
+                  <select id="edit_type" class="form-control">
+                    <option value="0">字符串</option>
+                    <option value="1">多个状态值</option>
+                    <option value="2">开关状态值（×/√）</option>
+                    <option value="3">文章（富文本编辑器内容）</option>
+                    <option value="4">图片</option>
+                    <option value="5">时间戳</option>
+                    <option value="6">整数</option>
+                    <option value="7">浮点数</option>
+                    <option value="8">外键</option>
+                    <option value="9">视频</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <button type="button" class="btn btn-primary" id="edit_type_confirm">确认</button>
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-danger alert-dismissable hide" id="alert-model-type">
+              <button type="button" class="close"  id="alert-type-close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong id="alert-type-text"></strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 生成外键模型 -->
+    <div class="modal fade cz_box" id="addFk" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">生成外键模型</h4>
+          </div>
+          <div class="modal-body" id="addFk_context">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="addFk_confirm">确认</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 查看外键模型 -->
+    <div class="modal fade cz_box" id="queryFkbtn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">查看外键模型</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">主数据表名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_mtablename" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">主表模型名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_mmodelname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">主表模型id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_mid" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">主表字段名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_mcolname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">主表字段说明</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_mexplain" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">关联数据表名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_ftablename" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">关联模型名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_fmodelname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">关联模型id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_fid" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">映射字段名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_funival" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">关联字段名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_fcolname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">关联字段说明</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="qFk_fexplain" value="" disabled>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 编辑外键模型 -->
+    <div class="modal fade cz_box" id="editFkbtn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑外键模型</h4>
+          </div>
+          <div class="modal-body" id="efCon">
+            <form class="form-horizontal">
+              <div class="form-group editFk_step1">
+                <label class="col-sm-4 control-label">主数据表名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_mtablename" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step1">
+                <label class="col-sm-4 control-label">主表模型名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_mmodelname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step1">
+                <label class="col-sm-4 control-label">主表模型id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_mid" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step1">
+                <label class="col-sm-4 control-label">主表字段名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_mcolname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step1">
+                <label class="col-sm-4 control-label">主表字段说明</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_mexplain" value="">
+                </div>
+              </div>
+              <div class="form-group editFk_step1">
+                <label class="col-sm-4 control-label">关联模型</label>
+                <div class="col-sm-6">
+                  <select id="eFk_fmodel" class="form-control">
+                    <option value="">请选择关联模型</option>
+                    <for exp="$key in $modelList" as="model">
+                      <option value="{{model.id}}">{{model.modelname}}</option>
+                    </for>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group editFk_step2">
+                <label class="col-sm-4 control-label">关联数据表名</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_ftablename" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step2">
+                <label class="col-sm-4 control-label">关联模型名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="eFk_fmodelname" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step2">
+                <label class="col-sm-4 control-label">关联模型id</label>
+                <div class="col-sm-6 editFk_step2">
+                  <input type="text" class="form-control" id="eFk_fid" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group editFk_step2">
+                <label class="col-sm-4 control-label">映射字段</label>
+                <div class="col-sm-6">
+                  <select id="eFk_funival" class="form-control">
+                    <option value="">请选择关联映射字段</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group editFk_step2">
+                <label class="col-sm-4 control-label">关联字段</label>
+                <div class="col-sm-6">
+                  <select id="eFk_fcolname" class="form-control">
+                    <option value="">请选择关联字段</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group" id="alert-next" style="color: red">
+                请选择关联模型！
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="form-group editFk_step1">
+              <button type="button" class="btn btn-primary" id="eFk_step1_confirm">下一步</button>
+            </div>
+            <div class="form-group editFk_step2">
+              <button type="button" class="btn btn-primary" id="eFk_stepup_confirm">上一步</button>
+              <button type="button" class="btn btn-primary" id="eFk_submit_confirm">确认</button>
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </extend>
+
+  <extend name="jsfoot">
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+    <script type="text/javascript">
+      jQuery(function($){
+
+        // 关闭弹出框刷新页面
+        $('.cz_alert').on('hide.bs.modal', function () {
+          window.location.reload();
+        });
+
+        // 关闭模态框刷新页面
+        $('.cz_box').on('hide.bs.modal', function () {
+          window.location.reload();
+        });
+
+        // 输入警告框
+        function alertModel(str,type) {
+          $('#alert-model' + type).removeClass('hide').addClass('in');
+          $("#alert" + type + "-text").text(str);
+
+          $("#alert" + type + "-close").click(function(){
+            $('#alert-model' + type).removeClass('in').addClass('hide');
+          });
+        }
+
+        // 添加模型字段提交数据
+        $("#add_col").click(function(){
+          var colname = $("#add_col_name").val();
+          if(colname.length<1){
+            alertModel('字段名称不能为空！','-addcol');
+          } else {
+            var tablename = '{{tname}}';
+            var uk = "{{userAuthKeyNow}}";
+            var ip = "{{loginIpNow}}";
+            fetch.getObject("server.ctl.arcz.DBModel", "changeModelCol", [colname, tablename, uk, ip], function (data) {
+              if(data.errCode == 1000){
+                $(".cz_alert_success_center").text(data.errMsg);
+                $(".cz_alert_success_box").modal();
+                setTimeout(function(){
+                  window.location.reload();
+                },1000);
+              } else {
+                alertModel(data.errMsg,'-addcol');
+                setTimeout(function(){
+                  window.location.reload();
+                },3000);
+              }
+            });
+          }
+        });
+
+        // 编辑字段说明
+        $("[id^=explain_]").click(function () {
+          var id = $(this).attr("id").split("explain_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getColRow", [id], function (data) {
+            $("#edit_col").val(data.colname);
+            $("#edit_explain").val(data.explain);
+            $("#edit_explain_confirm").click(function(){
+              var id = data.id;
+              var col = 'explain';
+              var value = $("#edit_explain").val();
+              var uk = "{{userAuthKeyNow}}";
+              var ip = "{{loginIpNow}}";
+              fetch.getObject("server.ctl.arcz.DBModel", "modelSetCol", [id, value, col, uk, ip], function (data) {
+                if(data.errCode == 1000){
+                  $(".cz_alert_success_center").text(data.errMsg);
+                  $(".cz_alert_success_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                } else {
+                  $(".cz_alert_danger_center").text(data.errMsg);
+                  $(".cz_alert_danger_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                }
+              });
+            });
+          });
+        });
+
+        // 编辑字段类型
+        $("[id^=type_]").click(function () {
+          var id = $(this).attr("id").split("type_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getColRow", [id], function (data) {
+            $("#edit_type_col").val(data.colname);
+            $("#edit_type").val(data.type);
+            $("#edit_type_confirm").click(function(){
+              var id = data.id;
+              var col = 'type';
+              var value = $("#edit_type").val();
+              var uk = "{{userAuthKeyNow}}";
+              var ip = "{{loginIpNow}}";
+              fetch.getObject("server.ctl.arcz.DBModel", "modelSetCol", [id, value, col, uk, ip], function (data) {
+                if(data.errCode == 1000){
+                  $(".cz_alert_success_center").text(data.errMsg);
+                  $(".cz_alert_success_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                } else {
+                  $(".cz_alert_danger_center").text(data.errMsg);
+                  $(".cz_alert_danger_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                }
+              });
+            });
+          });
+        });
+
+        // 编辑字段类型说明
+        $("[id^=typeexplain_]").click(function () {
+          var id = $(this).attr("id").split("typeexplain_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getColRow", [id], function (data) {
+            $("#edit_typeexplain_col").val(data.colname);
+            $("#edit_typeexplain").val(data.typeexplain);
+
+            $("#edit_typeexplain_confirm").click(function(){
+              var id = data.id;
+              var col = 'typeexplain';
+              var value = $("#edit_typeexplain").val();
+              var uk = "{{userAuthKeyNow}}";
+              var ip = "{{loginIpNow}}";
+              fetch.getObject("server.ctl.arcz.DBModel", "modelSetCol", [id, value, col, uk, ip], function (data) {
+                if(data.errCode == 1000){
+                  $(".cz_alert_success_center").text(data.errMsg);
+                  $(".cz_alert_success_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                } else {
+                  $(".cz_alert_danger_center").text(data.errMsg);
+                  $(".cz_alert_danger_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                }
+              });
+            });
+          });
+        });
+
+        // 编辑排序
+        $("[id^=ordernum_]").click(function () {
+          var id = $(this).attr("id").split("ordernum_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getColRow", [id], function (data) {
+            $("#edit_ordernum_col").val(data.colname);
+            $("#edit_ordernum").val(data.ordernum);
+            $("#edit_ordernum_confirm").click(function(){
+              var id = data.id;
+              var col = 'ordernum';
+              var value = $("#edit_ordernum").val();
+              var uk = "{{userAuthKeyNow}}";
+              var ip = "{{loginIpNow}}";
+              fetch.getObject("server.ctl.arcz.DBModel", "modelSetCol", [id, value, col, uk, ip], function (data) {
+                if(data.errCode == 1000){
+                  $(".cz_alert_success_center").text(data.errMsg);
+                  $(".cz_alert_success_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                } else {
+                  $(".cz_alert_danger_center").text(data.errMsg);
+                  $(".cz_alert_danger_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                }
+              });
+            });
+          });
+        });
+
+        // 开关状态值设置
+        $(".switch_check").click(function(){
+          // 传入设置值
+          var checked = $(this).is(':checked');
+          var name = $(this).attr("name");
+          var setval;
+          if (checked) {
+            setval = 1;
+          } else {
+            setval = 0;
+          }
+          // 传入id
+          var id = $(this).val();
+          var uk = "{{userAuthKeyNow}}";
+          var ip = "{{loginIpNow}}";
+
+          fetch.getObject("server.ctl.arcz.DBModel", "modelSetSwitch", [id, setval, name, uk, ip], function (data) {
+            if(data.errCode == 1000){
+              $(".cz_alert_success_center").text(data.errMsg);
+              $(".cz_alert_success_box").modal();
+            } else {
+              $(".cz_alert_danger_center").text(data.errMsg);
+              $(".cz_alert_danger_box").modal();
+              setTimeout(function(){
+                window.location.reload();
+              },1000);
+            }
+          });
+        });
+
+        // 生成外键模型
+        $("[id^=addFk_]").click(function () {
+          var id = $(this).attr("id").split("addFk_")[1];
+          $("#addFk_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定生成外键模型?</h3></div>');
+          // 确认按钮点击
+          $("#addFk_confirm").click(function(){
+            var uk = "{{userAuthKeyNow}}";
+            var ip = "{{loginIpNow}}";
+            fetch.getObject("server.ctl.arcz.DBModel", "addFkModel", [id, uk, ip], function (data) {
+              if(data.errCode == 1000){
+                $("#addFk_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                setTimeout(function(){
+                  window.location.reload();
+                },1000);
+              } else {
+                $("#addFk_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                setTimeout(function(){
+                  window.location.reload();
+                },1000);
+              }
+            });
+          });
+        });
+
+        // 查看外键模型
+        $("[id^=queryFk_]").click(function () {
+          var id = $(this).attr("id").split("queryFk_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getFkModel", [id], function (data) {
+            $("#qFk_mtablename").val(data.mtablename);
+            $("#qFk_mmodelname").val(data.mmodelname);
+            $("#qFk_mid").val(data.mid);
+            $("#qFk_mcolname").val(data.mcolname);
+            $("#qFk_mexplain").val(data.mexplain);
+            $("#qFk_ftablename").val(data.ftablename);
+            $("#qFk_fmodelname").val(data.fmodelname);
+            $("#qFk_fid").val(data.fid);
+            $("#qFk_funival").val(data.funival);
+            $("#qFk_fcolname").val(data.fcolname);
+            $("#qFk_fexplain").val(data.fexplain);
+          });
+        });
+
+        // 编辑外键模型
+        $("[id^=editFk_]").click(function () {
+          var id = $(this).attr("id").split("editFk_")[1];
+          $(".editFk_step2").css("display", "none");
+          $("#alert-next").css("display", "none");
+          fetch.getObject("server.ctl.arcz.DBModel", "getFkModel", [id], function (data) {
+            $("#eFk_mtablename").val(data.mtablename);
+            $("#eFk_mmodelname").val(data.mmodelname);
+            $("#eFk_mid").val(data.mid);
+            $("#eFk_mcolname").val(data.mcolname);
+            $("#eFk_mexplain").val(data.mexplain);
+            $("#eFk_ftablename").val(data.ftablename);
+            $("#eFk_fmodelname").val(data.fmodelname);
+            $("#eFk_fid").val(data.fid);
+            $("#eFk_fmodel").val(data.fid);
+            $("#eFk_funival").val(data.funival);
+            $("#eFk_fcolname").val(data.fcolname);
+            // 下一步
+            $("#eFk_step1_confirm").click(function(){
+              if($("#eFk_fmodel").val()==""){
+                $("#alert-next").css("display", "block");
+              } else {
+                $("#alert-next").css("display", "none");
+                var nfid = $("#eFk_fmodel").val();
+                $("#eFk_fid").val(nfid);
+                $(".editFk_step1").css("display", "none");
+                $(".editFk_step2").css("display", "block");
+                fetch.getObject("server.ctl.arcz.DBModel", "getCol", [nfid], function (dataf) {
+                  $("#eFk_ftablename").val(dataf.modelDetail.tablename);
+                  $("#eFk_fmodelname").val(dataf.modelDetail.modelname);
+                  if(dataf.colLists.length>0){
+                    $("#eFk_funival").append("<option>数据读取中···</option>");
+                    var funival_html = "";
+                    for(var i = 0; i < dataf.colLists.length; i ++){
+                      funival_html += "<option value='"+dataf.colLists[i].id+"'>"+dataf.colLists[i].colname+"</option>";
+                    }
+                    $("#eFk_funival").empty();
+                    $("#eFk_funival").append("<option value=''>请选择关联映射字段</option>" + funival_html);
+                  }
+                  if(dataf.colLists.length>0){
+                    $("#eFk_fcolname").append("<option>数据读取中···</option>");
+                    var fcolname_html = "";
+                    for(var i = 0; i < dataf.colLists.length; i ++){
+                      fcolname_html += "<option value='"+dataf.colLists[i].id+"'>"+dataf.colLists[i].colname+"</option>";
+                    }
+                    $("#eFk_fcolname").empty();
+                    $("#eFk_fcolname").append("<option value=''>请选择关联字段</option>" + fcolname_html);
+                  }
+                });
+              }
+              // 确认修改
+              $("#eFk_submit_confirm").click(function(){
+                var fkid = data.id;  // 外键模型id
+                var fmodelid = $("#eFk_fmodel").val();  // 关联模型id
+                var funivalid = $("#eFk_funival").val();  // 映射字段对应字段id
+                var fcolnameid = $("#eFk_fcolname").val();  // 关联字段对应字段id
+                var uk = "{{userAuthKeyNow}}";
+                var ip = "{{loginIpNow}}";
+                fetch.getObject("server.ctl.arcz.DBModel", "manageFkCol", [fkid, fmodelid, funivalid, fcolnameid, uk, ip], function (datar) {
+                  if(datar.errCode == 1000){
+                    $("#efCon").html('<div class="alert alert-success" role="alert" align="center"><h3>' + datar.errMsg + '</h3></div>');
+                    setTimeout(function(){
+                      window.location.reload();
+                    },1000);
+                  } else {
+                    $("#efCon").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + datar.errMsg + '</h3></div>');
+                    setTimeout(function(){
+                      window.location.reload();
+                    },1000);
+                  }
+                });
+              });
+
+            });
+            // 上一步
+            $("#eFk_stepup_confirm").click(function(){
+              $(".editFk_step2").css("display", "none");
+              $(".editFk_step1").css("display", "block");
+            });
+          });
+        });
+
+
+      });
+    </script>
+  </extend>
+</import>

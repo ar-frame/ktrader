@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/item_shares"
+    android:layout_width="match_parent"
+    android:layout_height="147.5dp"
+    android:background="@drawable/shape_rv_shares_bg"
+    android:layout_marginTop="10dp"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        >
+        <TextView
+            android:id="@+id/shares_name"
+            android:text="深圳机场"
+            android:textColor="#2B2B3A"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            />
+        <TextView
+            android:layout_toRightOf="@id/shares_name"
+            android:text="#600292"
+            android:textColor="#D1D4E2"
+            android:id="@+id/shares_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            />
+        <TextView
+            android:layout_toRightOf="@id/shares_code"
+            android:id="@+id/mode"
+            android:text="买入"
+            android:textSize="11sp"
+            android:textColor="@color/share_text_red"
+            android:layout_width="27dp"
+            android:layout_height="17dp"
+            android:background="@drawable/shape_rv_item_buyinto_bg"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+
+            />
+        <ImageView
+            android:layout_toLeftOf="@id/shares_time"
+            android:src="@mipmap/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4.5dp"
+
+            />
+        <TextView
+            android:id="@+id/shares_time"
+            android:text="今天 08:32"
+            android:textColor="#ACAEC0"
+            android:textSize="12sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:background="#FBFCFF"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="61.5dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/new_price"
+                    android:text="9.75"
+                    android:textColor="#717591"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="元"
+                    android:textColor="#717591"
+                    android:textSize="11sp"
+                    android:layout_marginLeft="4.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="15dp"
+                >
+                <TextView
+                    android:text="推荐时价格"
+                    android:textSize="11sp"
+                    android:textColor="#ACAEC0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_marginRight="17dp"
+                        android:src="@mipmap/icon_jiantou_hui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/goal_price"
+                    android:text="32.50"
+                    android:textColor="#FF566A"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="元"
+                    android:textColor="#FF566A"
+                    android:textSize="11sp"
+                    android:layout_marginLeft="4.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="15dp"
+                android:text="预测目标价"
+                android:textColor="#ACAEC0"
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/accuracy"
+            android:text="准确率：87.2%"
+            android:textColor="#005AFF"
+            android:textSize="12sp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

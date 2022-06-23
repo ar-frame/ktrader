@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+        <ImageView
+            android:id="@+id/detail_fanhui"
+            android:src="@mipmap/jiatou_fanhui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/share"
+            android:layout_width="49dp"
+            android:layout_height="46dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+
+
+            />
+    </RelativeLayout>
+    <TextView
+        android:text="参与设立股权投资基金，进入新能源汽车领域"
+        android:textSize="26sp"
+        android:textColor="#21212B"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="28dp"
+        
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        >
+        <ImageView
+            android:id="@+id/upup_img"
+            android:src="@mipmap/upup"
+            android:layout_width="39dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+
+            />
+        <ImageView
+            android:id="@+id/time_img"
+            android:src="@mipmap/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/upup_img"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:text="07-28 08:32"
+            android:textSize="12sp"
+            android:textColor="#9C9CAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/time_img"
+            android:layout_marginLeft="5dp"
+            />
+        <TextView
+            android:text="2580人阅读"
+            android:textSize="12sp"
+            android:textColor="#9C9CAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            />
+        
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        >
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

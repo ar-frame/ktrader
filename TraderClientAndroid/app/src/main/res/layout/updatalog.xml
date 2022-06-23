@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFFFF">
+        <LinearLayout
+            android:id="@+id/updatalog_out"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="19dp"
+                android:src="@mipmap/re_out"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更新日志"
+            android:textColor="#FF000000"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/updatalog_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </android.support.v7.widget.RecyclerView>
+
+    <include
+        android:id="@+id/updatalog_nodata"
+        layout="@layout/nodata"
+        android:visibility="gone">
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF6F7FA"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/updatalog_item"
+            android:layout_width="match_parent"
+            android:layout_height="155dp">
+            <TextView
+                android:id="@+id/updatalog_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-06-04"
+                android:textColor="#ff9b9b9b"
+                android:textSize="11sp"
+                android:textStyle="italic"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="70dp"
+                />
+
+            <ImageView
+                android:id="@+id/updatalog_item_img"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@mipmap/lanyuan"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="17dp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="70dp"
+                android:background="#FFE5EBF6"
+                android:layout_below="@+id/updatalog_item_img"
+                android:layout_marginStart="25dp"
+                >
+            </View>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:background="@drawable/white8_bg"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/updatalog_item_time"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/updatalog_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="V1.2.2正式版发布"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1、增加“更新日志”功能，方便用户查询更新信息\n2、优化首页的数据显示，新增参数“通知等级”"
+                    android:textColor="#ff000000"
+                    android:textSize="13sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="155dp">
+            <TextView
+                android:id="@+id/updatalog_item_time1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-03-20"
+                android:textColor="#ff9b9b9b"
+                android:textSize="11sp"
+                android:textStyle="italic"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="70dp"
+                />
+
+            <ImageView
+                android:id="@+id/updatalog_item_img1"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@mipmap/huiyuan"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="17dp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="70dp"
+                android:background="#FFE5EBF6"
+                android:layout_above="@+id/updatalog_item_img1"
+                android:layout_marginStart="25dp"
+                >
+            </View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:background="@drawable/white8_bg"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/updatalog_item_time1"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/updatalog_item_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="V1.2.1正式版发布"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1、正式版发布"
+                    android:textColor="#ff000000"
+                    android:textSize="13sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

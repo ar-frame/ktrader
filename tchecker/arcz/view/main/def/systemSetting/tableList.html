@@ -1,0 +1,179 @@
+<import from="/layout/global" name="html5">
+    <extend name="title">
+        <if exp="$menuTitle['cate'] == 1">
+            {{menuTitle.title1}}
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            {{menuTitle.title2}}
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            {{menuTitle.title3}}
+        </if>
+    </extend>
+    <extend name="css">
+
+    </extend>
+
+    <extend name="breadcrumb">
+        <if exp="$menuTitle['cate'] == 1">
+            <li class="active">{{menuTitle.title1}}</li>
+        </if>
+        <if exp="$menuTitle['cate'] == 2">
+            <li>
+                <a href="#">{{menuTitle.title1}}</a>
+            </li>
+            <li class="active">{{menuTitle.title2}}</li>
+        </if>
+        <if exp="$menuTitle['cate'] == 3">
+            <li>
+                <a href="#">{{menuTitle.title1}}</a>
+            </li>
+            <li>
+                <a href="#">{{menuTitle.title2}}</a>
+            </li>
+            <li class="active">{{menuTitle.title3}}</li>
+        </if>
+    </extend>
+
+    <extend name="page-header-title">数据库表</extend>
+    <extend name="body">
+
+        <form class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">数据库选择</div>
+                    <label class="sr-only">选择数据库</label>
+                    <select id="database" name="database" class="form-control database">
+                        <for exp="$key in $allDataBaseLists" as="name">
+                            <if exp="$db == $name">
+                                <option value="{{name}}" selected>{{name}}</option>
+                            <else/>
+                                <option value="{{name}}">{{name}}</option>
+                            </if>
+
+                        </for>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+            <if exp="count($tables)>0">
+                <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                    <tr class="active">
+                        <th>数据表名</th>
+                        <th>是否存在模型</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                <for exp="$table_key in $tables" as="table">
+                    <tbody>
+                        <tr>
+                            <td>{{table.name}}</td>
+                            <td>
+                                <if exp="$table['ismodel'] == 1">
+                                    存在
+                                </if>
+                                <if exp="$table['ismodel'] == 0">
+                                    不存在
+                                </if>
+                            </td>
+                            <td>
+                                <if exp="$table['ismodel'] == 1">
+                                    <button type="button" id="btmodel_{{table.name}}" class="btn btn-white btn-primary btn-xs">管理模型</button>
+                                </if>
+                                <if exp="$table['ismodel'] == 0">
+                                    <button type="button" id="btnv_{{table.name}}" class="btn btn-white btn-pink btn-xs" data-toggle="modal" data-target="#create">生成模型</button>
+                                </if>
+                            </td>
+                        </tr>
+                    </tbody>
+                </for>
+                </table>
+            <else/>
+                <div class="jumbotron">
+                    <h1 align="center">暂无数据！</h1>
+                </div>
+            </if>
+
+        <!-- 创建模型 -->
+        <div class="modal fade cz_box" id="create" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">创建模型</h4>
+                    </div>
+                    <div class="modal-body" id="create_model_context">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="create_confirm">确认</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </extend>
+
+    <extend name="jsfoot">
+        <script type="text/javascript">
+            jQuery(function($){
+                // 切换数据库
+                $('#database').change(function(){
+                    var dbname = $("#database").val();
+                    window.location.href = "{{\ar\core\url('systems/tableList')}}" + "/db/" + dbname;
+                });
+
+                // 关闭弹出框刷新页面
+                $('.cz_alert').on('hide.bs.modal', function () {
+                    window.location.reload();
+                });
+
+                // 关闭模态框刷新页面
+                $('.cz_box').on('hide.bs.modal', function () {
+                    window.location.reload();
+                });
+
+                // 创建模型
+                $("[id^=btnv_]").click(function () {
+                    var tablename = $(this).attr("id").split("btnv_")[1];
+                    $("#create_model_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定生成 ' + tablename + ' 的模型?</h3></div>');
+                    // 确认按钮点击
+                    $("#create_confirm").click(function(){
+                        $("#create_model_context").html('<div class="alert alert-info" role="alert" align="center"><h3>正在生成模型</h3></div>');
+                        var db = tablename;
+                        var uk = "{{userAuthKeyNow}}";
+                        var ip = "{{loginIpNow}}";
+                        fetch.getObject("server.ctl.arcz.DBModel", "changeModel", [db, uk, ip], function (data) {
+                            if(data.errCode == 1000){
+                                $("#create_model_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },1000);
+                            } else {
+                                $("#create_model_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },1000);
+                            }
+                        });
+                    });
+                });
+
+                // 管理模型
+                $("[id^=btmodel_]").click(function () {
+                    var tablename = $(this).attr("id").split("btmodel_")[1];
+                    fetch.getObject("server.ctl.arcz.DBModel", "getModelRowByTname", [tablename], function (data) {
+                        var id = data.id;
+                        window.location.href = "{{\ar\core\url('systemSetting/showFields')}}" + "/id/" + id;
+                    });
+                });
+
+
+            });
+        </script>
+    </extend>
+</import>

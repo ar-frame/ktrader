@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f6f7fa"
+    android:fitsSystemWindows="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff">
+        <LinearLayout
+            android:id="@+id/variety_out"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="19dp"
+                android:src="@mipmap/re_out"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="切换品种"
+            android:textColor="#ff000000"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="45dp">
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avliv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:indicatorName="LineSpinFadeLoaderIndicator"
+            app:indicatorColor="#005AFF"
+            style="@style/AVLoadingIndicatorView.Small"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            />
+        <com.example.tradestrategy.bean.XRadioGroup
+            android:id="@+id/variety_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffffff"
+                android:layout_marginBottom="1dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ETH-USDT"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/btn_eth"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:layout_marginEnd="15dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffffff"
+                android:layout_marginBottom="1dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EOS-USDT"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/btn_eos"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:layout_marginEnd="15dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffffff"
+                android:layout_marginBottom="1dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BTC-USDT"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/btn_btc"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:layout_marginEnd="15dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffffff"
+                android:layout_marginBottom="1dp">
+                <TextView
+                    android:id="@+id/vatiety_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="股票"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/btn_gupiao"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/selector_radio"
+                    android:button="@null"
+                    android:layout_marginEnd="15dp"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+        </com.example.tradestrategy.bean.XRadioGroup>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/variety_item"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"
+        >
+        <LinearLayout
+            android:id="@+id/variety_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#FAFAFA">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="#ff000000"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/variety_sure"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#FF005AFF"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确认"
+                android:textColor="#ffffffff"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

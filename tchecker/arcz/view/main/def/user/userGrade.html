@@ -1,0 +1,292 @@
+<import from="/layout/global" name="html5">
+	<extend name="title">
+		<if exp="$menuTitle['cate'] == 1">
+			{{menuTitle.title1}}
+		</if>
+		<if exp="$menuTitle['cate'] == 2">
+			{{menuTitle.title2}}
+		</if>
+		<if exp="$menuTitle['cate'] == 3">
+			{{menuTitle.title3}}
+		</if>
+	</extend>
+	<extend name="css">
+
+	</extend>
+
+	<extend name="breadcrumb">
+		<if exp="$menuTitle['cate'] == 1">
+			<li class="active">{{menuTitle.title1}}</li>
+		</if>
+		<if exp="$menuTitle['cate'] == 2">
+			<li>
+				<a href="#">{{menuTitle.title1}}</a>
+			</li>
+			<li class="active">{{menuTitle.title2}}</li>
+		</if>
+		<if exp="$menuTitle['cate'] == 3">
+			<li>
+				<a href="#">{{menuTitle.title1}}</a>
+			</li>
+			<li>
+				<a href="#">{{menuTitle.title2}}</a>
+			</li>
+			<li class="active">{{menuTitle.title3}}</li>
+		</if>
+	</extend>
+
+	<extend name="page-header-title">管理员组列表</extend>
+	<extend name="body">
+
+		<form class="form-inline">
+			<div class="form-group">
+				<label class="sr-only">添加管理员角色</label>
+				<input type="text" class="form-control" id="add_group_name" placeholder="请输入新管理员角色">
+			</div>
+			<button type="button" id="add_group" class="btn btn-sm btn-primary">添加角色</button>
+			<div class="alert alert-danger alert-dismissable hide" id="alert-model-add">
+				<button type="button" class="close"  id="alert-add-close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong id="alert-add-text"></strong>
+			</div>
+		</form>
+
+		<if exp="count($roleList)>0">
+			<table class="table table-hover table-striped">
+				<thead>
+				<tr class="active">
+					<th>角色名称</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				<for exp="$key in $roleList" as="r">
+					<tr>
+						<td>{{r.group_name}}</td>
+						<td><if exp="$r['status'] == 1">可以删除<else/>不能删除</if></td>
+						<td>
+							<button type="button" id="rid_{{r.id}}" class="btn btn-warning btn-xs">分配权限</button>
+							<if exp="$r['status'] == 1">
+								<button type="button" id="eid_{{r.id}}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit">编辑</button>
+								<button type="button" id="did_{{r.id}}" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#del">删除</button>
+							</if>
+						</td>
+					</tr>
+				</for>
+				</tbody>
+			</table>
+			<else/>
+			<ul class="pager">
+				<li class="previous">
+					<a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+				</li>
+			</ul>
+			<div class="jumbotron">
+				<h1 align="center">暂无数据！</h1>
+			</div>
+		</if>
+
+		<!-- 编辑 -->
+		<div class="modal fade cz_box" id="edit" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">编辑</h4>
+					</div>
+					<div class="modal-body" id="edit_group_context">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">用户组名称</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" id="edit_groupname" value="">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-6">
+									<button type="button" class="btn btn-primary" id="edit_confirm">确认</button>
+								</div>
+							</div>
+						</form>
+						<div class="alert alert-danger alert-dismissable hide" id="alert-model-edit">
+							<button type="button" class="close"  id="alert-edit-close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<strong id="alert-edit-text"></strong>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 删除 -->
+		<div class="modal fade cz_box" id="del" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">删除</h4>
+					</div>
+					<div class="modal-body" id="del_group_context">
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="del_confirm">确认</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+	</extend>
+
+	<extend name="jsfoot">
+		<script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+		<script type="text/javascript">
+			jQuery(function($){
+
+				// 关闭弹出框刷新页面
+				$('.cz_alert').on('hide.bs.modal', function () {
+					window.location.reload();
+				});
+
+				// 关闭模态框刷新页面
+				$('.cz_box').on('hide.bs.modal', function () {
+					window.location.reload();
+				});
+
+				// 输入警告框
+				function alertModel(str,type) {
+					$('#alert-model' + type).removeClass('hide').addClass('in');
+					$("#alert" + type + "-text").text(str);
+
+					$("#alert" + type + "-close").click(function(){
+						$('#alert-model' + type).removeClass('in').addClass('hide');
+					});
+				}
+
+				// 添加管理员角色提交数据
+				$("#add_group").click(function(){
+					var groupname = $("#add_group_name").val();
+					if(groupname.length<1){
+						alertModel('管理员组名称不能为空！','-add');
+					} else {
+						var uk = "{{userAuthKeyNow}}";
+						var ip = "{{loginIpNow}}";
+						fetch.getObject("server.ctl.arcz.User", "addGrade", [groupname, uk, ip], function (data) {
+							if(data.errCode == 1000){
+								$(".cz_alert_success_center").text(data.errMsg);
+								$(".cz_alert_success_box").modal();
+								setTimeout(function(){
+									window.location.reload();
+								},1000);
+							} else {
+								$(".cz_alert_danger_center").text(data.errMsg);
+								$(".cz_alert_danger_box").modal();
+								setTimeout(function(){
+									window.location.reload();
+								},1000);
+							}
+						});
+					}
+				});
+
+				// 分配权限
+				$("[id^=rid_]").click(function () {
+					var role_id = $(this).attr("id").split("rid_")[1];
+					fetch.getObject("server.ctl.arcz.User", "userGradeDetail", [role_id], function (data) {
+						if(data.has==1){
+							layui.use(['form','layer','laydate','table','laytpl'],function(){
+								var layer = parent.layer === undefined ? layui.layer : top.layer;
+								layer.open({
+									title : "分配权限给" + data.group_name,
+									type: 2,
+									skin: '',  // 不加边框
+									area: ['600px', '600px'],  // 宽高
+									content: SERVER_PATH + "user/roleAdd/rid/" + role_id,
+									cancel: function () {  // 弹框关闭触发事件
+										window.location.reload();
+									}
+								});
+							});
+						}
+					});
+				});
+
+				// 编辑
+				$("[id^=eid_]").click(function () {
+					var id = $(this).attr("id").split("eid_")[1];
+					fetch.getObject("server.ctl.arcz.User", "userGradeDetail", [id], function (data) {
+						if(data.has==1){
+							$("#edit_groupname").val(data.group_name);
+							// 确认编辑按钮点击
+							$("#edit_confirm").click(function(){
+								var id = data.id;
+								var groupname = $("#edit_groupname").val();
+								if(!groupname){
+									alertModel('不能为空！','-edit');
+								} else {
+									var uk = "{{userAuthKeyNow}}";
+									var ip = "{{loginIpNow}}";
+									fetch.getObject("server.ctl.arcz.User", "editUserGroup", [id, groupname, uk, ip], function (data) {
+										if(data.errCode == 1000){
+											$(".cz_alert_success_center").text(data.errMsg);
+											$(".cz_alert_success_box").modal();
+											setTimeout(function(){
+												window.location.reload();
+											},1000);
+										} else {
+											$(".cz_alert_danger_center").text(data.errMsg);
+											$(".cz_alert_danger_box").modal();
+											setTimeout(function(){
+												window.location.reload();
+											},1000);
+										}
+									});
+								}
+							});
+						}
+					});
+				});
+
+				// 删除
+				$("[id^=did_]").click(function () {
+					var id = $(this).attr("id").split("did_")[1];
+					fetch.getObject("server.ctl.arcz.User", "userGradeDetail", [id], function (data) {
+						if(data.has==1){
+							$("#del_group_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定删除管理员组：' + data.group_name + ' ?</h3></div>');
+							// 确认删除按钮点击
+							$("#del_confirm").click(function(){
+								var id = data.id;
+								var uk = "{{userAuthKeyNow}}";
+								var ip = "{{loginIpNow}}";
+								fetch.getObject("server.ctl.arcz.User", "delUserGroup", [id, uk, ip], function (data) {
+									if(data.errCode == 1000){
+										$("#del_group_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+										setTimeout(function(){
+											window.location.reload();
+										},1000);
+									} else {
+										$("#del_group_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+										setTimeout(function(){
+											window.location.reload();
+										},1000);
+									}
+								});
+							});
+						}
+					});
+				});
+
+
+			});
+		</script>
+	</extend>
+</import>

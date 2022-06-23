@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/total_bg_hui"
+
+
+    >
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff7f8fc"
+            >
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    app:layout_collapseMode="parallax"
+
+                    >
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="147.5dp"
+                        android:background="@drawable/shape_rv_shares_bg"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="47dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/mode"
+                                android:text="买入"
+                                android:textSize="11sp"
+                                android:textColor="@color/share_text_red"
+                                android:layout_width="27dp"
+                                android:layout_height="17dp"
+                                android:background="@drawable/shape_rv_item_buyinto_bg"
+                                android:gravity="center"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="16dp"
+
+
+                                />
+
+                            <ImageView
+                                android:id="@+id/xuanzhuan_img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="14dp"
+                                android:src="@mipmap/icon_xuanzhuan"
+
+
+                                />
+                            <TextView
+                                android:layout_toLeftOf="@id/xuanzhuan_img"
+                                android:text="推荐中"
+                                android:textColor="#3C3C4D"
+                                android:textSize="12sp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="4.5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:background="#FBFCFF"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="61.5dp">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:layout_height="match_parent">
+                                <LinearLayout
+                                    android:layout_marginLeft="15dp"
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/start_price"
+                                        android:text="9.75"
+                                        android:textColor="#717591"
+                                        android:textSize="18sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                    <TextView
+                                        android:text="元"
+                                        android:textColor="#717591"
+                                        android:textSize="11sp"
+                                        android:layout_marginLeft="4.5dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginLeft="15dp"
+                                    >
+                                    <TextView
+                                        android:text="推荐时价格"
+                                        android:textSize="11sp"
+                                        android:textColor="#ACAEC0"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:layout_gravity="center_vertical"
+                                        >
+                                        <ImageView
+                                            android:layout_marginRight="17dp"
+                                            android:src="@mipmap/icon_jiantou_hui"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:layout_height="match_parent">
+                                <LinearLayout
+                                    android:layout_marginLeft="15dp"
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/goal_price"
+                                        android:text="32.50"
+                                        android:textColor="#717591"
+                                        android:textSize="18sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                    <TextView
+                                        android:text="元"
+                                        android:textColor="#717591"
+                                        android:textSize="11sp"
+                                        android:layout_marginLeft="4.5dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+                                <TextView
+                                    android:layout_marginTop="6dp"
+                                    android:layout_marginLeft="15dp"
+                                    android:text="预测目标价"
+                                    android:textColor="#ACAEC0"
+                                    android:textSize="11sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent">
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@id/time_img"
+                                android:src="@mipmap/time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="15dp"
+
+                                />
+                            <TextView
+                                android:id="@+id/shares_time"
+                                android:text="今天 08:32"
+                                android:textColor="#ACAEC0"
+                                android:textSize="12sp"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@id/time_img"
+                                android:layout_marginLeft="4.5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
+
+
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp"
+                        android:background="@drawable/shape_rv_shares_bg"
+                        android:layout_marginTop="10dp"
+                        >
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            >
+                            <ImageView
+                                android:layout_marginLeft="15dp"
+                                android:src="@mipmap/icon_accuracy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <LinearLayout
+                                android:layout_marginLeft="10dp"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/accuracy"
+                                        android:text="89.20"
+                                        android:textColor="#717591"
+                                        android:textSize="18sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                    <TextView
+                                        android:text="%"
+                                        android:textColor="#717591"
+                                        android:textSize="11sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+                                <TextView
+                                    android:text="准确率"
+                                    android:textColor="#ACAEC0"
+                                    android:textSize="11sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            >
+                            <ImageView
+                                android:layout_marginLeft="15dp"
+                                android:src="@mipmap/icon_profit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <LinearLayout
+                                android:layout_marginLeft="10dp"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/profit"
+                                        android:text="25.20"
+                                        android:textColor="#717591"
+                                        android:textSize="18sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                    <TextView
+                                        android:text="%"
+                                        android:textColor="#717591"
+                                        android:textSize="11sp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+
+                                </LinearLayout>
+                                <TextView
+                                    android:text="平均收益"
+                                    android:textColor="#ACAEC0"
+                                    android:textSize="11sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:layout_collapseMode="pin"
+                    android:background="@color/total_bg_hui"
+
+
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+
+                        >
+
+                        <ImageView
+                            android:id="@+id/fanhui"
+                            android:layout_width="48dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginStart="-14dp"
+                            android:layout_marginLeft="-14dp"
+                            android:src="@mipmap/fanhui" />
+
+                        <TextView
+                            android:id="@+id/shares_name"
+                            android:text="深圳机场"
+                            android:textColor="#2B2B3A"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/shares_code"
+                            android:layout_marginRight="15dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:text="#600292"
+                            android:textColor="#ACAEC0"
+                            android:textSize="13sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.Toolbar>
+                </android.support.design.widget.CollapsingToolbarLayout>
+                <!--固定栏-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_alignParentBottom="true"
+                    >
+                    <ImageView
+                        android:id="@+id/historytime_img"
+                        android:src="@mipmap/icon_historytime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        />
+                    <TextView
+                        android:layout_toRightOf="@id/historytime_img"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/history_txt"
+                        android:text="历史推荐"
+                        android:textColor="#3C3C4D"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/history_txt"
+                        android:id="@+id/history_number"
+                        android:text="6次"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="#035CFF"
+                        android:textSize="13sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
+
+
+</android.support.design.widget.CoordinatorLayout>
+
+

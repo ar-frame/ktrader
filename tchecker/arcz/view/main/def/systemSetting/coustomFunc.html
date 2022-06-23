@@ -1,0 +1,410 @@
+<import from="/layout/global" name="html5">
+  <extend name="title">
+    <if exp="$menuTitle['cate'] == 1">
+      {{menuTitle.title1}}
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      {{menuTitle.title2}}
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      {{menuTitle.title3}}
+    </if>
+  </extend>
+  <extend name="css">
+
+  </extend>
+
+  <extend name="breadcrumb">
+    <if exp="$menuTitle['cate'] == 1">
+      <li class="active">{{menuTitle.title1}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li class="active">{{menuTitle.title2}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li>
+        <a href="#">{{menuTitle.title2}}</a>
+      </li>
+      <li class="active">{{menuTitle.title3}}</li>
+    </if>
+  </extend>
+
+  <extend name="page-header-title">模型自定义功能列表</extend>
+  <extend name="body">
+
+    <if exp="count($data)>0">
+      <ul class="pager">
+        <li class="previous">
+          <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+        </li>
+      </ul>
+      <button type="button" class="btn btn-white btn-purple btn-xs addFunc_btn" data-toggle="modal" data-target="#addFunc">添加自定义功能</button>
+      <table class="table table-hover table-condensed table-striped table-bordered">
+        <thead>
+        <tr class="active">
+          <th>按钮名称</th>
+          <th>代号</th>
+          <th>模型id</th>
+          <th>菜单id</th>
+          <th>功能地址名称</th>
+          <th>状态是否开启</th>
+          <th>打开方式(×新页面 √弹窗)</th>
+          <th>按钮位置(×列表 √顶端)</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <for exp="$key in $data" as="d">
+          <tr>
+            <td align="center">{{d.title}}</td>
+            <td align="center">{{d.name}}</td>
+            <td align="center">{{d.mid}}</td>
+            <td align="center">{{d.menuid}}</td>
+            <td align="center">{{d.apiaddr}}</td>
+            <td align="center">{{d.switchstatus}}</td>
+            <td align="center">{{d.switchtype_window}}</td>
+            <td align="center">{{d.switchtype_button}}</td>
+            <td align="center">
+              <button type="button" id="btneditUserFunc_{{d.id}}" class="btn btn-white btn-warning btn-xs">分配权限</button>
+              <button type="button" id="btneditFunc_{{d.id}}" class="btn btn-white btn-primary btn-xs" data-toggle="modal" data-target="#editFunc">编辑</button>
+              <button type="button" id="btndelFunc_{{d.id}}" class="btn btn-white btn-danger btn-xs" data-toggle="modal" data-target="#delFunc">删除</button>
+            </td>
+          </tr>
+        </for>
+        </tbody>
+      </table>
+
+      <else/>
+      <ul class="pager">
+        <li class="previous">
+          <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+        </li>
+      </ul>
+      <button type="button" class="btn btn-white btn-purple btn-xs addFunc_btn" data-toggle="modal" data-target="#addFunc">添加自定义功能</button>
+      <div class="jumbotron">
+        <h1 align="center">暂无数据！</h1>
+      </div>
+    </if>
+
+    <!-- 添加自定义功能 -->
+    <div class="modal fade cz_box" id="addFunc" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">添加自定义功能</h4>
+          </div>
+          <div class="modal-body" id="add_context">
+            <form class="form-horizontal">
+
+              <div class="form-group">
+                <label class="col-sm-4 control-label">模型id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="add_mid" value="{{func_mid}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">菜单id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="add_menuid" value="{{func_menuid}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">按钮名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="add_title" value="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">功能地址名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="add_apiaddr" value="">
+                </div>
+              </div>
+              功能地址名称不能有下划线_
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <button type="button" class="btn btn-primary" id="add_confirm">确认</button>
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-danger alert-dismissable hide" id="alert-model-add">
+              <button type="button" class="close"  id="alert-add-close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong id="alert-add-text"></strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 编辑自定义功能 -->
+    <div class="modal fade cz_box" id="editFunc" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑自定义功能</h4>
+          </div>
+          <div class="modal-body" id="edit_context">
+            <form class="form-horizontal">
+              <input type="hidden" class="form-control" id="edit_id" value="">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">模型id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_mid" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">菜单id</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_menuid" value="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">按钮名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_title" value="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">功能地址名称</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="edit_apiaddr" value="" disabled>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-6">
+                  <button type="button" class="btn btn-primary" id="edit_confirm">确认</button>
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-danger alert-dismissable hide" id="alert-model-edit">
+              <button type="button" class="close"  id="alert-edit-close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong id="alert-edit-text"></strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 删除 -->
+    <div class="modal fade cz_box" id="delFunc" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">删除</h4>
+          </div>
+          <div class="modal-body" id="del_context">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="del_confirm">确认</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </extend>
+
+  <extend name="jsfoot">
+    <script type="text/javascript" src="{{C.PATH.GPUBLIC}}layui/layui.js"></script>
+    <script type="text/javascript">
+      jQuery(function($){
+
+        // 关闭弹出框刷新页面
+        $('.cz_alert').on('hide.bs.modal', function () {
+          window.location.reload();
+        });
+
+        // 关闭模态框刷新页面
+        $('.cz_box').on('hide.bs.modal', function () {
+          window.location.reload();
+        });
+
+        // 输入警告框
+        function alertModel(str,type) {
+          $('#alert-model' + type).removeClass('hide').addClass('in');
+          $("#alert" + type + "-text").text(str);
+
+          $("#alert" + type + "-close").click(function(){
+            $('#alert-model' + type).removeClass('in').addClass('hide');
+          });
+        }
+
+        // 添加自定义功能
+        $(".addFunc_btn").click(function () {
+          var mid = $("#add_mid").val();
+          var menuid = $("#add_menuid").val();
+          // 确认添加
+          $("#add_confirm").click(function () {
+            var title = $("#add_title").val();
+            var name = $("#add_apiaddr").val();
+            var apiaddr = $("#add_apiaddr").val();
+            if(!title){
+              alertModel('按钮名称不能为空！','-add');
+            } else if(!apiaddr){
+              alertModel('功能地址名称不能为空！','-add');
+            } else {
+              var uk = "{{userAuthKeyNow}}";
+              var ip = "{{loginIpNow}}";
+              fetch.getObject("server.ctl.arcz.DBModel", "addFunc", [mid, menuid, title, name, apiaddr, uk, ip], function (data) {
+                if(data.errCode == 1000){
+                  $(".cz_alert_success_center").text(data.errMsg);
+                  $(".cz_alert_success_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                } else {
+                  $(".cz_alert_danger_center").text(data.errMsg);
+                  $(".cz_alert_danger_box").modal();
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                }
+              });
+            }
+          });
+        });
+
+        // 分配权限
+        $("[id^=btneditUserFunc_]").click(function () {
+          var id = $(this).attr("id").split("btneditUserFunc_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getFuncRow", [id], function (data) {
+
+              layui.use(['form','layer','laydate','table','laytpl'],function(){
+                var layer = parent.layer === undefined ? layui.layer : top.layer;
+                layer.open({
+                  title : "配置功能 " + data.title + " 的权限",
+                  type: 2,
+                  skin: '',  // 不加边框
+                  area: ['600px', '600px'],  // 宽高
+                  content: SERVER_PATH + "user/editFunc/mid/" + data.mid + "/type/" + data.type + "/fid/" + data.id,
+                  cancel: function () {  // 弹框关闭触发事件
+                    window.location.reload();
+                  }
+                });
+              });
+
+          });
+        });
+
+        // 编辑自定义功能
+        $("[id^=btneditFunc_]").click(function () {
+          var id = $(this).attr("id").split("btneditFunc_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getFuncRow", [id], function (data) {
+            $("#edit_id").val(data.id);
+            $("#edit_mid").val(data.mid);
+            $("#edit_menuid").val(data.menuid);
+            $("#edit_title").val(data.title);
+            $("#edit_apiaddr").val(data.apiaddr);
+            // 确认编辑
+            $("#edit_confirm").click(function () {
+              var title = $("#edit_title").val();
+              var apiaddr = $("#edit_apiaddr").val();
+              if(!title){
+                alertModel('按钮名称不能为空！','-edit');
+              } else if(!apiaddr){
+                alertModel('功能地址名称不能为空！','-edit');
+              } else {
+                var uk = "{{userAuthKeyNow}}";
+                var ip = "{{loginIpNow}}";
+                fetch.getObject("server.ctl.arcz.DBModel", "editFunc", [id, title, apiaddr, uk, ip], function (datae) {
+                  if(datae.errCode == 1000){
+                    $(".cz_alert_success_center").text(datae.errMsg);
+                    $(".cz_alert_success_box").modal();
+                    setTimeout(function(){
+                      window.location.reload();
+                    },1000);
+                  } else {
+                    $(".cz_alert_danger_center").text(datae.errMsg);
+                    $(".cz_alert_danger_box").modal();
+                    setTimeout(function(){
+                      window.location.reload();
+                    },1000);
+                  }
+                });
+              }
+            });
+          });
+        });
+
+        // 删除自定义功能
+        $("[id^=btndelFunc_]").click(function () {
+          var id = $(this).attr("id").split("btndelFunc_")[1];
+          fetch.getObject("server.ctl.arcz.DBModel", "getFuncRow", [id], function (dataRow) {
+            $("#del_context").html('<div class="alert alert-warning" role="alert" align="center"><h3>确定删除功能：' + dataRow.title + ' ?</h3></div>');
+            // 确认删除按钮点击
+            $("#del_confirm").click(function(){
+              var id = dataRow.id;
+              var uk = "{{userAuthKeyNow}}";
+              var ip = "{{loginIpNow}}";
+              fetch.getObject("server.ctl.arcz.DBModel", "delFunc", [id, uk, ip], function (data) {
+                if(data.errCode == 1000){
+                  $("#del_context").html('<div class="alert alert-success" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                } else {
+                  $("#del_context").html('<div class="alert alert-danger" role="alert" align="center"><h3>' + data.errMsg + '</h3></div>');
+                  setTimeout(function(){
+                    window.location.reload();
+                  },1000);
+                }
+              });
+            });
+          });
+        });
+
+        // 开关状态值设置
+        $(".switch_check").click(function(){
+          // 传入设置值
+          var checked = $(this).is(':checked');
+          var name = $(this).attr("name");
+          var setval;
+          if (checked) {
+            setval = 1;
+          } else {
+            setval = 0;
+          }
+          // 传入id
+          var id = $(this).val();
+          var uk = "{{userAuthKeyNow}}";
+          var ip = "{{loginIpNow}}";
+          fetch.getObject("server.ctl.arcz.DBModel", "funcSetSwitch", [id, setval, name, uk, ip], function (data) {
+            if(data.errCode == 1000){
+              $(".cz_alert_success_center").text(data.errMsg);
+              $(".cz_alert_success_box").modal();
+            } else {
+              $(".cz_alert_danger_center").text(data.errMsg);
+              $(".cz_alert_danger_box").modal();
+              setTimeout(function(){
+                window.location.reload();
+              },1000);
+            }
+          });
+        });
+
+
+      });
+    </script>
+  </extend>
+</import>

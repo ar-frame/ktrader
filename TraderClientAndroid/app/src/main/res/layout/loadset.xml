@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f7fa"
+    android:fitsSystemWindows="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff">
+        <RelativeLayout
+            android:id="@+id/loadset_out"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="19dp"
+                android:src="@mipmap/re_out"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="载入设置"
+            android:textColor="#ff000000"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            />
+        <RelativeLayout
+            android:id="@+id/loadset_add"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/add"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/loadset_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
+    </android.support.v7.widget.RecyclerView>
+
+    <include
+        android:id="@+id/loadset_nodata"
+        layout="@layout/nodata"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </include>
+</RelativeLayout>

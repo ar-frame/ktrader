@@ -1,0 +1,87 @@
+<import from="/layout/global" name="html5-layer-open">
+	<extend name="body">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" align="center">分配功能权限</h4>
+			</div>
+			<div class="modal-body" id="func_group_content">
+				{{roleList.rolestr}}
+				是否开启功能：{{menuFuncRow.switchstr}}
+			</div>
+			<div class="modal-footer">
+
+			</div>
+		</div>
+	</extend>
+
+
+	<extend name="jsfoot">
+		<script type="text/javascript">
+			var uk = "{{userAuthKeyNow}}";
+			var ip = "{{loginIpNow}}";
+
+			// 功能开启关闭
+			$("#switch_status").click(function(){
+				// 传入设置值
+				var checked = $(this).is(':checked');
+				var setval;
+				if (checked) {
+					setval = 1;
+				} else {
+					setval = 0;
+				}
+				// 传入id
+				var id = $(this).val();
+				var name = "status";
+
+				fetch.getObject("server.ctl.arcz.DBModel", "funcSetSwitch", [id, setval, name, uk, ip], function (data) {
+					if(data.errCode == 1000){
+						$(".cz_alert_success_center").text(data.errMsg);
+						$(".cz_alert_success_box").modal();
+					} else {
+						$(".cz_alert_danger_center").text(data.errMsg);
+						$(".cz_alert_danger_box").modal();
+						setTimeout(function(){
+							window.location.reload();
+						},1000);
+					}
+				});
+			});
+
+			// 取消分配角色功能
+			$("[id^=rf0id_]").click(function () {
+				var role_id = $(this).attr("id").split("rf0id_")[1];
+				var type = 0;
+				var mid = $(".mid").val();
+				var fid = $(".fid").val();
+				var functype = $(".functype").val();
+				fetch.getObject("server.ctl.arcz.User", "changeRoleFunc", [role_id, type, mid, fid, functype, uk, ip], function (data) {
+					if(data.errCode == 1000){
+						$("#btng_" + role_id).html('<a id="rf1id_' + role_id + '" class="btn btn-warning btn-xs" title="点击分配功能">分配</a>');
+						setTimeout(function(){
+							location.reload();
+						},100);
+					}
+				});
+			});
+
+			// 分配角色功能
+			$("[id^=rf1id_]").click(function () {
+				var role_id = $(this).attr("id").split("rf1id_")[1];
+				var type = 1;
+				var mid = $(".mid").val();
+				var fid = $(".fid").val();
+				var functype = $(".functype").val();
+				fetch.getObject("server.ctl.arcz.User", "changeRoleFunc", [role_id, type, mid, fid, functype, uk, ip], function (data) {
+					if(data.errCode == 1000){
+						$("#btng_" + role_id).html('<a id="rf0id_' + role_id + '" class="btn btn-warning btn-xs" title="点击取消分配功能">已分配</a>');
+						setTimeout(function(){
+							location.reload();
+						},100);
+					}
+				});
+			});
+
+		</script>
+	</extend>
+</import>

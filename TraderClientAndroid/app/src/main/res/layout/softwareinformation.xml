@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#21212B">
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#21212B">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上上策"
+                android:textColor="#ffffffff"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:layout_marginStart="150dp"
+                android:layout_alignParentStart="true"
+                />
+
+            <TextView
+                android:id="@+id/softwareinformation_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffffff"
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:layout_below="@+id/name"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@+id/name"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/info_bg">
+
+            <LinearLayout
+                android:id="@+id/softwareinformation_updatalog"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更新日志"
+                    android:textColor="#ff005aff"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="7dp"
+                    android:src="@mipmap/genxinrizhi" />
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/softwareinformation_isvip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:visibility="visible"
+                android:gravity="center"
+                >
+            <TextView
+                android:id="@+id/softwareinformation_balanceday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#ff29c367"
+                android:textSize="80sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/softwareinformation_balanceday"
+                android:layout_gravity="center"
+                android:text="VIP剩余使用天数"
+                android:textColor="#ff000000"
+                android:textSize="14sp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/softwareinformation_notvip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="140dp"
+                android:layout_marginLeft="93dp"
+                android:layout_marginRight="93dp"
+                android:visibility="invisible"
+                >
+                <TextView
+                    android:text="您当前是普通用户，  联系客服"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    />
+                <TextView
+                    android:text="获取激活码后就能体验VIP功能"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/softwareinformation_edit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/softwareinformation_isvip"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/login_edt_bg">
+
+                <EditText
+                    android:id="@+id/softwareinformation_key"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/login_edt_bg"
+                    android:gravity="start|center"
+                    android:hint="激活码"
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/edit_cursor_blue"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:id="@+id/softwareinformation_sure"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/softwareinformation_suretext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="确认"
+                        android:textColor="#9b9b9b"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/softwareinformation_update"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/softwareinformation_edit"
+                android:layout_marginTop="25dp"
+                android:background="#FFFFFF"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="当前版本"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/softwareinformation_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toStartOf="@+id/jiantou_a"
+                    android:textColor="#ff656565"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/jiantou_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:src="@mipmap/zhixiangjiantou" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/softwareinformation_noticeset"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/softwareinformation_update"
+                android:background="#FFFFFF"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="通知设置"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toStartOf="@+id/jiantou"
+                    android:textColor="#ff656565"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/jiantou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:src="@mipmap/zhixiangjiantou" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/softwareinformation_disclaimer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/softwareinformation_noticeset"
+                android:background="#FFFFFF"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="免责声明"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toStartOf="@+id/jiantou_c"
+                    android:textColor="#ff656565"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/jiantou_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:src="@mipmap/zhixiangjiantou" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/softwareinformation_call"
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_below="@id/softwareinformation_disclaimer"
+                android:textColor="#ff000000"
+                android:layout_marginTop="30dp"
+                android:textSize="13sp" />
+
+            <!--   <TextView
+                   android:id="@+id/softwareinformation_overhead"
+                   android:layout_width="250dp"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentBottom="true"
+                   android:layout_centerHorizontal="true"
+
+                   android:gravity="center"
+                   android:textColor="#ff000000"
+                   android:textSize="13sp" />-->
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/info_logo"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:layout_marginStart="20dp"
+            android:src="@mipmap/info_logo"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

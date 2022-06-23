@@ -1,0 +1,26 @@
+{
+    "AR_DEBUG": true,
+    "AR_AUTO_START_SESSION": true,
+    "AR_AS_WEB": true,
+    "AR_OUTER_START": false,
+    "AR_AS_OUTER_FRAME": false,
+    "AR_RUN_AS_SERVICE_HTTP": false,
+    "AR_AS_CMD": false,
+    "AR_AS_WEB_CLI": false,
+    "AR_MAN_NAME": "man",
+    "AR_PUBLIC_CONFIG_FILE": "",
+    "AR_DEFAULT_APP_NAME": "main",
+    "AR_DEFAULT_CONTROLLER": "Checker",
+    "AR_DEFAULT_ACTION": "authUser",
+    "AR_ORI_NAME": "checker",
+    "AR_ORI_PATH": "%AR_ROOT_PATH%%AR_ORI_ACTUAL_NAME%%DS%",
+    "AR_ASSETS_SERVER_PATH": "%AR_SERVER_PATH%assets/",
+    "AR_DATA_PATH": "%AR_ROOT_PATH%data%DS%",
+    "CONFIG": {
+        "moduleLists": ["main"],
+        "theme": "def",
+        "REBUILD_TPL_CACHE": true,
+        "DEBUG_SHOW_TRACE": false,
+        "TPL_SUFFIX": "html"
+    }
+}

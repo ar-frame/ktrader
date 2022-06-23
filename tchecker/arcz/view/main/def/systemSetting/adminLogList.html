@@ -1,0 +1,191 @@
+<import from="/layout/global" name="html5">
+  <extend name="title">
+    <if exp="$menuTitle['cate'] == 1">
+      {{menuTitle.title1}}
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      {{menuTitle.title2}}
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      {{menuTitle.title3}}
+    </if>
+  </extend>
+  <extend name="css">
+
+  </extend>
+
+  <extend name="breadcrumb">
+    <if exp="$menuTitle['cate'] == 1">
+      <li class="active">{{menuTitle.title1}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 2">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li class="active">{{menuTitle.title2}}</li>
+    </if>
+    <if exp="$menuTitle['cate'] == 3">
+      <li>
+        <a href="#">{{menuTitle.title1}}</a>
+      </li>
+      <li>
+        <a href="#">{{menuTitle.title2}}</a>
+      </li>
+      <li class="active">{{menuTitle.title3}}</li>
+    </if>
+  </extend>
+
+  <extend name="page-header-title">管理员操作日志</extend>
+  <extend name="body">
+
+    <if exp="count($logLists)>0">
+      {{headForm}}
+      <table class="table table-hover table-condensed table-striped">
+        <thead>
+        <tr class="active">
+          <th>id</th>
+          <th>uid</th>
+          <th>登录账号</th>
+          <th>登录IP</th>
+          <th>日志标题</th>
+          <th>日志内容</th>
+          <th>操作时间</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <for exp="$log_key in $logLists" as="log">
+          <tr>
+            <td>{{log.id}}</td>
+            <td>{{log.uid}}</td>
+            <td>{{log.username}}</td>
+            <td>{{log.login_ip}}</td>
+            <td>{{log.title}}</td>
+            <td>{{log.content}}</td>
+            <td>{{log.log_date}}</td>
+            <td>
+              <button type="button" id="btnv_{{log.id}}" class="btn btn-white btn-primary btn-xs" data-toggle="modal" data-target="#view">查看详情</button>
+            </td>
+          </tr>
+        </for>
+        </tbody>
+      </table>
+      {{pageShow}}
+    <else/>
+      <ul class="pager">
+        <li class="previous">
+          <a href="#" onclick="javascript:window.history.back()">返回上一页</a>
+        </li>
+      </ul>
+      <div class="jumbotron">
+        <h1 align="center">暂无数据！</h1>
+      </div>
+    </if>
+
+
+    <!-- 查看详情 -->
+    <div class="modal fade" id="view" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">日志详情</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-6 col-sm-2">日志编号：</div>
+              <div class="col-xs-6 col-sm-10 log_id"></div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-2">操作人：</div>
+              <div class="col-xs-6 col-sm-2 log_username"></div>
+              <div class="col-xs-6 col-sm-2 log_nickname"></div>
+              <div class="col-xs-6 col-sm-2"><img class="log_admin_face" src="" height="30" width="30"></div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-2">登录IP：</div>
+              <div class="col-xs-6 col-sm-10 log_ip"></div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-2">操作时间：</div>
+              <div class="col-xs-6 col-sm-10 log_time"></div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6 col-sm-2">日志标题：</div>
+              <div class="col-xs-6 col-sm-10 log_title"></div>
+            </div>
+            <br>
+            <h3>日志内容</h3>
+            <div class="log_content">
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </extend>
+
+  <extend name="jsfoot">
+    <script type="text/javascript">
+      jQuery(function($){
+        // 分页切换
+        $('#pageCount').change(function(){
+          var count = $("#pageCount").val();
+          window.location.href = "{{\ar\core\url('systems/adminLogList')}}" + "/count/" + count + "/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+        });
+
+        // 跳转指定页面
+        $('#pageTo').change(function(){
+          var page = $("#pageTo").val();
+          window.location.href = "{{\ar\core\url('systems/adminLogList')}}" + "/count/{{count}}/page/" + page + "/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+        });
+
+        // 搜索
+        $('#search').click(function(){
+          var keyword = $("#keyword").val();
+          var search_col = $("#search_col").val();
+          window.location.href = "{{\ar\core\url('systems/adminLogList')}}" + "/count/{{count}}/page/1/search_col/" + search_col + "/keyword/" + keyword + "/sort_col/{{sort_col}}/sort_type/{{sort_type}}";
+        });
+
+        // 升序
+        $('#sorting_asc').click(function(){
+          var sort_col = $("#sorting").val();
+          var sort_type = 'asc';
+          window.location.href = "{{\ar\core\url('systems/adminLogList')}}" + "/count/{{count}}/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/" + sort_col + "/sort_type/" + sort_type;
+        });
+
+        // 降序
+        $('#sorting_desc').click(function(){
+          var sort_col = $("#sorting").val();
+          var sort_type = 'desc';
+          window.location.href = "{{\ar\core\url('systems/adminLogList')}}" + "/count/{{count}}/page/1/search_col/{{search_col}}/keyword/{{keyword}}/sort_col/" + sort_col + "/sort_type/" + sort_type;
+        });
+
+        // 查看详情
+        $("[id^=btnv_]").click(function () {
+          var id = $(this).attr("id").split("btnv_")[1];
+          $(".log_id").text(id);
+          fetch.getObject("server.ctl.arcz.Data", "getLogDetail", [id], function (data) {
+              $(".log_username").text(data.username);
+              $(".log_nickname").text(data.nickname);
+            if(data.admin_face){
+              $(".log_admin_face").attr('src',data.admin_face);
+            } else {
+              $(".log_admin_face").attr('src','{{C.PATH.GPUBLIC}}images/avatars/newuser.jpg');
+            }
+              $(".log_ip").text(data.login_ip);
+              $(".log_time").text(data.log_time);
+              $(".log_title").text(data.title);
+              $(".log_content").text(data.content);
+          });
+        });
+
+      });
+    </script>
+  </extend>
+</import>

@@ -1,0 +1,415 @@
+<import from="/layout/global" name="html5">
+	<extend name="title">
+		<if exp="$menuTitle['cate'] == 1">
+			{{menuTitle.title1}}
+		</if>
+		<if exp="$menuTitle['cate'] == 2">
+			{{menuTitle.title2}}
+		</if>
+		<if exp="$menuTitle['cate'] == 3">
+			{{menuTitle.title3}}
+		</if>
+	</extend>
+	<extend name="css">
+
+	</extend>
+
+	<extend name="breadcrumb">
+		<if exp="$menuTitle['cate'] == 1">
+			<li class="active">{{menuTitle.title1}}</li>
+		</if>
+		<if exp="$menuTitle['cate'] == 2">
+			<li>
+				<a href="#">{{menuTitle.title1}}</a>
+			</li>
+			<li class="active">{{menuTitle.title2}}</li>
+		</if>
+		<if exp="$menuTitle['cate'] == 3">
+			<li>
+				<a href="#">{{menuTitle.title1}}</a>
+			</li>
+			<li>
+				<a href="#">{{menuTitle.title2}}</a>
+			</li>
+			<li class="active">{{menuTitle.title3}}</li>
+		</if>
+	</extend>
+
+	<extend name="page-header-title">系统参数设置</extend>
+	<extend name="body">
+
+		<div class="">
+			<div id="user-profile-3" class="user-profile row">
+				<div class="col-sm-offset-1 col-sm-10">
+					<div class="well well-sm">
+						<div class="inline middle blue bigger-110"> 系统参数设置 </div>
+					</div><!-- /.well -->
+
+					<div class="space"></div>
+
+					<form class="form-horizontal">
+						<div class="tabbable">
+							<ul class="nav nav-tabs padding-16">
+								<li class="active" id="edit_1">
+									<a data-toggle="tab" href="#edit-basic">
+										<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+										一般设置
+									</a>
+								</li>
+
+								<li id="edit_2">
+									<a data-toggle="tab" href="#edit-password">
+										<i class="blue ace-icon fa fa-key bigger-125"></i>
+										版权设置
+									</a>
+								</li>
+							</ul>
+
+							<div class="tab-content profile-edit-tab-content">
+
+								<div id="edit-basic" class="tab-pane in active">
+									<h4 class="header blue bolder smaller">基本信息</h4>
+
+									<div class="row">
+
+
+										<div class="vspace-12-sm"></div>
+
+										<div class="col-xs-12 col-sm-8">
+
+											<div class="space-4"></div>
+											<div class="form-group">
+												<label class="col-sm-4 control-label no-padding-right" for="form-edit-title">系统名称</label>
+
+												<div class="col-sm-8">
+													<input class="col-xs-12 col-sm-10" type="text" id="form-edit-title" placeholder="系统名称" value="{{sysInfo.title}}" />
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+											<div class="form-group">
+												<label class="col-sm-4 control-label no-padding-right" for="form-edit-simplename">系统简称</label>
+
+												<div class="col-sm-8">
+													<input class="col-xs-12 col-sm-10" type="text" id="form-edit-simplename" placeholder="系统简称" value="{{sysInfo.simplename}}" />
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+											<div class="form-group">
+												<label class="col-sm-4 control-label no-padding-right" for="form-edit-version">版本</label>
+
+												<div class="col-sm-8">
+													<input class="col-xs-12 col-sm-10" type="text" id="form-edit-version" placeholder="版本" value="{{sysInfo.version}}" />
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+											<div class="form-group">
+												<label class="col-sm-4 control-label no-padding-right" for="form-edit-url">网站地址</label>
+
+												<div class="col-sm-8">
+													<input class="col-xs-12 col-sm-10" type="text" id="form-edit-url" placeholder="网站地址" value="{{sysInfo.url}}" />
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<hr />
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-edit-notice">系统公告</label>
+
+										<div class="col-sm-9">
+											<textarea class="form-control col-sm-7" rows="5" id="form-edit-notice">{{sysInfo.notice}}</textarea>
+										</div>
+									</div>
+
+									<div class="alert alert-danger alert-dismissable hide" id="alert-model-edit">
+										<button type="button" class="close"  id="alert-edit-close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<strong id="alert-edit-text"></strong>
+									</div>
+
+								</div>
+
+								<div id="edit-password" class="tab-pane">
+									<div class="space-10"></div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label no-padding-right" for="form-edit-companyname">公司名称</label>
+
+										<div class="col-sm-8">
+											<input class="col-xs-12 col-sm-5" type="text" id="form-edit-companyname" placeholder="公司名称" value="{{sysInfo.companyname}}" />
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label no-padding-right" for="form-edit-copyright">版权</label>
+
+										<div class="col-sm-8">
+											<input class="col-xs-12 col-sm-5" type="text" id="form-edit-copyright" placeholder="版权" value="{{sysInfo.copyright}}" />
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label no-padding-right" for="form-edit-copyrightyears">版权年限</label>
+
+										<div class="col-sm-8">
+											<input class="col-xs-12 col-sm-5" type="text" id="form-edit-copyrightyears" placeholder="版本年限" value="{{sysInfo.copyrightyears}}" />
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label no-padding-right" for="form-edit-author">开发作者</label>
+
+										<div class="col-sm-8">
+											<input class="col-xs-12 col-sm-5" type="text" id="form-edit-author" placeholder="开发作者" value="{{sysInfo.author}}" />
+										</div>
+									</div>
+
+									<div class="alert alert-danger alert-dismissable hide" id="alert-model-edit2">
+										<button type="button" class="close"  id="alert-edit2-close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<strong id="alert-edit2-text"></strong>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-info" type="button" id="editsys_save">
+									<i class="ace-icon fa fa-check bigger-110"></i>
+									保存
+								</button>
+
+								&nbsp; &nbsp;
+								<button class="btn" type="reset">
+									<i class="ace-icon fa fa-undo bigger-110"></i>
+									取消
+								</button>
+							</div>
+						</div>
+
+					</form>
+				</div><!-- /.span -->
+			</div><!-- /.user-profile -->
+		</div>
+
+
+	</extend>
+
+	<extend name="jsfoot_include">
+		<script src="{{C.PATH.GPUBLIC}}js/jquery.gritter.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/bootbox.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/jquery.easypiechart.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/bootstrap-datepicker.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/jquery.hotkeys.index.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/bootstrap-wysiwyg.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/select2.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/spinbox.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/bootstrap-editable.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/ace-editable.min.js"></script>
+		<script src="{{C.PATH.GPUBLIC}}js/jquery.maskedinput.min.js"></script>
+	</extend>
+
+	<extend name="jsfoot">
+		<script type="text/javascript">
+			jQuery(function($) {
+
+				$('.more_admin_log').click(function(){
+					window.location.href = "{{\ar\core\url('/systems/adminLogList')}}";
+				});
+
+				// 输入警告框
+				function alertModel(str,type)
+				{
+					$('#alert-model' + type).removeClass('hide').addClass('in');
+					$("#alert" + type + "-text").text(str);
+
+					$("#alert" + type + "-close").click(function(){
+						$('#alert-model' + type).removeClass('in').addClass('hide');
+					});
+				}
+
+				// 确认编辑
+				$('#editsys_save').click(function(){
+					var uk = "{{userAuthKeyNow}}";
+					var ip = "{{loginIpNow}}";
+
+					if($('#edit_1').hasClass("active")){
+						var title = $('#form-edit-title').val();
+						var simplename = $('#form-edit-simplename').val();
+						var version = $('#form-edit-version').val();
+						var url = $('#form-edit-url').val();
+						var notice = $('#form-edit-notice').val();
+
+						if(!title){
+							alertModel('系统标题不能为空！','-edit');
+						} else if(!simplename){
+							alertModel('简称不能为空！','-edit');
+						} else {
+							var serverData = [
+								{key: 'title', value: title},
+								{key: 'simplename', value: simplename},
+								{key: 'version', value: version},
+								{key: 'url', value: url},
+								{key: 'notice', value: notice}
+							];
+							fetch.getObject("server.ctl.arcz.Index", "editSetting", [serverData, uk, ip], function (data) {
+								if(data.errCode == 1000){
+									$(".cz_alert_success_center").text(data.errMsg);
+									$(".cz_alert_success_box").modal();
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								} else {
+									alertModel(data.errMsg, '-edit');
+								}
+							});
+						}
+
+					} else if($('#edit_2').hasClass("active")){
+						var companyname = $('#form-edit-companyname').val();
+						var copyright = $('#form-edit-copyright').val();
+						var copyrightyears = $('#form-edit-copyrightyears').val();
+						var author = $('#form-edit-author').val();
+
+						if(!companyname){
+							alertModel('公司名称不能为空！','-edit2');
+						} else if(!copyright){
+							alertModel('copyright不能为空！','-edit2');
+						} else if(!copyrightyears) {
+							alertModel('版权年限不能为空！', '-edit2');
+						} else {
+							var serverData2 = [
+								{key: 'companyname', value: companyname},
+								{key: 'copyright', value: copyright},
+								{key: 'copyrightyears', value: copyrightyears},
+								{key: 'author', value: author}
+							];
+							fetch.getObject("server.ctl.arcz.Index", "editSetting", [serverData2, uk, ip], function (data) {
+								if(data.errCode == 1000){
+									$(".cz_alert_success_center").text(data.errMsg);
+									$(".cz_alert_success_box").modal();
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								} else {
+									alertModel(data.errMsg, '-edit2');
+								}
+							});
+						}
+
+					}
+				});
+
+
+
+				//////////////////////////////
+				$('#profile-feed-1').ace_scroll({
+					height: '250px',
+					mouseWheelLock: true,
+					alwaysVisible : true
+				});
+
+				$('a[ data-original-title]').tooltip();
+
+				$('.easy-pie-chart.percentage').each(function(){
+					var barColor = $(this).data('color') || '#555';
+					var trackColor = '#E2E2E2';
+					var size = parseInt($(this).data('size')) || 72;
+					$(this).easyPieChart({
+						barColor: barColor,
+						trackColor: trackColor,
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: parseInt(size/10),
+						animate:false,
+						size: size
+					}).css('color', barColor);
+				});
+
+				///////////////////////////////////////////
+
+				//right & left position
+				//show the user info on right or left depending on its position
+				$('#user-profile-2 .memberdiv').on('mouseenter touchstart', function(){
+					var $this = $(this);
+					var $parent = $this.closest('.tab-pane');
+
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+
+					var off2 = $this.offset();
+					var w2 = $this.width();
+
+					var place = 'left';
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) place = 'right';
+
+					$this.find('.popover').removeClass('right left').addClass(place);
+				}).on('click', function(e) {
+					e.preventDefault();
+				});
+
+
+				///////////////////////////////////////////
+				$('#user-profile-3')
+						.find('input[type=file]').ace_file_input({
+							style:'well',
+							btn_choose:'Change avatar',
+							btn_change:null,
+							no_icon:'ace-icon fa fa-picture-o',
+							thumbnail:'large',
+							droppable:true,
+
+							allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+							allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+						})
+						.end().find('button[type=reset]').on(ace.click_event, function(){
+							$('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+						})
+						.end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				})
+				$('.input-mask-phone').mask('(999) 999-9999');
+
+				$('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{type: 'image', name: $('#avatar').attr('src')}]);
+
+
+				////////////////////
+				//change profile
+				$('[data-toggle="buttons"] .btn').on('click', function(e){
+					var target = $(this).find('input[type=radio]');
+					var which = parseInt(target.val());
+					$('.user-profile').parent().addClass('hide');
+					$('#user-profile-'+which).parent().removeClass('hide');
+				});
+
+
+
+				/////////////////////////////////////
+				$(document).one('ajaxloadstart.page', function(e) {
+					//in ajax mode, remove remaining elements before leaving page
+					try {
+						$('.editable').editable('destroy');
+					} catch(e) {}
+					$('[class*=select2]').remove();
+				});
+
+			});
+
+		</script>
+	</extend>
+</import>

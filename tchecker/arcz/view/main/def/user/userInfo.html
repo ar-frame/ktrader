@@ -1,0 +1,1140 @@
+<import from="/layout/global" name="html5">
+	<extend name="title">
+		个人资料
+	</extend>
+
+	<extend name="breadcrumb">
+
+		<li>
+			<a href="#">More Pages</a>
+		</li>
+		<li class="active">个人资料</li>
+
+	</extend>
+
+	<extend name="page-header-title">个人中心</extend>
+	<extend name="body">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+				<div class="clearfix">
+					<div class="pull-left alert alert-success no-margin alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert">
+							<i class="ace-icon fa fa-times"></i>
+						</button>
+
+						<i class="ace-icon fa fa-umbrella bigger-120 blue"></i>
+						当前登录管理员用户 {{userInfo.username}} {{userInfo.nickname}} [{{userInfo.group}}] 的个人中心 点击选项第一页下面头像可以修改头像
+					</div>
+
+					<div class="pull-right">
+						<span class="green middle bolder">选项： &nbsp;</span>
+
+						<div class="btn-toolbar inline middle no-margin">
+							<div data-toggle="buttons" class="btn-group no-margin">
+								<label class="btn btn-sm btn-yellow active">
+									<span class="bigger-110">1</span>
+
+									<input type="radio" value="1" />
+								</label>
+
+								<label class="btn btn-sm btn-yellow">
+									<span class="bigger-110">2</span>
+
+									<input type="radio" value="2" />
+								</label>
+
+								<label class="btn btn-sm btn-yellow">
+									<span class="bigger-110">3</span>
+
+									<input type="radio" value="3" />
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="hr dotted"></div>
+
+				<div>
+					<div id="user-profile-1" class="user-profile row">
+						<div class="col-xs-12 col-sm-3 center">
+							<div>
+								<span class="profile-picture">
+									<if exp="$userInfo['admin_face']">
+										<img id="avatar" class="img-responsive" height="180px" width="180px" src="{{userInfo.admin_face}}" />
+										<input accept="image/gif,image/jpeg,image/png" type="file" id="userface-edit" style="opacity:0;width:50%;height:50%;position:absolute;top:0;left:100px" class="form-control">
+										<input type="hidden" id="userface" value="{{userInfo.admin_face}}">
+									<else/>
+										<img id="avatar" class="img-responsive" height="180px" width="180px" src="{{C.PATH.GPUBLIC}}images/avatars/newuser.jpg" />
+										<input accept="image/gif,image/jpeg,image/png" type="file" id="userface-edit" style="opacity:0;width:50%;height:50%;position:absolute;top:0;left:0" class="form-control">
+										<input type="hidden" id="userface" value="{{userInfo.admin_face}}">
+									</if>
+
+								</span>
+
+								<div class="space-4"></div>
+
+								<div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+									<div class="inline position-relative">
+										<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+											<i class="ace-icon fa fa-circle light-green"></i>
+											&nbsp;
+											<span class="white">{{userInfo.nickname}}</span>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="profile-contact-info">
+								<div class="profile-contact-links align-left">
+									<a href="#" class="btn btn-link">
+										<i class="ace-icon fa fa-envelope bigger-120 pink"></i>
+										{{userInfo.email}}
+									</a>
+
+									<a href="#" class="btn btn-link">
+										<i class="ace-icon fa fa-globe bigger-125 blue"></i>
+										{{userInfo.website}}
+									</a>
+
+									<a href="#" class="btn btn-link">
+										<i class="ace-icon fa fa-mobile-phone bigger-125 light-blue"></i>
+										{{userInfo.tel}}
+									</a>
+								</div>
+
+								<div class="space-6"></div>
+
+							</div>
+
+							<div class="hr hr12 dotted"></div>
+
+							<div class="clearfix">
+								<div class="grid2">
+									<span class="bigger-175 blue">{{userInfo.group}}</span>
+
+									<br />
+									管理员权限
+								</div>
+							</div>
+
+							<div class="hr hr16 dotted"></div>
+						</div>
+
+						<div class="col-xs-12 col-sm-9">
+							<div class="center">
+									<span class="btn btn-app btn-sm btn-light no-hover">
+										<span class="line-height-1 bigger-170 blue"> {{userInfo.count_log_1}} </span>
+
+										<br />
+										<span class="line-height-1 smaller-90"> login </span>
+									</span>
+
+									<span class="btn btn-app btn-sm btn-yellow no-hover">
+										<span class="line-height-1 bigger-170"> {{userInfo.count_log_2}} </span>
+
+										<br />
+										<span class="line-height-1 smaller-90"> setting </span>
+									</span>
+
+									<span class="btn btn-app btn-sm btn-pink no-hover">
+										<span class="line-height-1 bigger-170"> {{userInfo.count_log_3}} </span>
+
+										<br />
+										<span class="line-height-1 smaller-90"> assign </span>
+									</span>
+
+									<span class="btn btn-app btn-sm btn-grey no-hover">
+										<span class="line-height-1 bigger-170"> {{userInfo.count_log_4}} </span>
+
+										<br />
+										<span class="line-height-1 smaller-90"> add </span>
+									</span>
+
+									<span class="btn btn-app btn-sm btn-success no-hover">
+										<span class="line-height-1 bigger-170"> {{userInfo.count_log_5}} </span>
+
+										<br />
+										<span class="line-height-1 smaller-90"> edit </span>
+									</span>
+
+									<span class="btn btn-app btn-sm btn-primary no-hover">
+										<span class="line-height-1 bigger-170"> {{userInfo.count_log_6}} </span>
+
+										<br />
+										<span class="line-height-1 smaller-90"> del </span>
+									</span>
+
+							</div>
+
+							<div class="space-12"></div>
+
+							<div class="profile-user-info profile-user-info-striped">
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> 登录账号 </div>
+
+									<div class="profile-info-value">
+										<span class="">{{userInfo.username}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> 昵称 </div>
+
+									<div class="profile-info-value">
+										<span class="">{{userInfo.nickname}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> 年龄 </div>
+
+									<div class="profile-info-value">
+										<span class="">{{userInfo.age}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> 加入时间 </div>
+
+									<div class="profile-info-value">
+										<span class="">{{userInfo.register_date}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> 上次登录 </div>
+
+									<div class="profile-info-value">
+										<span class="" id="login_time"></span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> 管理员组 </div>
+
+									<div class="profile-info-value">
+										<span class="">{{userInfo.groups}}</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="space-20"></div>
+
+							<div class="widget-box transparent">
+								<div class="widget-header widget-header-small">
+									<h4 class="widget-title blue smaller">
+										<i class="ace-icon fa fa-rss orange"></i>
+										操作日志
+									</h4>
+
+									<div class="widget-toolbar action-buttons">
+										<a href="#" data-action="reload">
+											<i class="ace-icon fa fa-refresh blue"></i>
+										</a>
+										&nbsp;
+										<a href="#" class="pink">
+											<i class="ace-icon fa fa-trash-o"></i>
+										</a>
+									</div>
+								</div>
+
+								<div class="widget-body">
+									<div class="widget-main padding-8">
+										<div id="profile-feed-1" class="profile-feed">
+
+											<for exp="$key in $userInfo['log_list']" as="l">
+												<div class="profile-activity clearfix">
+													<div>
+														<img class="pull-left" src="{{l.admin_face}}" />
+														<a class="user" href="#"> {{l.username}} </a>
+														{{l.content}}
+														<a href="#">{{l.title}}</a>
+
+														<div class="time logtime">
+															<i class="ace-icon fa fa-clock-o bigger-110"></i>
+															{{l.log_date}}
+														</div>
+													</div>
+
+													<div class="tools action-buttons">
+														<a href="#" class="blue">
+															<i class="ace-icon fa fa-pencil bigger-125"></i>
+														</a>
+
+														<a href="#" class="red">
+															<i class="ace-icon fa fa-times bigger-125"></i>
+														</a>
+													</div>
+												</div>
+											</for>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="hr hr2 hr-double"></div>
+
+							<div class="space-6"></div>
+
+							<div class="center">
+								<button type="button" class="btn btn-sm btn-primary btn-white btn-round">
+									<i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
+									<span class="bigger-110 more_admin_log">查看更多管理员日志</span>
+									<i class="icon-on-right ace-icon fa fa-arrow-right"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="hide">
+					<div id="user-profile-2" class="user-profile">
+						<div class="tabbable">
+							<ul class="nav nav-tabs padding-18">
+								<li class="active">
+									<a data-toggle="tab" href="#home">
+										<i class="green ace-icon fa fa-user bigger-120"></i>
+										个人资料
+									</a>
+								</li>
+
+								<li>
+									<a data-toggle="tab" href="#feed">
+										<i class="orange ace-icon fa fa-rss bigger-120"></i>
+										操作日志
+									</a>
+								</li>
+
+								<li>
+									<a data-toggle="tab" href="#friends">
+										<i class="blue ace-icon fa fa-users bigger-120"></i>
+										其他管理员
+									</a>
+								</li>
+
+							</ul>
+
+							<div class="tab-content no-border padding-24">
+								<div id="home" class="tab-pane in active">
+									<div class="row">
+										<div class="col-xs-12 col-sm-3 center">
+												<span class="profile-picture">
+													<if exp="$userInfo['admin_face']">
+														<img class="img-responsive" alt="Alex's Avatar" height="180px" width="180px" src="{{userInfo.admin_face}}" />
+													<else/>
+														<img class="img-responsive" alt="Alex's Avatar" height="180px" width="180px" src="{{C.PATH.GPUBLIC}}images/avatars/newuser.jpg" />
+													</if>
+												</span>
+
+											<div class="space space-4"></div>
+
+										</div><!-- /.col -->
+
+										<div class="col-xs-12 col-sm-9">
+											<h4 class="blue">
+												<span class="middle">{{userInfo.nickname}}</span>
+
+												<span class="label label-purple arrowed-in-right">
+													<i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+													online
+												</span>
+											</h4>
+
+											<div class="profile-user-info">
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 登录名称 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.username}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 昵称 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.nickname}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 真实姓名 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.realname}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 年龄 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.age}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 加入时间 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.register_date}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 上次登录时间 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.login_date}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 管理员组 </div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.groups}}</span>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="hr hr-8 dotted"></div>
+
+											<div class="profile-user-info">
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 邮箱 </div>
+
+													<div class="profile-info-value">
+														<a href="#">{{userInfo.email}}</a>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 电话 </div>
+
+													<div class="profile-info-value">
+														<a href="#">{{userInfo.tel}}</a>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> 个人网站 </div>
+
+													<div class="profile-info-value">
+														<a href="#">{{userInfo.website}}</a>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name">
+														<li class="fa fa-weixin green"></li>
+													</div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.wx}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name">
+														<li class="fa fa-weibo red"></li>
+													</div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.weibo}}</span>
+													</div>
+												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name">
+														<li class="fa fa-qq blue"></li>
+													</div>
+
+													<div class="profile-info-value">
+														<span>{{userInfo.qq}}</span>
+													</div>
+												</div>
+
+											</div>
+										</div><!-- /.col -->
+									</div><!-- /.row -->
+
+									<div class="space-20"></div>
+
+									<div class="row">
+										<div class="col-xs-12 col-sm-6">
+											<div class="widget-box transparent">
+												<div class="widget-header widget-header-small">
+													<h4 class="widget-title smaller">
+														<i class="ace-icon fa fa-check-square-o bigger-110"></i>
+														个人简介
+													</h4>
+												</div>
+
+												<div class="widget-body">
+													<div class="widget-main">
+														{{userInfo.admin_content}}
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div><!-- /#home -->
+
+								<div id="feed" class="tab-pane">
+									<div class="profile-feed row">
+										<div class="col-sm-6">
+
+											<for exp="$key in $userInfo['log_list_1']" as="l">
+												<div class="profile-activity clearfix">
+													<div>
+														<img class="pull-left" src="{{l.admin_face}}" />
+														<a class="user" href="#"> {{l.username}} </a>
+														{{l.content}}
+														<a href="#">{{l.title}}</a>
+
+														<div class="time logtime">
+															<i class="ace-icon fa fa-clock-o bigger-110"></i>
+															{{l.log_date}}
+														</div>
+													</div>
+
+													<div class="tools action-buttons">
+														<a href="#" class="blue">
+															<i class="ace-icon fa fa-pencil bigger-125"></i>
+														</a>
+
+														<a href="#" class="red">
+															<i class="ace-icon fa fa-times bigger-125"></i>
+														</a>
+													</div>
+												</div>
+											</for>
+
+										</div><!-- /.col -->
+
+										<div class="col-sm-6">
+
+											<for exp="$key in $userInfo['log_list_2']" as="l">
+												<div class="profile-activity clearfix">
+													<div>
+														<img class="pull-left" src="{{l.admin_face}}" />
+														<a class="user" href="#"> {{l.username}} </a>
+														{{l.content}}
+														<a href="#">{{l.title}}</a>
+
+														<div class="time logtime">
+															<i class="ace-icon fa fa-clock-o bigger-110"></i>
+															{{l.log_date}}
+														</div>
+													</div>
+
+													<div class="tools action-buttons">
+														<a href="#" class="blue">
+															<i class="ace-icon fa fa-pencil bigger-125"></i>
+														</a>
+
+														<a href="#" class="red">
+															<i class="ace-icon fa fa-times bigger-125"></i>
+														</a>
+													</div>
+												</div>
+											</for>
+
+										</div><!-- /.col -->
+									</div><!-- /.row -->
+
+									<div class="space-12"></div>
+
+									<div class="center">
+										<button type="button" class="btn btn-sm btn-primary btn-white btn-round">
+											<i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
+											<span class="bigger-110 more_admin_log">查看更多管理员日志</span>
+											<i class="icon-on-right ace-icon fa fa-arrow-right"></i>
+										</button>
+									</div>
+								</div><!-- /#feed -->
+
+								<div id="friends" class="tab-pane">
+									<div class="profile-users clearfix">
+
+										<for exp="$key in $userInfo['userListMore']" as="u">
+											<div class="itemdiv memberdiv">
+												<div class="inline pos-rel">
+													<div class="user">
+														<a href="#">
+															<img src="{{u.admin_face}}" width="35" height="65" />
+														</a>
+													</div>
+
+													<div class="body">
+														<div class="name">
+															<a href="#">
+																<span class="user-status status-online"></span>
+																{{u.nickname}}
+															</a>
+														</div>
+													</div>
+
+													<div class="popover">
+														<div class="arrow"></div>
+
+														<div class="popover-content">
+															<div class="bolder">{{u.group}}</div>
+
+															<div class="time">
+																<i class="ace-icon fa fa-clock-o middle bigger-120 orange"></i>
+																<span class="green"> {{u.login_date}} </span>
+															</div>
+
+															<div class="hr dotted hr-8"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</for>
+
+									</div>
+
+									<div class="hr hr10 hr-double"></div>
+
+								</div><!-- /#friends -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="hide">
+					<div id="user-profile-3" class="user-profile row">
+						<div class="col-sm-offset-1 col-sm-10">
+							<div class="well well-sm">
+								<div class="inline middle blue bigger-110"> 个人资料设置 </div>
+							</div><!-- /.well -->
+
+							<div class="space"></div>
+
+							<form class="form-horizontal">
+								<div class="tabbable">
+									<ul class="nav nav-tabs padding-16">
+										<li class="active" id="edit_1">
+											<a data-toggle="tab" href="#edit-basic">
+												<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+												资料设置
+											</a>
+										</li>
+
+										<li id="edit_2">
+											<a data-toggle="tab" href="#edit-password">
+												<i class="blue ace-icon fa fa-key bigger-125"></i>
+												密码设置
+											</a>
+										</li>
+									</ul>
+
+									<div class="tab-content profile-edit-tab-content">
+
+										<div id="edit-basic" class="tab-pane in active">
+											<h4 class="header blue bolder smaller">基本信息</h4>
+
+											<div class="row">
+
+
+												<div class="vspace-12-sm"></div>
+
+												<div class="col-xs-12 col-sm-8">
+													<div class="form-group">
+														<label class="col-sm-4 control-label no-padding-right" for="form-edit-username">登录账号</label>
+														<div class="col-sm-8">
+															<input class="col-xs-12 col-sm-10" type="text" id="form-edit-username" placeholder="Username" value="{{userInfo.username}}" disabled />
+														</div>
+													</div>
+
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-4 control-label no-padding-right" for="form-edit-nickname">昵称</label>
+
+														<div class="col-sm-8">
+															<input class="col-xs-12 col-sm-10" type="text" id="form-edit-nickname" placeholder="Nickname" value="{{userInfo.nickname}}" />
+														</div>
+													</div>
+
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-4 control-label no-padding-right" for="form-edit-realname">真实姓名</label>
+
+														<div class="col-sm-8">
+															<input class="col-xs-12 col-sm-10" type="text" id="form-edit-realname" placeholder="Realname" value="{{userInfo.realname}}" />
+														</div>
+													</div>
+
+													<div class="space-4"></div>
+													<div class="form-group">
+														<label class="col-sm-4 control-label no-padding-right" for="form-edit-age">年龄</label>
+
+														<div class="col-sm-8">
+															<input class="col-xs-12 col-sm-10" type="number" id="form-edit-age" placeholder="age" value="{{userInfo.age}}" />
+														</div>
+													</div>
+
+												</div>
+											</div>
+
+											<hr />
+
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-admin_content">个人简介</label>
+
+												<div class="col-sm-9">
+													<textarea class="form-control col-sm-7" rows="5" id="form-edit-admin_content">{{userInfo.admin_content}}</textarea>
+												</div>
+											</div>
+
+											<div class="space"></div>
+											<h4 class="header blue bolder smaller">联系方式</h4>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-email">Email</label>
+
+												<div class="col-sm-9">
+													<span class="input-icon input-icon-right">
+														<input type="email" id="form-edit-email" value="{{userInfo.email}}" />
+														<i class="ace-icon fa fa-envelope"></i>
+													</span>
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-website">个人网站</label>
+
+												<div class="col-sm-9">
+													<span class="input-icon input-icon-right">
+														<input type="url" id="form-edit-website" value="{{userInfo.website}}" />
+														<i class="ace-icon fa fa-globe"></i>
+													</span>
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-tel">电话</label>
+
+												<div class="col-sm-9">
+													<span class="input-icon input-icon-right">
+														<input type="url" id="form-edit-tel" value="{{userInfo.tel}}" />
+														<i class="ace-icon fa fa-phone"></i>
+													</span>
+												</div>
+											</div>
+
+											<div class="space"></div>
+											<h4 class="header blue bolder smaller">社交网络</h4>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-qq">QQ</label>
+
+												<div class="col-sm-9">
+													<span class="input-icon">
+														<input type="text" value="{{userInfo.qq}}" id="form-edit-qq" />
+														<i class="ace-icon fa fa-qq blue"></i>
+													</span>
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-wx">微信</label>
+
+												<div class="col-sm-9">
+													<span class="input-icon">
+														<input type="text" value="{{userInfo.wx}}" id="form-edit-wx" />
+														<i class="ace-icon fa fa-weixin light-green"></i>
+													</span>
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-weibo">微博</label>
+
+												<div class="col-sm-9">
+													<span class="input-icon">
+														<input type="text" value="{{userInfo.weibo}}" id="form-edit-weibo" />
+														<i class="ace-icon fa fa-weibo red"></i>
+													</span>
+												</div>
+											</div>
+
+											<div class="alert alert-danger alert-dismissable hide" id="alert-model-edit">
+												<button type="button" class="close"  id="alert-edit-close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<strong id="alert-edit-text"></strong>
+											</div>
+
+										</div>
+
+										<div id="edit-password" class="tab-pane">
+											<div class="space-10"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-oldpass">旧密码</label>
+
+												<div class="col-sm-9">
+													<input type="password" id="form-edit-oldpass" />
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-pass1">新密码</label>
+
+												<div class="col-sm-9">
+													<input type="password" id="form-edit-pass1" />
+												</div>
+											</div>
+
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right" for="form-edit-pass2">确认密码</label>
+
+												<div class="col-sm-9">
+													<input type="password" id="form-edit-pass2" />
+												</div>
+											</div>
+
+											<div class="alert alert-danger alert-dismissable hide" id="alert-model-editpwd">
+												<button type="button" class="close"  id="alert-editpwd-close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<strong id="alert-editpwd-text"></strong>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+								<div class="clearfix form-actions">
+									<div class="col-md-offset-3 col-md-9">
+										<button class="btn btn-info" type="button" id="edit_save">
+											<i class="ace-icon fa fa-check bigger-110"></i>
+											保存
+										</button>
+
+										&nbsp; &nbsp;
+										<button class="btn" type="reset">
+											<i class="ace-icon fa fa-undo bigger-110"></i>
+											取消
+										</button>
+									</div>
+								</div>
+
+							</form>
+						</div><!-- /.span -->
+					</div><!-- /.user-profile -->
+				</div>
+
+				<!-- PAGE CONTENT ENDS -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+
+	</extend>
+
+	<extend name="jsfoot_include">
+	<script src="{{C.PATH.GPUBLIC}}js/jquery.gritter.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/bootbox.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/jquery.easypiechart.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/bootstrap-datepicker.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/jquery.hotkeys.index.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/bootstrap-wysiwyg.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/select2.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/spinbox.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/bootstrap-editable.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/ace-editable.min.js"></script>
+	<script src="{{C.PATH.GPUBLIC}}js/jquery.maskedinput.min.js"></script>
+	</extend>
+
+	<extend name="jsfoot">
+	<script type="text/javascript">
+		jQuery(function($) {
+			var login_time = "{{userInfo.login_time}}";
+
+			$('#login_time').text(getDateDiff(login_time));
+
+			$('.more_admin_log').click(function(){
+				window.location.href = "{{\ar\core\url('/systems/adminLogList')}}";
+			});
+
+			// 输入警告框
+			function alertModel(str,type)
+			{
+				$('#alert-model' + type).removeClass('hide').addClass('in');
+				$("#alert" + type + "-text").text(str);
+
+				$("#alert" + type + "-close").click(function(){
+					$('#alert-model' + type).removeClass('in').addClass('hide');
+				});
+			}
+
+			// 确认编辑
+			$('#edit_save').click(function(){
+				var uk = "{{userAuthKeyNow}}";
+				var ip = "{{loginIpNow}}";
+				if($('#edit_1').hasClass("active")){
+					var nickname = $('#form-edit-nickname').val();
+					var realname = $('#form-edit-realname').val();
+					var age = $('#form-edit-age').val();
+					var tel = $('#form-edit-tel').val();
+					var email = $('#form-edit-email').val();
+					var website = $('#form-edit-website').val();
+					var admin_content = $('#form-edit-admin_content').val();
+					var qq = $('#form-edit-qq').val();
+					var wx = $('#form-edit-wx').val();
+					var weibo = $('#form-edit-weibo').val();
+
+					var regEmail = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+					// 调用正则验证test()函数验证Email
+					isokEmail = regEmail.test(email);
+
+					if(!nickname){
+						alertModel('昵称不能为空！','-edit');
+					} else if(!realname){
+						alertModel('真实姓名不能为空！','-edit');
+					} else if(!email) {
+						alertModel('邮箱不能为空！', '-edit');
+					} else if(!isokEmail){
+						alertModel('邮箱格式不正确，请重新输入！','-edit');
+					} else {
+						fetch.getObject("server.ctl.arcz.User", "changeUserInfo", [uk, nickname, realname, age, tel, email, website, admin_content, qq, wx, weibo, ip], function (data) {
+							if(data.errCode == 1000){
+								$(".cz_alert_success_center").text(data.errMsg);
+								$(".cz_alert_success_box").modal();
+								setTimeout(function(){
+									window.location.reload();
+								},1000);
+							} else {
+								alertModel(data.errMsg, '-edit');
+							}
+						});
+					}
+
+				} else if($('#edit_2').hasClass("active")){
+					var oldPwd = $('#form-edit-oldpass').val();
+					var newPwd = $('#form-edit-pass1').val();
+					var new2Pwd = $('#form-edit-pass2').val();
+
+					if(!oldPwd){
+						alertModel('旧密码不能为空！','-editpwd');
+					} else if(!newPwd){
+						alertModel('新密码不能为空！','-editpwd');
+					} else if(!new2Pwd) {
+						alertModel('确认密码不能为空！', '-editpwd');
+					} else {
+						fetch.getObject("server.ctl.arcz.User", "changeUserPwd", [uk, oldPwd, newPwd, new2Pwd, ip], function (data) {
+							if(data.errCode == 1000){
+								$(".cz_alert_success_center").text(data.errMsg);
+								$(".cz_alert_success_box").modal();
+								setTimeout(function(){
+									window.location.reload();
+								},1000);
+							} else {
+								alertModel(data.errMsg, '-editpwd');
+							}
+						});
+					}
+
+				}
+			});
+
+
+			// 上传头像
+			$('#userface-edit').change(function () {
+				var file = this.files[0];
+				//文件类型
+				var fileType = this.files[0].type;
+				var type = getFileType(fileType);
+				//文件大小
+				var fileSize = (this.files[0].size/ 1024).toFixed(2);
+				if(type != "jpg" && type != "gif" && type != "jpeg" && type != "png"){
+					alert("您上传的文件不合法");
+					return false;
+				}
+				if(fileSize>10240){ // 定义不能超过10MB
+					alert("文件太大，请重新选择！！");
+					return false;
+				}
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = function (e) { // 上传成功，执行上传成功之后的事件
+					var str = e.target.result;
+
+					var origin_address = fetch.config.SERVER_ADDRESS;
+					// fetch.config.SERVER_ADDRESS = 'aaaaaaaa';
+					fetch.getObject('server.ctl.arcz.Data', "uploadPic", [str],function (data) {
+						if(data){
+							var uid = '{{userInfo.id}}';
+							var img = data.picurl;
+							photo = img;
+							// 将上传成功后的图片显示在特定位置
+							$("#avatar").attr('src', photo);
+							$("#userface").val(photo);
+							// 修改数据
+							fetch.config.SERVER_ADDRESS = origin_address;
+							fetch.getObject('server.ctl.arcz.User', "editUserFace", [uid,img],function (data) {
+								if(data.errCode == 1000){
+									$(".cz_alert_success_center").text(data.errMsg);
+									$(".cz_alert_success_box").modal();
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								} else {
+									$(".cz_alert_danger_center").text(data.errMsg);
+									$(".cz_alert_danger_box").modal();
+									setTimeout(function(){
+										window.location.reload();
+									},1000);
+								}
+							});
+
+						}
+					});
+
+					fetch.config.SERVER_ADDRESS = origin_address;
+
+				};
+				reader.onerror = function () {
+					alert("上传失败！！！");
+				}
+
+			});
+
+			//获取上传文件的类型
+			function getFileType(filePath) {
+				var startIndex = filePath.lastIndexOf("/");
+				if(startIndex != -1){
+					return filePath.substring(startIndex+1,filePath.length).toLowerCase();
+				}else {
+					return "";
+				}
+			}
+
+
+
+			//////////////////////////////
+			$('#profile-feed-1').ace_scroll({
+				height: '250px',
+				mouseWheelLock: true,
+				alwaysVisible : true
+			});
+
+			$('a[ data-original-title]').tooltip();
+
+			$('.easy-pie-chart.percentage').each(function(){
+				var barColor = $(this).data('color') || '#555';
+				var trackColor = '#E2E2E2';
+				var size = parseInt($(this).data('size')) || 72;
+				$(this).easyPieChart({
+					barColor: barColor,
+					trackColor: trackColor,
+					scaleColor: false,
+					lineCap: 'butt',
+					lineWidth: parseInt(size/10),
+					animate:false,
+					size: size
+				}).css('color', barColor);
+			});
+
+			///////////////////////////////////////////
+
+			//right & left position
+			//show the user info on right or left depending on its position
+			$('#user-profile-2 .memberdiv').on('mouseenter touchstart', function(){
+				var $this = $(this);
+				var $parent = $this.closest('.tab-pane');
+
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+
+				var off2 = $this.offset();
+				var w2 = $this.width();
+
+				var place = 'left';
+				if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) place = 'right';
+
+				$this.find('.popover').removeClass('right left').addClass(place);
+			}).on('click', function(e) {
+				e.preventDefault();
+			});
+
+
+			///////////////////////////////////////////
+			$('#user-profile-3')
+					.find('input[type=file]').ace_file_input({
+						style:'well',
+						btn_choose:'Change avatar',
+						btn_change:null,
+						no_icon:'ace-icon fa fa-picture-o',
+						thumbnail:'large',
+						droppable:true,
+
+						allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+						allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+					})
+					.end().find('button[type=reset]').on(ace.click_event, function(){
+						$('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+					})
+					.end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			})
+			$('.input-mask-phone').mask('(999) 999-9999');
+
+			$('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{type: 'image', name: $('#avatar').attr('src')}]);
+
+
+			////////////////////
+			//change profile
+			$('[data-toggle="buttons"] .btn').on('click', function(e){
+				var target = $(this).find('input[type=radio]');
+				var which = parseInt(target.val());
+				$('.user-profile').parent().addClass('hide');
+				$('#user-profile-'+which).parent().removeClass('hide');
+			});
+
+
+
+			/////////////////////////////////////
+			$(document).one('ajaxloadstart.page', function(e) {
+				//in ajax mode, remove remaining elements before leaving page
+				try {
+					$('.editable').editable('destroy');
+				} catch(e) {}
+				$('[class*=select2]').remove();
+			});
+
+		});
+	</script>
+	</extend>
+</import>

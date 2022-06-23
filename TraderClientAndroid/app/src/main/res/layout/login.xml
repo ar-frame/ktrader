@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Login"
+    android:background="#fff">
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/exit"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出系统"
+            android:textColor="#ffd4d4d4"
+            android:textSize="15sp"
+            android:layout_marginEnd="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/biaoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欢迎使用上上策"
+        android:textColor="#ff000000"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="125dp"
+        />
+
+    <TextView
+        android:id="@+id/tishi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用前请先输入激活码"
+        android:textColor="#ff656565"
+        android:textSize="15sp"
+        android:layout_below="@id/biaoti"
+        android:layout_alignStart="@+id/biaoti"
+        android:layout_marginTop="12dp"
+        />
+
+    <EditText
+        android:id="@+id/login_activationcode"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="60dp"
+        android:textSize="15sp"
+        android:inputType="text"
+        android:background="@drawable/login_edt_bg"
+        android:hint="激活码"
+        android:gravity="center"
+        android:textCursorDrawable="@drawable/edit_cursor_blue"
+        android:layout_below="@+id/tishi"
+        />
+
+    <LinearLayout
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_below="@+id/login_activationcode"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:background="@drawable/lack_bg"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始使用"
+            android:textColor="#ffffffff"
+            android:textSize="17sp"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/login_nonet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您的网络异常，请检查后登陆"
+        android:textColor="#F44336"
+        android:textSize="13sp"
+        android:textStyle="italic"
+        android:layout_below="@+id/login"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        />
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/logo"
+        android:layout_above="@+id/zhushi"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/zhushi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By成达传网络科技"
+        android:textColor="#ff005aff"
+        android:textSize="13sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/main_avliv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        app:indicatorColor="#005AFF"
+        style="@style/AVLoadingIndicatorView.Small"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+</RelativeLayout>
