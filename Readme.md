@@ -12,7 +12,7 @@
 而上上策将解决这个问题，上上策开源后命名为“KTrader”。
 Ktrader 将包括Python，Java，PHP, nodejs , H5 , react，安卓，linux，mongodb，mysql 等技术。
 一套体系全部用一个docker 镜像打包集成。
-虽然KTrader核心是集成了数字货币交易逻辑，不过修修网站，改改前端，策略改变以下，买卖接口一换可以做任何期货交易对品种的回测实盘。
+KTrader核心集成了数字货币交易，改改前端，策略改变以下，买卖接口一换可以做任何期货交易对品种的回测实盘。
 
 # 【1.准备篇】
 
@@ -49,6 +49,9 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ### 下载镜像
 ktrader2.1.tar.gz 下载地址
 
+链接：https://pan.baidu.com/s/1mxQ_seHE5caIk_1DgxLbmQ?pwd=3x2r 
+
+
 ### 导入命令
 gunzip -c ktrader2.1.tar.gz | docker import - ktrader2.1_debian_img
 
@@ -64,6 +67,8 @@ gunzip -c ktrader2.1.tar.gz | docker import - ktrader2.1_debian_img
 ## 3 恢复数据
 
 ### 数据下载地址
+链接：https://pan.baidu.com/s/1jibyoaeAVHJxexhB_0qG5A?pwd=hcii 
+
 trader.tar.gz 主要是mysql, mongodb单独数据
 sftp 上传至 /var/yp/trader
 
