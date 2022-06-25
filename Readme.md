@@ -25,8 +25,8 @@ KTrader核心集成了数字货币交易，改改前端，策略改变以下，�
 
 ![回测](https://gitee.com/ar-frame/ktrader/raw/master/docs/img/huice.png)
 
-![web客户端](https://gitee.com/ar-frame/ktrader/raw/master/docs/img/client_web.png)
-
+## 系统架构图
+![系统架构图](https://gitee.com/ar-frame/ktrader/raw/master/docs/img/tec_struct.png)
 
 
 # 【1.准备篇】
