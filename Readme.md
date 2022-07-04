@@ -375,9 +375,24 @@ key alias : test
 
 
 # 【8.杂篇】
-看需要吧，是否做一下视频操作教程
 
-...
+基于此文档的视频操作教程：
+
+[1.KTrader简介](https://www.zhihu.com/zvideo/1525847400921378816)
+
+[2.如何回测](https://www.zhihu.com/zvideo/1526932656764186624)
+
+[3.自定义策略](https://www.zhihu.com/zvideo/1526935650145755136)
+
+[4.如何实盘](https://www.zhihu.com/zvideo/1526951247911673856)
+
+[5.代理激活码生成](https://www.zhihu.com/zvideo/1526952645588094976)
+
+[6.web版打包](https://www.zhihu.com/zvideo/1526954475802062848)
+
+[7.安卓版打包](https://www.zhihu.com/zvideo/1526956566222147585)
+
+[8.源码下载](https://www.zhihu.com/zvideo/1526959243780980736)
 
 
 ## dokcer 常用命令
@@ -397,5 +412,6 @@ gunzip -c *.tar.gz | docker load
 
 ---
 【MIT】
-Copyright © 2022 dpbtrader, v: kozdpb 
-有任何问题的小伙伴可以加V讨论 
+Copyright © 2022 dpbtrader, v: kozdpb
+
+技术交流q群: `259956472`
