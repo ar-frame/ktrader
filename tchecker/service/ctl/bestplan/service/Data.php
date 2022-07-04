@@ -493,7 +493,7 @@ class Data
         $db = \ar\core\comp('db.mysql')->read('tchecker_paint');
         $record = [
             'pair' => $pair,
-            'addtime' => time(),
+            'addtime' => date('Y-m-d H:i:s', time()),
             'time_sep' => $timeSep,
             'command_params' => $commandParams,
             'result_str' => $resultStr,
