@@ -6,7 +6,7 @@ def getCfg():
     curpath = os.path.dirname(os.path.realpath(__file__))
     cfgpath = os.path.join(curpath, "conf/conf.ini")
     config = configparser.ConfigParser()
-    config.read(cfgpath)
+    config.read(cfgpath, encoding = 'utf-8')
     return config
 
 def getMongo(tradeVariety = None):

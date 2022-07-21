@@ -31,6 +31,8 @@ import func
 import cfg
 from Trade import Trade
 
+from Paint import Paint
+
 from multiprocessing import Process
 import multiprocessing
 import signal
@@ -43,21 +45,25 @@ class Shipan:
         self.midcresult = {"mc": 0, "mcMax": 0, "mcMin": 0}
         self.tradeVariety = tradeVariety
         pass
-        
+
     def initResoure(self, tradeVariety):
         self.startTime = time.time()
 
         nowHour = datetime.datetime.now().strftime('%Y%m%d%H')
-       
+
         # print(nowHour)
         # self.db_bigdata = MongoDB('bigdata', 'gataio_eth_trades_h' + nowHour)
         # self.db_bigdata = MongoDB('bigdata', 'gataio_eth_trades_h2019011918')
         mongo = cfg.getMongo(tradeVariety)
         self.db_bigdata = MongoDB(mongo.get('DB'), 'gataio_eth_trades_h' + nowHour, mongo.get('DB_HOST'), mongo.get('DB_USER'), mongo.get('DB_PASS'))
 
-        self.sim = Simulate(tradeVariety)
-        self.cha = Characteristic(tradeVariety)
+        self.paint = Paint(tradeVariety)
+
+        self.sim = self.paint.sim
+        self.cha = self.paint.cha
+
         self.ts = TradeSave()
+
         self.trade = Trade()
 
         self.threads = []
@@ -66,14 +72,14 @@ class Shipan:
         self.getPointCount = 0
         self.lastPointCode = None
         self.initUsdtUint = 0
-     
+
 
     def drawBase(self, data, dataBase, ah, aw, kh, kw):
 
         if len(data) == 0:
             print('data is empty')
             return None
-        
+
         buydata = data[data.type == 'buy']
         selldata = data[data.type == 'sell']
 
@@ -87,7 +93,7 @@ class Shipan:
 
         maxamount = dataBase.amount.astype('float64').max()
         minamount = dataBase.amount.astype('float64').min()
-        
+
         height = math.ceil( (maxprice - minprice) / 0.01 )
 
 
@@ -115,7 +121,7 @@ class Shipan:
             maxTotal = amountSellTotal_base.amount.max()
 
         amountBuyTotal = self.reFormatAmount(amountBuyTotal, width, maxTotal)
-    
+
         amountSellTotal = self.reFormatAmount(amountSellTotal, width, maxTotal)
 
         nd_leftPriceAmount = self.getNdPriceAmount(amountBuyTotal, height)
@@ -129,7 +135,7 @@ class Shipan:
         # print(nd_title)
         # exit()
 
-       
+
 
         nd_show = np.concatenate((nd_leftPriceAmount, nd_buy , nd_title, nd_sell, nd_rightPriceAmount), axis = 1)
 
@@ -138,7 +144,7 @@ class Shipan:
         nd_kline = self.drawKline(data, dataBase, kh, kw)
         nd_f = np.concatenate((nd_f, nd_kline), axis = 1)
 
-      
+
         summary = self.sim.getSummayObj(data)
 
         bottomTitle = self.getBottomTitle(summary, nd_f.shape)
@@ -155,7 +161,7 @@ class Shipan:
 
         f = '%Y-%m-%d %H:%M:%S'
         now = time.strftime(f)
-      
+
         times = data.timedate.astype("int64").min()
         return {"tstr": tstr, 'now': now, 'times': times}
         # print(tstr)
@@ -165,7 +171,7 @@ class Shipan:
         if len(data) == 0:
             print('data is empty')
             return None
-        
+
         buydata = data[data.type == 'buy']
         selldata = data[data.type == 'sell']
 
@@ -179,7 +185,7 @@ class Shipan:
 
         maxamount = dataBase.amount.astype('float64').max()
         minamount = dataBase.amount.astype('float64').min()
-        
+
         height = math.ceil( (maxprice - minprice) / 0.01 )
 
 
@@ -207,7 +213,7 @@ class Shipan:
             maxTotal = amountSellTotal_base.amount.max()
         self.printRunTime('6.05')
         amountBuyTotal = self.reFormatAmount(amountBuyTotal, width, maxTotal)
-    
+
         amountSellTotal = self.reFormatAmount(amountSellTotal, width, maxTotal)
 
         # nd_leftPriceAmount = self.getNdPriceAmount(amountBuyTotal, height)
@@ -239,12 +245,12 @@ class Shipan:
 
         # print(code_buy, code_sell, code_kline)
 
-       
+
 
         nd_f = np.concatenate((nd_f, nd_kline), axis = 1)
         self.printRunTime('6.09')
         # print(self.transNdToStr(nd_f))
-        
+
         nd = self.transNdToCode(nd_f)
         self.printRunTime('6.10')
         return nd
@@ -269,14 +275,14 @@ class Shipan:
             else:
                 listarr.append('NOT_PRINT')
         return np.array(listarr).reshape((1, colNum))
-        
+
 
     def drawline(self, data):
 
         if len(data) == 0:
             print('data is empty')
             return False
-        
+
         buydata = data[data.type == 'buy']
         selldata = data[data.type == 'sell']
 
@@ -287,7 +293,7 @@ class Shipan:
 
         maxamount = data.amount.astype('float64').max()
         minamount = data.amount.astype('float64').min()
-        
+
         height = math.ceil( (maxprice - minprice) / 0.01 )
 
 
@@ -312,7 +318,7 @@ class Shipan:
             maxTotal = amountSellTotal.amount.max()
 
         amountBuyTotal = self.reFormatAmount(amountBuyTotal, width, maxTotal)
-      
+
 
         amountSellTotal = self.reFormatAmount(amountSellTotal, width, maxTotal)
 
@@ -334,7 +340,7 @@ class Shipan:
         nd_f = self.topToBottom(nd_show)
         tstr = self.transNdToStr(nd_f)
 
-      
+
 
 
         # print(nd_title)
@@ -354,7 +360,7 @@ class Shipan:
             list_t.append(amount)
 
         nd_title = np.array(list_t)
- 
+
         nd_title = nd_title.reshape((height + 1, 1))
         return nd_title
 
@@ -372,12 +378,12 @@ class Shipan:
                 sprice = Decimal(minPrice + i * sepPrice).quantize(Decimal('0.0000'))
             list_t.append("%.2f" % sprice)
 
-       
+
         nd_title = np.array(list_t)
         nd_title = nd_title.reshape((height + 1, 1))
         # print(nd_title.ndim)
         return nd_title
-       
+
     def transDfAmountToDdarry(self, data, height, width):
         nd_arr = np.zeros((height + 1, width))
         shape = nd_arr.shape
@@ -390,7 +396,7 @@ class Shipan:
                 amount = currentIndexData.amount
                 w = int(currentIndexData.w)
                 key = int(currentIndexData.key)
-                
+
                 nd_arr[i, 0:w] = 1
         return nd_arr
 
@@ -412,7 +418,7 @@ class Shipan:
         minamount = data.amount.astype('float64').min()
 
         subPerHeight = (maxprice - minprice) / height
-        
+
         showstage = {}
         for tradek in formatData.index:
             price = float(formatData.at[tradek, 'price'])
@@ -429,7 +435,7 @@ class Shipan:
             else:
                 showstage[nd_key] = {"key": nd_key, "amount": amount}
 
-   
+
         df = pd.DataFrame(showstage).T
 
         return df
@@ -445,7 +451,7 @@ class Shipan:
             if i in key_df.index:
                 cs = key_df.loc[i]
                 w = int(cs['w'])
-                for j in range(colNum):               
+                for j in range(colNum):
                     if j < w:
                         tstr = tstr + '#'
                     elif j >= w:
@@ -454,14 +460,14 @@ class Shipan:
                     if j == colNum - 1:
                         tstr = tstr + "\n"
             else:
-                for j in range(colNum):               
-                 
+                for j in range(colNum):
+
                     tstr = tstr + '.'
 
                     if j == colNum - 1:
                         tstr = tstr + "\n"
 
-        return tstr 
+        return tstr
 
     def transNdToStr(self, nd_arr):
 
@@ -484,7 +490,7 @@ class Shipan:
                     tstr = tstr + '∨'
                 else:
                     tstr = tstr + nd_arr[i, j]
-            
+
                 if j == colNum - 1:
                     tstr = tstr + "\n"
 
@@ -497,7 +503,7 @@ class Shipan:
         colNum = shape[1]
 
         codeIndex = 0
-       
+
         for i in range(rowNum):
             for j in range(colNum):
                 if nd_arr[i, j] == 0 or nd_arr[i, j] == '0.0':
@@ -524,7 +530,7 @@ class Shipan:
         for i in range(rowNum // 2):
             mt[i], mt[rowNum-1-i] = mt_origin[rowNum-1-i], mt_origin[i]
         return mt
-    
+
     def stepOver(self, timeStart, timeEnd, stepSec, ah, aw, kh, kw, his = False, interval = 0.5, ploop = 1):
         cha = self.cha
         st = timeStart
@@ -539,9 +545,9 @@ class Shipan:
         stime = time.strptime(timeStart, f)
         etime = time.strptime(timeEnd, f)
 
-      
+
         # exit()
-        
+
         # sec time
         tm_s = time.mktime(stime)
         tm_e = time.mktime(etime)
@@ -555,7 +561,7 @@ class Shipan:
 
         while tm_stepnow < tm_e:
             tm_stepnow = stepSec + tm_stepnow
-           
+
             tm_s_stu = time.gmtime(tm_s + 8 * 3600)
             tm_stepnow_stu = time.gmtime(tm_stepnow + 8 * 3600)
 
@@ -570,7 +576,7 @@ class Shipan:
                 dataAll = cha.searchTimeArea(time.strftime(f2, stime), time.strftime(f2, etime))
                 data = cha.searchTimeArea(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_stepnow_stu))
                 nd_f = self.drawBase(data, dataAll, ah, aw, kh, kw)
-  
+
                 if his:
                     if nd_f is not None:
                         gkey = self.gkey(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_stepnow_stu), stepSec, ah, aw, kh, kw)
@@ -586,13 +592,13 @@ class Shipan:
         if ploop > 1:
             ploop = ploop -1
             time.sleep(4)
-            p.stepOver(timeStart, timeEnd, stepSec, ah, aw, kh, kw, his, interval, ploop) 
-            
+            p.stepOver(timeStart, timeEnd, stepSec, ah, aw, kh, kw, his, interval, ploop)
+
 
 
     def stepOverNow(self, stepSec, ah, aw, kh, kw):
         cha = self.cha
-        
+
 
         f = '%Y-%m-%d %H:%M:%S'
         f2 = '%Y%m%d%H%M%S'
@@ -606,18 +612,18 @@ class Shipan:
         etime = time.strptime(now, f)
         tm_e = time.mktime(etime)
         tm_s = tm_e - stepSec
-        
+
         tm_s_stu = time.gmtime(tm_s + 8 * 3600)
         tm_e_stu = time.gmtime(tm_e + 8 * 3600)
 
         data = cha.searchTimeArea(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_e_stu))
         nd_f = self.drawBase(data, data, ah, aw, kh, kw)
-        
+
         if nd_f is not None:
             print(self.transNdToStr(nd_f))
         # one more time
         self.stepOverNow(stepSec, ah, aw, kh, kw)
-    
+
 
     def gkey(self, times, timee, step, ah, aw, kh, kw):
         mongo = cfg.getMongo(self.tradeVariety)
@@ -700,7 +706,7 @@ class Shipan:
                 return self.getTimePrice(dfdata, timedate_pre.timedate.astype('int64').max())
             else :
                 return 0
-            
+
     def transTimeToTimedate(self, tstime):
         f2 = '%Y%m%d%H%M%S'
         tm_s_stu = time.gmtime(tstime)
@@ -733,7 +739,7 @@ class Shipan:
 
         # self.sim.writeTradeLog("\n" + nd_str)
         print(nd_str)
-        
+
     def getDataIndexStr(self, timeStart, timeEnd, ah = 16, aw = 45, kh = 16, kw = 70):
 
         sdate = func.transF1ToTimedateF2(timeStart)
@@ -753,16 +759,16 @@ class Shipan:
 
     def drawIndexCode(self, timeStart, timeEnd, ah = 16, aw = 45, kh = 16, kw = 70, timeSepM = 5):
         f = '%Y-%m-%d %H:%M:%S'
-       
-        
+
+
         ps = datetime.datetime.strptime(timeStart, f)
         stimeEnd = (ps+datetime.timedelta(minutes=timeSepM)).strftime(f)
         ar = []
         while True:
-           
+
 
             if datetime.datetime.strptime(stimeEnd, f) <= datetime.datetime.strptime(timeEnd, f):
-         
+
 
                 sdate = func.transF1ToTimedateF2(timeStart)
                 edate = func.transF1ToTimedateF2(stimeEnd)
@@ -777,7 +783,7 @@ class Shipan:
                     continue
 
                 nd_code = {}
-                
+
                 code = self.drawBaseIndexCode(dataAll, dataAll, ah, aw, kh, kw)
                 print(code)
                 nd_code['code'] = code
@@ -794,7 +800,7 @@ class Shipan:
 
         ar_df = pd.DataFrame(ar)
 
-        # first_num = num_info[0:12] 
+        # first_num = num_info[0:12]
         # plt.plot(ar_df["tm"],ar_df["b"])
         # labx = range(len(ar_df["b"]))
         labx = ar_df['tm']
@@ -802,7 +808,7 @@ class Shipan:
         # plt.plot(labx,ar_df["s"],label="s",color="#60dc41")
         #绘制网格
         plt.grid(alpha=0.4, linestyle=':')
-       
+
         #添加图例，prop指定图例的字体, loc坂数坯以查看溝砝
         plt.legend(loc="upper left")
 
@@ -815,12 +821,15 @@ class Shipan:
         # print(ar_df)
 
     def getPoint(self, timeStart, timeEnd):
+
+        return self.paint.getPoint(timeStart, timeEnd)
+
         self.getPointCount = self.getPointCount + 1
         if self.getPointCount > 1:
             self.getPointCount = 0
             return None
 
-        
+
         sdate = func.transF1ToTimedateF2(timeStart)
         edate = func.transF1ToTimedateF2(timeEnd)
         dataAll = self.cha.searchTimeArea(sdate, edate)
@@ -830,7 +839,7 @@ class Shipan:
 
         maxPrice = dataAll['price'].astype('float64').max()
         minPrice = dataAll['price'].astype('float64').min()
-        
+
         dfmaxRows = dataAll.loc[dataAll.price.astype('float64') == maxPrice]
 
         if len(dfmaxRows) == 0:
@@ -852,10 +861,10 @@ class Shipan:
 
         absMax = abs(float(dfmaxRow.price) - float(currentRow.price))
         absMin = abs(float(dfminRow.price) - float(currentRow.price))
-        
+
         print("absMax %f, p %f" % (absMax, absMax / float(dfmaxRow.price)))
         print("absMin %f, p %f" % (absMin, absMin / float(dfminRow.price)))
-       
+
         mutiny = False
 
         like = abs(absMax - absMin) / float(currentRow.price)
@@ -900,20 +909,20 @@ class Shipan:
             # return self.getPoint(timeLeft, timeEnd)
             return None
 
-       
+
         sdate = leftRow.timedate
         edate = func.transF1ToTimedateF2(timeEnd)
         # print(leftRow)
         # print(sdate, edate)
         dataCodeAll = self.cha.searchTimeArea(sdate, edate)
-        
-        code = self.drawBaseIndexCode(dataCodeAll, dataCodeAll, ah = 22, aw = 40, kh = 22, kw = 80)     
-        
-        
+
+        code = self.drawBaseIndexCode(dataCodeAll, dataCodeAll, ah = 22, aw = 40, kh = 22, kw = 80)
+
+
         self.getPointCount = 0
 
         if mutiny == False:
-            
+
             if absMax > absMin:
                 if code < 260000:
                     print("code %s not for buy" % code)
@@ -952,15 +961,15 @@ class Shipan:
                     if currentLine['id'] == tdata['id']:
                         hask = 1
                         continue
-                    
+
                     if hask == 1:
                         moredata.append(dict(currentLine))
 
                 if hask == 0 and len(addTempList) > 0:
                     moredata = addTempList
-                   
+
             # print(len(df_hdata),len(moredata))
-                    
+
             if len(moredata) > 0:
                 self.cha.addCacheData(moredata)
 
@@ -989,15 +998,16 @@ class Shipan:
                 psLeft = datetime.datetime.strptime(timeRight, f)
                 timeLeft = (psLeft+datetime.timedelta(minutes=-58)).strftime(f)
                 print(timeLeft, timeRight)
-            
+
                 pc = self.getPoint(timeLeft, timeRight)
+
 
                 # ps = datetime.datetime.strptime(stimeEnd, f)
                 # stimeEnd = (ps+datetime.timedelta(minutes=timeSepM)).strftime(f)
 
                 if pc is None:
                     print("point code none, last dump")
-                
+
                     if self.lastPointCode is not None:
                         data_share_map['timedate'] = self.lastPointCode.get('timedate')
                         data_share_map['price'] = self.lastPointCode.get('price')
@@ -1008,24 +1018,27 @@ class Shipan:
                     time.sleep(1)
                     continue
                 pointCode = dict(pc)
-            
 
                 #pointCode['code'] = 400000
                 #pointCode['price'] = 0.1
-                
+
                 dft = pd.DataFrame(self.orders)
+
                 if len(dft) == 0:
                     allNotCompTrades = []
                 else:
+                    dft['complete'] = dft['complete'].astype(float)
+                    dft['currency'] = dft['currency'].astype(float)
+                    dft['price'] = dft['price'].astype(float)
+
                     allNotCompTrades = dft.loc[dft.complete == 0]
 
-                if pointCode.get('code') > 320000:
-                
+                if pointCode.get('trade_opt') == 'buy':
+
                     if len(allNotCompTrades) > 0:
                         lastOrder = dict(allNotCompTrades.loc[allNotCompTrades.index[-1]])
 
                         if lastOrder['type'] == 'buy':
-
                             level = 1
                             for li in range(8):
                                 if len(allNotCompTrades) >= li + 2:
@@ -1039,6 +1052,7 @@ class Shipan:
 
                             spendUsdt = self.getLevelPrice(level)
 
+                            # 加仓
                             if float(lastOrder['price']) > float(pointCode.get('price')):
                                 pointPrice = (float(lastOrder['price']) - float(pointCode.get('price'))) / float(pointCode.get('price'))
                                 # 点差影响
@@ -1049,25 +1063,28 @@ class Shipan:
                                         if optres is not None:
                                             # self.forcePcLast(pointCode.get('timedate'), optres.get('filledRate'), allNotCompTradesSell.loc[allNotCompTradesSell.index[-1]])
                                             self.addOrder(optype = 'buy', currency = spendUsdt, code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
-                                    
+
                                     else:
                                         self.addOrder(optype = 'buy', currency = spendUsdt, code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
                         else:
+                            # 反向开单
+                            if float(lastOrder['price']) > float(pointCode.get('price')):
+                                pointPrice = (float(lastOrder['price']) - float(pointCode.get('price'))) / float(pointCode.get('price'))
+                                 # 点差影响
+                                if pointPrice > 0.00818:
+                                    optres = self.trade.buy(usdT = self.initUsdtUint, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
+                                    if optres is not None:
+                                        self.addOrder(optype = 'buy', code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
 
-                            optres = self.trade.buy(usdT = self.initUsdtUint, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
-                            if optres is not None:
-                                # self.forcePcLast(pointCode.get('timedate'), optres.get('filledRate'), lastOrder)
-                                self.addOrder(optype = 'buy', code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
-                            # self.forcePcLast(pointCode.get('timedate'), pointCode.get('price'), lastOrder)
-                    else:        
+                    else:
                         self.addOrder(optype = 'buy', code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
 
-                
-                elif pointCode.get('code') < 260000:
-                    
+
+                elif pointCode.get('trade_opt') == 'sell':
+
+
                     if len(allNotCompTrades) > 0:
                         lastOrder = dict(allNotCompTrades.loc[allNotCompTrades.index[-1]])
-                        print('llllllllll------------', lastOrder)
 
                         if lastOrder['type'] == 'sell':
                             level = 1
@@ -1083,6 +1100,7 @@ class Shipan:
 
                             spendUsdt = self.getLevelPrice(level)
 
+                            # 加空单
                             if float(lastOrder['price']) < float(pointCode.get('price')):
                                 pointPrice = (float(pointCode.get('price')) - float(lastOrder['price'])) / float(lastOrder['price'])
                                 if pointPrice > 0.00618:
@@ -1096,27 +1114,31 @@ class Shipan:
                                     else:
                                         self.addOrder(optype = 'sell', currency = spendUsdt, code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
                         else:
-                            optres = self.trade.sell(usdT = self.initUsdtUint, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
-                            if optres is not None:
-                                # self.forcePcLast(pointCode.get('timedate'), optres.get('filledRate'), lastOrder)
-                                self.addOrder(optype = 'sell', code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc = True)
-                    else:        
+                            # 反向单
+                            if float(lastOrder['price']) < float(pointCode.get('price')):
+                                pointPrice = (float(pointCode.get('price')) - float(lastOrder['price'])) / float(lastOrder['price'])
+                                if pointPrice > 0.00818:
+                                    optres = self.trade.sell(usdT = self.initUsdtUint, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
+                                    if optres is not None:
+                                        self.addOrder(optype = 'sell', code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc = True)
+
+                    else:
                         self.addOrder(optype = 'sell', code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
-                    
+
                 else:
-                    print('has no point to opt', pointCode)
+                    print('has no point to opt')
 
                     # print('orders', self.orders)
                     # self.pingc(pointCode.get('timedate'), pointCode.get('price'))
                 #print(pointCode)
 
-                print('hhhhupcode-------------',pointCode, self.lastPointCode)
+                # print('hhhhupcode-------------',pointCode, self.lastPointCode)
 
                 self.lastPointCode = pointCode
 
                 db_mysql = Mysql(self.tradeVariety)
                 db_mysql.updatePrice(type = self.lastPointCode.get('type'), price = self.lastPointCode.get('price'), timedate = func.transTimedateToDate(self.lastPointCode.get('timedate')), pair = self.tradeVariety)
-                
+
                 data_share_map['timedate'] = self.lastPointCode.get('timedate')
                 data_share_map['price'] = self.lastPointCode.get('price')
 
@@ -1125,10 +1147,13 @@ class Shipan:
                     data_share_map_summay[ok] = objs[ok]
 
                 self.dumpTrade(pointCode.get('timedate'), pointCode.get('price'))
-                
-            
+
+                print(pointCode.get("trade_msg"), " opt: " + pointCode.get("trade_opt"), ", code: %s\n" % pointCode.get("code"))
+                print(pointCode.get("nd_obj").get("nd_point_str"))
+
                 # time.sleep(timeSepM * 60)
-                time.sleep(10)
+                # time.sleep(10)
+                time.sleep(random.randint(5, 15))
 
         except Exception as e:
             curpath = os.path.dirname(os.path.realpath(__file__))
@@ -1142,8 +1167,6 @@ class Shipan:
 
             time.sleep(3)
 
-    
-    
     def getLevelPrice(self, level, currency = 0):
         currency = float(currency)
         if currency == 0:
@@ -1155,13 +1178,16 @@ class Shipan:
         if level == 0:
             levelPrice = startLevelPrice
         else:
-            maxLevel = 8
+            maxLevel = 16
             if level > maxLevel:
                 level = maxLevel
-                
+
             rel = 1 + (level - 1) * (level * 1 /maxLevel)
 
             levelPrice = startLevelPrice + level * (rel * startLevelPrice / maxLevel)
+
+            if levelPrice > 3 * startLevelPrice:
+                levelPrice = 3 * startLevelPrice
 
         return float("%.2f" % levelPrice)
 
@@ -1171,7 +1197,7 @@ class Shipan:
         mongo = cfg.getMongo(self.tradeVariety)
         db = MongoDB(mongo.get('DB'), 'gataio_eth_trades_h' + nowHour, mongo.get('DB_HOST'), mongo.get('DB_USER'), mongo.get('DB_PASS'))
         return list(db.query_all())
-       
+
     def getOrderLevel(self, linek):
         df = pd.DataFrame(list(self.orders))
         level = 0
@@ -1184,7 +1210,7 @@ class Shipan:
                 else:
                     break
         return level
-           
+
 
     def getTradeObjBuyOrders(self, currency):
         # self.pingc(timedate, price)
@@ -1192,7 +1218,7 @@ class Shipan:
         resdata = self.getPcOrders(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'), currency)
 
         df = pd.DataFrame(list(resdata))
-     
+
         tradeObj = {}
         tradeObj['maxStore'] = 0
         tradeObj['transferRate'] = 0
@@ -1267,8 +1293,8 @@ class Shipan:
                 Eshow = "空单:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Esc - Ebc, (Esc - Ebc) / Eamount)
                 pf = ((Esc - Ebc) / Eamount - price) * Eamount
                 r_transfer = c_profit / (Esc - Ebc)
-           
-           
+
+
             # tradeObj['maxStore'] = ("%.2f" % self.midcresult['mcMax'])
             tradeObj['transferRate'] = ("%.2f" % (r_transfer * 100))
             tradeObj['profit'] = ("%.2f" % c_profit)
@@ -1277,13 +1303,13 @@ class Shipan:
             tradeObj['orderSellCount'] = len(df_sell)
             tradeObj['cprice'] = price
             tradeObj['summary'] = Eshow
-           
-        return tradeObj   
+
+        return tradeObj
 
     def getTradeObj(self, timedate, price):
         self.pingc(timedate, price)
         df = pd.DataFrame(list(self.orders))
-     
+
         tradeObj = {}
         tradeObj['maxStore'] = 0
         tradeObj['transferRate'] = 0
@@ -1342,7 +1368,7 @@ class Shipan:
             c_profit = df['profit'].astype('float64').sum()
 
             r_transfer = c_profit / self.midcresult['mc']
-           
+
             tradeObj['maxStore'] = ("%.2f" % self.midcresult['mcMax'])
             tradeObj['transferRate'] = ("%.2f" % (r_transfer * 100))
             tradeObj['profit'] = ("%.2f" % c_profit)
@@ -1352,7 +1378,7 @@ class Shipan:
             tradeObj['cprice'] = price
             tradeObj['summary'] = Eshow
             tradeObj['unit'] = self.initUsdtUint
-        return tradeObj   
+        return tradeObj
 
     def getTradeStr(self, timedate, price):
         self.pingc(timedate, price)
@@ -1403,7 +1429,7 @@ class Shipan:
                 Eshow = "做空:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Esc - Ebc, (Esc - Ebc) / Eamount)
                 pf = ((Esc - Ebc) / Eamount - price) * Eamount
 
-           
+
             c_profit = df['profit'].astype('float64').sum()
 
             r_transfer = c_profit / self.midcresult['mc']
@@ -1414,12 +1440,12 @@ class Shipan:
             showStr = showStr + ("转化率 %.2f" % (r_transfer * 100)) + "\n"
 
             showStr = showStr + ("总体盈利 %.2f" % c_profit) + "\n"
-            
-            
+
+
 
             showStr = showStr + ("总单数 %d , 多单 %d, 空单 %d" % (len(df), len(df_buy), len(df_sell))) + "\n"
 
-            
+
 
             showStr = showStr + ("当前价格 %.2f" % price) + "\n"
             showStr = showStr + ("方向 %s" % Eshow) + "\n"
@@ -1429,7 +1455,7 @@ class Shipan:
         showStr = self.getTradeStr(timedate, price)
         print(showStr)
 
-           
+
     def forcePcLast(self, timedate, price, lastOrder):
         for ik in range(len(self.orders)):
             order = dict(self.orders[ik])
@@ -1461,19 +1487,19 @@ class Shipan:
                 if float(self.orders[i]['price']) < price:
                     self.orders[i]['suc'] = 1
                     self.orders[i]['profit'] = (price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-                    
+
                     (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
                 else:
                     self.orders[i]['suc'] = 2
                     self.orders[i]['profit'] = -(float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
 
     def pingcBuyCurrency(self, timedate, price):
-       
+
         price = float(price)
-        
+
         for i in range(len(self.orders)):
             self.orders[i]['currency'] = float(self.orders[i]['currency'])
-               
+
             absVal = abs(price - float(self.orders[i]['price']))
             absP = absVal / price
             # print('absp',absP)
@@ -1488,10 +1514,10 @@ class Shipan:
                     self.orders[i]['profit'] = (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
 
                 else:
-                    
+
                     self.orders[i]['suc'] = 2
                     self.orders[i]['profit'] = -(price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-                    
+
             else:
                 if float(self.orders[i]['price']) < price:
                     self.orders[i]['suc'] = 1
@@ -1501,17 +1527,17 @@ class Shipan:
                     self.orders[i]['suc'] = 2
                     self.orders[i]['profit'] = -(float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
 
-            self.orders[i]['price'] = Decimal(self.orders[i]['price']).quantize(Decimal('0.0000')) 
-            self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000')) 
+            self.orders[i]['price'] = Decimal(self.orders[i]['price']).quantize(Decimal('0.0000'))
+            self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
             self.orders[i]['profit'] = Decimal(self.orders[i]['profit']).quantize(Decimal('0.000'))
 
     def pingc(self, timedate, price):
-       
+
         price = float(price)
-        
+
         for i in range(len(self.orders)):
             self.orders[i]['currency'] = float(self.orders[i]['currency'])
-               
+
             absVal = abs(price - float(self.orders[i]['price']))
             absP = absVal / price
             # print('absp',absP)
@@ -1526,10 +1552,10 @@ class Shipan:
                     self.orders[i]['profit'] = (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
 
                 else:
-                    
+
                     self.orders[i]['suc'] = 2
                     self.orders[i]['profit'] = -(price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-                    
+
             else:
                 if float(self.orders[i]['price']) < price:
                     self.orders[i]['suc'] = 1
@@ -1539,19 +1565,19 @@ class Shipan:
                     self.orders[i]['suc'] = 2
                     self.orders[i]['profit'] = -(float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
 
-            self.orders[i]['price'] = Decimal(self.orders[i]['price']).quantize(Decimal('0.0000')) 
-            self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000')) 
+            self.orders[i]['price'] = Decimal(self.orders[i]['price']).quantize(Decimal('0.0000'))
+            self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
             self.orders[i]['profit'] = Decimal(self.orders[i]['profit']).quantize(Decimal('0.000'))
 
     def getPcOrders(self, timedate, price, currency):
-       
+
         price = float(price)
         orders = list(self.orders)
 
         print("recv or c", currency)
 
         for i in range(len(orders)):
-            
+
             level = self.getOrderLevel(i)
 
             print('level', level)
@@ -1559,7 +1585,7 @@ class Shipan:
             orders[i]['level'] = level
 
             orders[i]['currency'] = self.getLevelPrice(level, currency)
-               
+
             absVal = abs(price - float(orders[i]['price']))
             absP = absVal / price
             # print('absp',absP)
@@ -1575,10 +1601,10 @@ class Shipan:
                     orders[i]['profit'] = (float(orders[i]['price']) - price) / price * orders[i]['currency']
 
                 else:
-                    
+
                     orders[i]['suc'] = 2
                     orders[i]['profit'] = -(price - float(orders[i]['price'])) / float(orders[i]['price']) * orders[i]['currency']
-                    
+
             else:
                 if float(orders[i]['price']) < price:
                     orders[i]['suc'] = 1
@@ -1588,8 +1614,8 @@ class Shipan:
                     orders[i]['suc'] = 2
                     orders[i]['profit'] = -(float(orders[i]['price']) - price) / price * orders[i]['currency']
 
-            orders[i]['price'] = Decimal(orders[i]['price']).quantize(Decimal('0.0000')) 
-            orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000')) 
+            orders[i]['price'] = Decimal(orders[i]['price']).quantize(Decimal('0.0000'))
+            orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
             orders[i]['profit'] = Decimal(orders[i]['profit']).quantize(Decimal('0.000'))
 
         return orders
@@ -1621,7 +1647,7 @@ class Shipan:
 
     # def updateFirstOrder(self, suc = 1, profit = 0):
     #     if len(self.order) == 1:
-    
+
     def printRunTime(self, showmark = "run time:"):
         start = self.startTime
         end = time.time()
@@ -1637,7 +1663,7 @@ class Shipan:
 
         initUsdtUint = float(sys.argv[1])
         tradeVariety = sys.argv[2]
-     
+
 
         self.initResoure(tradeVariety)
 
@@ -1659,7 +1685,7 @@ class Shipan:
 
         # timeStart = '2019-01-28 11:05:00'
         # timeEnd = '2019-01-28 12:58:00'
-        
+
         # 180000 400000
         # timeEnd = now
         self.cha.cacheTimeArea(timeStart, timeStart)
@@ -1674,10 +1700,10 @@ class Shipan:
 
         pipe_name = os.path.dirname(os.path.realpath(__file__)) + '/log.sock'
         if not os.path.exists(pipe_name):
-            os.mkfifo(pipe_name)  
+            os.mkfifo(pipe_name)
         try:
             datastr = self.getTradeStr(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'))
-           
+
             bytestr = str.encode(datastr)
             pipeout = os.open(pipe_name, os.O_WRONLY)
             os.write(pipeout, bytestr)
@@ -1690,7 +1716,7 @@ class Shipan:
         if signum == signal.SIGUSR1:
             print('signal dump datalist')
             self.writeDataPipeInfo()
- 
+
     def registerSignal(self):
         # 注册信号处理程序
         signal.signal(signal.SIGUSR1, self.receive_signal)
@@ -1712,7 +1738,7 @@ class Shipan:
                 response = {"code": code}
 
                 if code == 'login':
-                    
+
                     response['errmsg'] = ''
                     mac = jsonobj.get('mac')
                     register_code = jsonobj.get('register_code')
@@ -1726,8 +1752,8 @@ class Shipan:
                     #     if register_code != 'A12315':
                     #         response['errmsg'] = 'register_code check error'
 
-                        
-                    
+
+
                     # if len(response['errmsg']) > 0:
                     #     responseStr = json.dumps(response, cls=DecimalEncoder)
                     #     server.send_message(client, responseStr)
@@ -1741,21 +1767,21 @@ class Shipan:
                     if client['is_check'] == 0:
                         # not check
                         # response['errmsg'] = 'check error'
-                        
+
                         # responseStr = json.dumps(response, cls=DecimalEncoder)
                         # server.send_message(client, responseStr)
 
                         # client['handler'].finish()
                         # return
                         client['is_check'] = 1
-                
+
                 if code == "get_list":
                     currency = jsonobj.get('currency')
                     if currency is None:
                         currency = 0
 
                     resdata = self.getPcOrders(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'), float(currency))
-                   
+
                     if len(resdata) == 0:
                         resdata = []
                     resdata = list(resdata)
@@ -1787,7 +1813,7 @@ class Shipan:
             # print(server,client)
             # client_handler = client['handler']
             # client_handler.finish()
-            
+
         # print(self.orders)
         # sp.ws_server.send_message_to_all("xxxhhhhhhhhhhhhhhhhhh")
         print("Client(%d) said: %s" % (client['id'], message))
@@ -1827,7 +1853,7 @@ if __name__ == "__main__":
     else:
         print("trade pair %s is not opening" % tradeVariety)
         # exit()
-            
+
     print("parent process:", os.getpid())
 
     sp = Shipan(tradeVariety)
@@ -1846,9 +1872,9 @@ if __name__ == "__main__":
 
 
     with multiprocessing.Manager() as MG:   #重命名
-       
+
         sp = Shipan(tradeVariety)
-      
+
 
         sp.initUsdtUint = initUsdtUint
         sp.tradeVariety = tradeVariety
@@ -1866,7 +1892,7 @@ if __name__ == "__main__":
         sp.orders = multiprocessing.Manager().list([])   #主进程与子进程共享这个List
         sp.lastPointCode = multiprocessing.Manager().dict()
         sp.summary = multiprocessing.Manager().dict()
-        
+
         p = multiprocessing.Process(target=sp.autoStart,args=(sp.orders, sp.lastPointCode, sp.summary))
 
         p.start()
@@ -1885,7 +1911,7 @@ if __name__ == "__main__":
         #     if isInitWs == False:
         #         print("init websocket")
 
-                
+
 
 
             #     isInitWs = True
@@ -1896,7 +1922,7 @@ if __name__ == "__main__":
 
 
             # print(sp.data_share_list)
-            
+
             # time.sleep(1)
 
 

@@ -10,7 +10,7 @@ import func
 class Mysql:
     def __init__(self, tradeVariety):
         self.table_suffix = tradeVariety
-        print('start mysql conn')
+        # print('start mysql conn')
 
     def getDb(self):
         # db = pymysql.connect("localhost","root","qweasd","trader")

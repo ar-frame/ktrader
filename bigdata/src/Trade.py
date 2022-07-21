@@ -29,8 +29,11 @@ except ImportError:
 import os
 import func
 import cfg
+import random
 from gateAPI import GateIO
 from okex.lever_api import LeverAPI
+from binance.spot import Spot as Client
+
 class Trade:
 
     def __init__(self):
@@ -42,26 +45,31 @@ class Trade:
         nowHour = datetime.datetime.now().strftime('%Y%m%d%H')
 
         ## 填写 apiKey APISECRET
-        apiKey = config.get('okex', 'apiKey')
-        secretKey = config.get('okex', 'secretKey')
-        passphrase = config.get('okex', 'passphrase')
-
-        API_QUERY_URL = config.get('gateio', 'API_QUERY_URL')
-        API_TRADE_URL = config.get('gateio', 'API_TRADE_URL')
+        apiKey = config.get(self.TRADE_TYPE, 'apiKey')
+        secretKey = config.get(self.TRADE_TYPE, 'secretKey')
 
         if self.TRADE_TYPE == 'gateio':
-        	self.gate_trade = GateIO(API_TRADE_URL, apiKey, secretKey)
+            API_QUERY_URL = config.get('gateio', 'API_QUERY_URL')
+            API_TRADE_URL = config.get('gateio', 'API_TRADE_URL')
+            self.gate_trade = GateIO(API_TRADE_URL, apiKey, secretKey)
+        elif self.TRADE_TYPE == 'binance':
+            httpProxies = config.get(self.TRADE_TYPE, 'httpProxies')
+            proxies = None
+            if len(httpProxies) > 0:
+                proxies = {'https': httpProxies}
+            self.gate_trade = Client(key = apiKey, secret = secretKey, proxies = proxies)
         else:
-        	self.gate_trade = LeverAPI(apiKey, secretKey, passphrase, True)
-
+            passphrase = config.get(self.TRADE_TYPE, 'passphrase')
+            self.gate_trade = LeverAPI(apiKey, secretKey, passphrase, True)
 
     def sell(self, usdT = 5, price = None, trytime = 3, tradeVariety = 'ETH-USDT'):
-
         if self.SHIPAN_ENABLE != 'yes':
             print("SHIPAN DISABLED")
             return False
         if self.TRADE_TYPE == 'gateio':
             return self.sell_gate(usdT, price, trytime, tradeVariety)
+        elif self.TRADE_TYPE == 'binance':
+            return self.trade_binance('SELL', usdT, price, trytime, tradeVariety)
         else:
             return self.sell_okex(usdT, price, trytime, tradeVariety)
 
@@ -73,6 +81,8 @@ class Trade:
 
         if self.TRADE_TYPE == 'gateio':
             return self.buy_gate(usdT, price, trytime, tradeVariety)
+        elif self.TRADE_TYPE == 'binance':
+            return self.trade_binance('BUY', usdT, price, trytime, tradeVariety)
         else:
             return self.buy_okex(usdT, price, trytime, tradeVariety)
 
@@ -214,8 +224,6 @@ class Trade:
         elif tradeVariety == 'BTC-USDT':
             cpair = 'btc_usdt'
 
-
-
         amount = "%.4f" % (Decimal(usdT) / Decimal(price))
         print(price, amount, trytime , 'buy')
         try:
@@ -240,12 +248,118 @@ class Trade:
                 return {'result': 'true', 'deal_stock': deal_stock, 'deal_money': deal_money, 'filledRate': deal_price}
             else:
                 time.sleep(0.1)
-                return self.buy(usdT, price, trytime - 1, tradeVariety = 'ETH-USDT')
+                return self.buy(usdT, price, trytime - 1, tradeVariety = tradeVariety)
+
+    def trade_binance(self, opt, usdT, price , trytime, tradeVariety):
+        cpair = tradeVariety.upper().replace("-", "")
+        print('cpair', cpair)
+
+        if trytime == 0:
+            return None
+
+        if trytime == 1:
+            if opt == 'BUY':
+                price = Decimal(price) + Decimal(price) * Decimal('0.0018')
+            else:
+                price = Decimal(price) - Decimal(price) * Decimal('0.0018')
+
+        price = Decimal(price).quantize(Decimal('0.00'))
+
+        double_format = "%.6f"
+        if cpair == 'BTCUSDT':
+            double_format = "%.5f"
+        amount = double_format % (Decimal(usdT) / Decimal(price))
+
+        print(price, amount, trytime , opt)
+        try:
+            # asset borrow repay
+            user_assets = self.gate_trade.margin_account()
+            df = pd.DataFrame(user_assets['userAssets'])
+            df.index = df['asset']
+
+            asset_name = cpair[0:-4]
+            current_asset = df.loc[asset_name]
+            usdt_asset = df.loc['USDT']
+
+            if opt == 'BUY':
+                if float(usdt_asset['free']) < usdT:
+                    borrow_usdt = self.gate_trade.margin_borrow('USDT', usdT)
+                    print("need borrow usdt:", borrow_usdt)
+            else:
+                if float(current_asset['free']) < float(amount):
+                    borrow_asset = self.gate_trade.margin_borrow(asset_name, amount)
+                    print("need borrow asset", borrow_asset)
+        except Exception as e:
+            print("binance outer api error")
+            print(e)
+            return None
+
+        try:
+            params = {
+                'symbol': cpair,
+                'side': opt, # SELL OR BUY
+                'type': 'LIMIT',
+                'timeInForce': 'GTC',
+                'quantity': amount,
+                'price': price
+            }
+
+            print(params)
+            new_order = self.gate_trade.new_margin_order(**params)
+
+            print(new_order)
+        except Exception as e:
+            print("opt load err:")
+            print(e)
+            return None
+        print("opt_order_result", params, new_order)
+        if new_order.get('status') == 'FILLED':
+            print('opt succ', new_order)
+            order = {"deal_money": new_order['cummulativeQuoteQty'], "filledRate": new_order['price']}
+
+            try:
+                repay_asset = 'USDT'
+                borrow_num = float(usdt_asset['borrowed'])
+                free_num = float(usdt_asset['free'])
+
+                if opt == 'BUY':
+                    repay_asset = asset_name
+                    borrow_num = float(current_asset['borrowed'])
+                    free_num = float(current_asset['free'])
+
+                if free_num > borrow_num:
+                    repay_result = self.gate_trade.margin_repay(repay_asset, borrow_num)
+                    print(repay_result)
+
+            except Exception as e:
+                print("repay error", e)
+
+            return order
+        else:
+            time.sleep(random.randint(1, 5))
+            open_orders = self.gate_trade.margin_open_orders()
+            if len(open_orders) > 0:
+                print("clear orders")
+                self.gate_trade.margin_open_orders_cancellation(cpair)
+
+                if opt == 'BUY':
+                    return self.buy(usdT, price, trytime - 1, tradeVariety = tradeVariety)
+                else:
+                    return self.sell(usdT, price, trytime - 1, tradeVariety = tradeVariety)
+            else:
+                print("empty time trade")
+                show_order = self.gate_trade.margin_order(symbol = cpair, orderId = new_order['orderId'])
+                print(show_order)
+
+                order = {"deal_money": show_order['cummulativeQuoteQty'], "filledRate": show_order['price']}
+                return order
 
 if __name__ == "__main__":
     t = Trade()
     # res = t.sell(1, 148.3)
-    res = t.buy(0.19, 200, tradeVariety = 'ETH-USDT')
+    #  usdT = 5, price = None, trytime = 3, tradeVariety = 'ETH-USDT'
+    # binance btc test for sell min amount > : 0.00017 4$ , for buy amount > : 0.001 25$ , if low get  'MIN_NOTIONAL' msg
+    res = t.buy(usdT = 25, price = 5000, trytime = 3, tradeVariety = 'BTC-USDT')
     #res = t.sell(10, 9600, tradeVariety = 'BTC-USDT')
     print(res)
 

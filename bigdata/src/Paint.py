@@ -839,14 +839,14 @@ class Paint:
         # print(ar_df)
 
     def getPoint(self, timeStart, timeEnd):
-
+       
         # print('gp:', timeStart, timeEnd)
         self.getPointCount = self.getPointCount + 1
         if self.getPointCount > 3:
             self.getPointCount = 0
             return None
 
-        p.printRunTime('point start 1')
+        self.printRunTime('point start 1')
         sdate = func.transF1ToTimedateF2(timeStart)
         edate = func.transF1ToTimedateF2(timeEnd)
 
@@ -856,7 +856,7 @@ class Paint:
 
         maxPrice = dataAll['price'].astype('float64').max()
         minPrice = dataAll['price'].astype('float64').min()
-        p.printRunTime('point start 2')
+        self.printRunTime('point start 2')
         dfmaxRows = dataAll.loc[dataAll.price.astype('float64') == maxPrice]
 
         if len(dfmaxRows) == 0:
@@ -877,7 +877,7 @@ class Paint:
 
         absMax = abs(float(dfmaxRow.price) - float(currentRow.price))
         absMin = abs(float(dfminRow.price) - float(currentRow.price))
-        p.printRunTime('point start 3')
+        self.printRunTime('point start 3')
         # print("absMax %f, p %f" % (absMax, absMax / float(dfmaxRow.price)))
         # print("absMin %f, p %f" % (absMin, absMin / float(dfminRow.price)))
 
@@ -931,7 +931,7 @@ class Paint:
             trade_opt = 'no'
             trade_msg = "balance min max"
 
-        p.printRunTime('point start 4')
+        self.printRunTime('point start 4')
         sdate = leftRow.timedate
         edate = func.transF1ToTimedateF2(timeEnd)
 
@@ -945,14 +945,14 @@ class Paint:
         dataCodeArea = self.cha.searchTimeArea(sdate, edate)
         # dataCodeAll = self.cha.searchTimeArea(longnowsdate, edate)
 
-        p.printRunTime('point start 5')
+        self.printRunTime('point start 5')
         nd_obj = self.drawBaseIndexCode(dataCodeArea, dataCodeArea, ah = 22, aw = 40, kh = 22, kw = 80)
 
         # self.nd_point_strs.append(nd_obj.get("nd_point_str"))
 
         code = nd_obj.get("nd_point_code")
 
-        p.printRunTime('point start 6')
+        self.printRunTime('point start 6')
         self.getPointCount = 0
 
         if mutiny == False:
@@ -961,7 +961,7 @@ class Paint:
                 if code < 260000:
                     trade_msg = "code %s sell, expect for buy" % code
                     print(trade_msg)
-                    print(nd_obj.get("nd_point_str"))
+                    # print(nd_obj.get("nd_point_str"))
                     trade_opt = 'no'
                 elif code > 320000:
                     trade_opt = 'buy'
@@ -970,7 +970,7 @@ class Paint:
                 if code > 320000:
                     trade_msg = "code %s buy, expect for sell" % code
                     print(trade_msg)
-                    print(nd_obj.get("nd_point_str"))
+                    # print(nd_obj.get("nd_point_str"))
                     trade_opt = 'no'
                 elif code < 260000:
                     trade_opt = 'sell'

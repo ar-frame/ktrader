@@ -337,11 +337,11 @@ def getPoint(self, timeStart, timeEnd):
 系统集成了okex , gate.io 
 配置及密钥修改:conf.ini
 ```
-; 开启实盘 no | yex
+; 开启实盘 no | yes
 SHIPAN_ENABLE = no
 
-; 交易所 okex | gateio
-TRADE_TYPE = okex
+; 交易所 binance | okex | gateio
+TRADE_TYPE = binance
 
 [gateio]
 ...
@@ -376,27 +376,18 @@ key alias : test
 
 # 【8.杂篇】
 
-基于此文档的视频操作教程：
+## 基于此文档的视频操作教程
+## [1.KTrader简介](https://www.zhihu.com/zvideo/1525847400921378816)
+## [2.如何回测](https://www.zhihu.com/zvideo/1526932656764186624)
+## [3.自定义策略](https://www.zhihu.com/zvideo/1526935650145755136)
+## [4.如何实盘](https://www.zhihu.com/zvideo/1526951247911673856)
+## [5.代理激活码生成](https://www.zhihu.com/zvideo/1526952645588094976)
+## [6.web版打包](https://www.zhihu.com/zvideo/1526954475802062848)
+## [7.安卓版打包](https://www.zhihu.com/zvideo/1526956566222147585)
+## [8.源码下载](https://www.zhihu.com/zvideo/1526959243780980736)
 
-[1.KTrader简介](https://www.zhihu.com/zvideo/1525847400921378816)
-
-[2.如何回测](https://www.zhihu.com/zvideo/1526932656764186624)
-
-[3.自定义策略](https://www.zhihu.com/zvideo/1526935650145755136)
-
-[4.如何实盘](https://www.zhihu.com/zvideo/1526951247911673856)
-
-[5.代理激活码生成](https://www.zhihu.com/zvideo/1526952645588094976)
-
-[6.web版打包](https://www.zhihu.com/zvideo/1526954475802062848)
-
-[7.安卓版打包](https://www.zhihu.com/zvideo/1526956566222147585)
-
-[8.源码下载](https://www.zhihu.com/zvideo/1526959243780980736)
-
-
+---
 ## dokcer 常用命令
-
 ### container
 ```
 docker export c | gzip > ./c.tar.gz
@@ -409,6 +400,23 @@ docker save
 gunzip -c *.tar.gz | docker load
 
 ```
+
+# 【更新日志】
+
+## 2022/07/21 增加 binace margin trade
+### 安装扩展: `pip install binance-connector`
+### conf.ini相关配置: 
+```
+; 交易所 binance | okex | gateio
+TRADE_TYPE = binance
+
+[binance]
+apiKey = **************
+secretKey = *******
+httpProxies = ************
+
+```
+
 
 ---
 【MIT】
