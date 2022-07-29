@@ -1,12 +1,10 @@
 # mongodb数据库操作
 from pymongo import MongoClient
 import time
-db_connection = None
-db = None
 
 class MongoDB:
     # 连接
-    def __init__(self, db_name, db_collection_name, dbHost = '120.24.7.188', dbUser = 'mongoroot', dbPass = 'cdcmogo2019Root'):
+    def __init__(self, db_name, db_collection_name, dbHost = '127.0.0.1', dbUser = '', dbPass = '', dbPort = 27017):
         '''
         数据库连接
         '''
@@ -15,12 +13,12 @@ class MongoDB:
         self.dbHost = dbHost
         self.dbUser = dbUser
         self.dbPass = dbPass
+        self.dbPort = dbPort
 
-       
-        self.connect(db_name, db_collection_name, dbHost,dbUser,dbPass)
+        self.connect(db_name, db_collection_name, dbHost, dbUser, dbPass, dbPort)
 
-    def connect(self, db_name, db_collection_name, dbHost = '120.24.7.188', dbUser = 'mongoroot', dbPass = 'cdcmogo2019Root'):
-        client = MongoClient(dbHost, 27017, serverSelectionTimeoutMS=100,connectTimeoutMS=20000)
+    def connect(self, db_name, db_collection_name, dbHost = '127.0.0.1', dbUser = '',dbPass = '', dbPort = 27017):
+        client = MongoClient(dbHost, dbPort, serverSelectionTimeoutMS = 100, connectTimeoutMS = 20000)
         try:
             #client.admin.command('ismaster')
             info = client.server_info()
@@ -65,6 +63,7 @@ class MongoDB:
         if self.isAvailable() == False:
             self.reConnectDb()
         self.db_connection = self.db[collection_name]
+        return self
     
     def get_all_collections(self):
         if self.isAvailable() == False:
@@ -75,17 +74,18 @@ class MongoDB:
     def clear_collections(self):
         for i in self.db_connection.find():
             self.db_connection.delete_one({"_id": i['_id']})
+        return self
+
     # insert
     def insert(self, data):
         if self.isAvailable() == False:
             self.reConnectDb()
 
         if isinstance(data, dict):
-            return self.db_connection.insert(data)
+            return self.db_connection.insert_one(data)
         elif len(data) > 0:
             return self.db_connection.insert_many(data)
         
-
     # 查找一行
     def query_row(self, con):
         if self.isAvailable() == False:
@@ -115,18 +115,16 @@ class MongoDB:
 
     #删除一个collection中的所有数据
     def remove(self):
-        if self.isAvailable() == False:
-            self.reConnectDb()
-        return self.db_connection.remove()
+        return self.clear_collections()
 
     # 删除记录
     def delete(self, con):
         if self.isAvailable() == False:
             self.reConnectDb()
-        return self.db_connection.delete_one(con)
+        return self.db_connection.delete_many(con)
 
     # 行数
     def count(self, con):
         if self.isAvailable() == False:
             self.reConnectDb()
-        return self.db_connection.count(con)
+        return self.db_connection.count_documents(con)

@@ -6,7 +6,7 @@ __author__ = 'assnr'
 import pymysql
 import cfg
 import func
-    
+
 class Mysql:
     def __init__(self, tradeVariety):
         self.table_suffix = tradeVariety
@@ -25,10 +25,10 @@ class Mysql:
         try:
             # 打开数据库连接
             db = self.getDb()
-            # 使用cursor()方法获取操作游标 
+            # 使用cursor()方法获取操作游标
             cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
             # SQL 插入语句
-            sql = "SELECT * FROM `record_"+self.table_suffix+"` ORDER BY id DESC LIMIT %d" % (rowCount)
+            sql = "SELECT * FROM `record_"+self.table_suffix+"` WHERE `complete` = '0' ORDER BY id DESC LIMIT %d" % (rowCount)
 
             try:
                 # 执行SQL语句
@@ -38,7 +38,7 @@ class Mysql:
 
                 # for row in results:
                 #     print(row)
-                
+
                     # 打印结果
                     # print ("fname=%s,lname=%s,age=%s,sex=%s,income=%s" % \
                     #         (fname, lname, age, sex, income ))
@@ -56,12 +56,39 @@ class Mysql:
             print ("Error: db error", e)
             return []
 
+
+
+    def updatepcOrders(self):
+        print("updatepcorders")
+        #'buy' 0.7794332 4.186 2020-02-17 21:11:30 400000 0 0 0
+        #print("catch insert data")
+        try:
+            # 打开数据库连接
+            db = self.getDb()
+            # 使用 cursor() 方法创建一个游标对象 cursor
+            cursor = db.cursor()
+            # SQL 插入语句
+            sql = "UPDATE `record_"+self.table_suffix+"` set `complete` = '1' WHERE `complete` = '0'"
+            try:
+                # 执行sql语句
+                cursor.execute(sql)
+                # 执行sql语句
+                db.commit()
+            except Exception as e:
+                # 发生错误时回滚
+                db.rollback()
+                print ("Error: db insert error", e)
+            # 关闭数据库连接
+            db.close()
+        except Exception as e:
+            print ("Error: db updatepcOrders error", e)
+
     def getPrice(self):
         results = []
         try:
             # 打开数据库连接
             db = self.getDb()
-            # 使用cursor()方法获取操作游标 
+            # 使用cursor()方法获取操作游标
             cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
             # SQL 插入语句
             sql = "SELECT * FROM `price_"+self.table_suffix+"` ORDER BY id DESC LIMIT %d" % (1)
@@ -115,7 +142,7 @@ class Mysql:
         except Exception as e:
             print ("Error: db 2 error", e)
 
-    
+
     def updatePrice(self, type, price, timedate, pair):
         nowPrice = self.getPrice()
         price = float(price)

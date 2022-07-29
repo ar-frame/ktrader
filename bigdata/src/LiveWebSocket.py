@@ -48,7 +48,7 @@ def on_message(ws, message):
         nowTime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
         for item in data:
             item['timedate'] = nowTime
-        
+
         db_trades.insert(data)
 
 
@@ -85,11 +85,9 @@ def connect():
                                 on_close = on_close)
             ws.on_open = on_open
             ws.run_forever()
-    except Exception as e:
-        curpath = os.path.dirname(os.path.realpath(__file__))
-        logpath = os.path.join(curpath, "data/wsexception.log")
 
-        writeLog(logpath, e)
+    except Exception as e:
+        writeErrorLog(e)
 
         time.sleep(1)
         connect()
@@ -101,7 +99,12 @@ def close_conn():
             ws.close()
             ws = None
     except Exception as e:
-        writeLog("wsexception.log", e)
+        writeErrorLog(e)
+
+def writeErrorLog(e):
+    curpath = os.path.dirname(os.path.realpath(__file__))
+    logpath = os.path.join(curpath, "data/wsexception.log")
+    writeLog(logpath, e)
 
 if __name__ == "__main__":
     while True:

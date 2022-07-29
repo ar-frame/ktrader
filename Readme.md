@@ -114,9 +114,9 @@ sed -i "s/192.168.101.177/你的ip/g" `grep 192.168.101.177 -rl /var/yp/source`
 ## 数据(爬虫)数据来源gateio
 开启
 ```
-nohup python3 /var/yp/source/bigdata/src/LiveWebSocket.py eth > /dev/null &
-nohup python3 /var/yp/source/bigdata/src/LiveWebSocket.py eos > /dev/null &
-nohup python3 /var/yp/source/bigdata/src/LiveWebSocket.py btc > /dev/null &
+nohup python3 /var/yp/source/bigdata/src/LiveWebSocketGtNew.py eth > /dev/null &
+nohup python3 /var/yp/source/bigdata/src/LiveWebSocketGtNew.py eos > /dev/null &
+nohup python3 /var/yp/source/bigdata/src/LiveWebSocketGtNew.py btc > /dev/null &
 ```
 
 关闭
@@ -196,8 +196,19 @@ python  | 脚本    | 网格单元金额 | 品种    | 开始日期             
 ` python3  /var/yp/source/bigdata/src/Paint.py 100           BTC-USDT '2022-06-16 21:00:00'  now               10   `
 
 ## 策略说明
-KTrader 默认实现了一类似于RSI的网格系统，网格金额随着振幅加大逐渐增大，网格信号级别最大为8
-增大级别简略说明
+
+### 交易策略
+KTrader 默认实现了一类似于RSI的能级因子code，code在 10W ~ 50W之间波动，当超买或者超卖code会有显著差异
+
+### 下单策略
+
+核心是马丁，网格金额随着振幅加大逐渐增大，模拟盘网格信号级别最大为8，实盘最大加仓为 3倍单元金额
+
+### 平仓策略
+
+模拟盘无，实盘反向做单为2倍 单元金额，当盈利并且持仓超过指定金额，在下次减仓交易信号出现时平仓，记录交易日志
+
+### 增大级别简略说明：
 ```
 1 |
 2 ||
@@ -334,19 +345,23 @@ def getPoint(self, timeStart, timeEnd):
 ```
 
 # 【6.实盘篇】
-系统集成了okex , gate.io 
+系统集成了binance , okex , gateio 
 配置及密钥修改:conf.ini
 ```
 ; 开启实盘 no | yes
-SHIPAN_ENABLE = no
+SHIPAN_ENABLE = yes
 
-; 交易所 binance | okex | gateio
+; 交易所 binance | okex | gateio 建议使用binance
 TRADE_TYPE = binance
 
 [gateio]
 ...
 [okex]
 ...
+
+[binance]
+...
+
 ```
 实盘启动
 python | 脚本 | 网格单元金额 | 品种
@@ -403,9 +418,17 @@ gunzip -c *.tar.gz | docker load
 
 # 【更新日志】
 
-## 2022/07/21 增加 binace margin trade
-### 安装扩展: `pip install binance-connector`
-### conf.ini相关配置: 
+## 2022/07/29 
+* 增加文件平仓日志 csv 格式
+* 更新数据来源 LiveWebSocketGtNew.py
+* 清除冗余代码
+
+## 2022/07/21 
+* 增加 binace margin trade
+
+安装扩展: `pip install binance-connector`
+
+conf.ini相关配置: 
 ```
 ; 交易所 binance | okex | gateio
 TRADE_TYPE = binance

@@ -73,7 +73,6 @@ class Shipan:
         self.lastPointCode = None
         self.initUsdtUint = 0
 
-
     def drawBase(self, data, dataBase, ah, aw, kh, kw):
 
         if len(data) == 0:
@@ -135,8 +134,6 @@ class Shipan:
         # print(nd_title)
         # exit()
 
-
-
         nd_show = np.concatenate((nd_leftPriceAmount, nd_buy , nd_title, nd_sell, nd_rightPriceAmount), axis = 1)
 
         nd_f = self.topToBottom(nd_show)
@@ -144,14 +141,11 @@ class Shipan:
         nd_kline = self.drawKline(data, dataBase, kh, kw)
         nd_f = np.concatenate((nd_f, nd_kline), axis = 1)
 
-
         summary = self.sim.getSummayObj(data)
 
         bottomTitle = self.getBottomTitle(summary, nd_f.shape)
 
         nd_f = np.concatenate((nd_f, bottomTitle), axis = 0)
-
-
         return nd_f
 
 
@@ -188,7 +182,6 @@ class Shipan:
 
         height = math.ceil( (maxprice - minprice) / 0.01 )
 
-
         height = ah
         width = aw
 
@@ -213,7 +206,6 @@ class Shipan:
             maxTotal = amountSellTotal_base.amount.max()
         self.printRunTime('6.05')
         amountBuyTotal = self.reFormatAmount(amountBuyTotal, width, maxTotal)
-
         amountSellTotal = self.reFormatAmount(amountSellTotal, width, maxTotal)
 
         # nd_leftPriceAmount = self.getNdPriceAmount(amountBuyTotal, height)
@@ -226,7 +218,6 @@ class Shipan:
         # nd_title = self.getNdTitle(dataBase, height)
         # print(nd_title)
         # exit()
-
         # code_buy = self.transNdToCode(self.topToBottom(nd_buy))
         # code_sell = self.transNdToCode(self.topToBottom(nd_sell))
 
@@ -238,14 +229,9 @@ class Shipan:
         self.printRunTime('6.08')
         # code_kline = self.transNdToCode(nd_kline)
 
-
         # powerBuy = (code_buy - code_sell) / code_sell
-
         # powerSell = (code_sell - code_buy) / code_buy
-
         # print(code_buy, code_sell, code_kline)
-
-
 
         nd_f = np.concatenate((nd_f, nd_kline), axis = 1)
         self.printRunTime('6.09')
@@ -255,9 +241,7 @@ class Shipan:
         self.printRunTime('6.10')
         return nd
         # summary = self.sim.getSummayObj(data)
-
         # bottomTitle = self.getBottomTitle(summary, nd_f.shape)
-
         # nd_f = np.concatenate((nd_f, bottomTitle), axis = 0)
         # return nd_f
 
@@ -278,14 +262,12 @@ class Shipan:
 
 
     def drawline(self, data):
-
         if len(data) == 0:
             print('data is empty')
             return False
 
         buydata = data[data.type == 'buy']
         selldata = data[data.type == 'sell']
-
         # print(data)
 
         maxprice = data.price.astype('float64').max()
@@ -295,7 +277,6 @@ class Shipan:
         minamount = data.amount.astype('float64').min()
 
         height = math.ceil( (maxprice - minprice) / 0.01 )
-
 
         height = 20
         width = 80
@@ -318,18 +299,13 @@ class Shipan:
             maxTotal = amountSellTotal.amount.max()
 
         amountBuyTotal = self.reFormatAmount(amountBuyTotal, width, maxTotal)
-
-
         amountSellTotal = self.reFormatAmount(amountSellTotal, width, maxTotal)
 
         nd_leftPriceAmount = self.getNdPriceAmount(amountBuyTotal, height)
-
         nd_rightPriceAmount = self.getNdPriceAmount(amountSellTotal, height)
-
 
         nd_buy = self.transDfAmountToDdarry(amountBuyTotal, height, width)
         nd_sell = self.transDfAmountToDdarry(amountSellTotal, height, width)
-
 
         nd_sell = self.leftToRight(nd_sell)
 
@@ -339,9 +315,6 @@ class Shipan:
 
         nd_f = self.topToBottom(nd_show)
         tstr = self.transNdToStr(nd_f)
-
-
-
 
         # print(nd_title)
 
@@ -531,100 +504,6 @@ class Shipan:
             mt[i], mt[rowNum-1-i] = mt_origin[rowNum-1-i], mt_origin[i]
         return mt
 
-    def stepOver(self, timeStart, timeEnd, stepSec, ah, aw, kh, kw, his = False, interval = 0.5, ploop = 1):
-        cha = self.cha
-        st = timeStart
-
-        f = '%Y-%m-%d %H:%M:%S'
-        f2 = '%Y%m%d%H%M%S'
-
-        # now = time.strftime(f)
-        # print(now)
-
-        # struct time
-        stime = time.strptime(timeStart, f)
-        etime = time.strptime(timeEnd, f)
-
-
-        # exit()
-
-        # sec time
-        tm_s = time.mktime(stime)
-        tm_e = time.mktime(etime)
-        tm_stepnow = tm_s
-
-        tm_count = (tm_s - tm_e) // stepSec + 1
-
-        cloopcount = 0
-
-        sethreads = []
-
-        while tm_stepnow < tm_e:
-            tm_stepnow = stepSec + tm_stepnow
-
-            tm_s_stu = time.gmtime(tm_s + 8 * 3600)
-            tm_stepnow_stu = time.gmtime(tm_stepnow + 8 * 3600)
-
-            nd_f = None
-
-            if his:
-                gkey = self.gkey(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_stepnow_stu), stepSec, ah, aw, kh, kw)
-                nd_f = self.ts.getTradeData(gkey)
-
-
-            if nd_f is None:
-                dataAll = cha.searchTimeArea(time.strftime(f2, stime), time.strftime(f2, etime))
-                data = cha.searchTimeArea(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_stepnow_stu))
-                nd_f = self.drawBase(data, dataAll, ah, aw, kh, kw)
-
-                if his:
-                    if nd_f is not None:
-                        gkey = self.gkey(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_stepnow_stu), stepSec, ah, aw, kh, kw)
-                        self.ts.saveTradeData(nd_f, gkey)
-            else:
-                if his:
-                    if interval > 0:
-                        time.sleep(interval)
-
-            if nd_f is not None:
-                print(self.transNdToStr(nd_f))
-
-        if ploop > 1:
-            ploop = ploop -1
-            time.sleep(4)
-            p.stepOver(timeStart, timeEnd, stepSec, ah, aw, kh, kw, his, interval, ploop)
-
-
-
-    def stepOverNow(self, stepSec, ah, aw, kh, kw):
-        cha = self.cha
-
-
-        f = '%Y-%m-%d %H:%M:%S'
-        f2 = '%Y%m%d%H%M%S'
-
-        now = time.strftime(f)
-        # print(now)
-
-        # struct time
-        # stime = time.strptime(timeStart, f)
-
-        etime = time.strptime(now, f)
-        tm_e = time.mktime(etime)
-        tm_s = tm_e - stepSec
-
-        tm_s_stu = time.gmtime(tm_s + 8 * 3600)
-        tm_e_stu = time.gmtime(tm_e + 8 * 3600)
-
-        data = cha.searchTimeArea(time.strftime(f2, tm_s_stu), time.strftime(f2, tm_e_stu))
-        nd_f = self.drawBase(data, data, ah, aw, kh, kw)
-
-        if nd_f is not None:
-            print(self.transNdToStr(nd_f))
-        # one more time
-        self.stepOverNow(stepSec, ah, aw, kh, kw)
-
-
     def gkey(self, times, timee, step, ah, aw, kh, kw):
         mongo = cfg.getMongo(self.tradeVariety)
         return "nd_"+mongo.get('DB')+mongo.get('DB_HOST')+"_{times}_{timee}_st{step}_{ah}_{aw}_{kh}_{kw}".format(times = times, timee = timee, step = step, ah = ah, aw = aw, kh = kh, kw = kw)
@@ -634,9 +513,6 @@ class Shipan:
         data = pd.DataFrame(data)
         dataBase = pd.DataFrame(dataBase)
 
-        # print(data)
-        # height = 16
-        # width = 50
         maxPrice = dataBase.price.astype('float64').max()
         minPrice = dataBase.price.astype('float64').min()
 
@@ -741,7 +617,6 @@ class Shipan:
         print(nd_str)
 
     def getDataIndexStr(self, timeStart, timeEnd, ah = 16, aw = 45, kh = 16, kw = 70):
-
         sdate = func.transF1ToTimedateF2(timeStart)
         edate = func.transF1ToTimedateF2(timeEnd)
 
@@ -753,28 +628,21 @@ class Shipan:
 
         nd_code = self.drawBaseIndexCode(dataAll, dataAll, ah, aw, kh, kw)
 
-
         # self.sim.writeTradeLog("\n" + nd_str)
         print(nd_str, nd_code)
 
     def drawIndexCode(self, timeStart, timeEnd, ah = 16, aw = 45, kh = 16, kw = 70, timeSepM = 5):
         f = '%Y-%m-%d %H:%M:%S'
 
-
         ps = datetime.datetime.strptime(timeStart, f)
         stimeEnd = (ps+datetime.timedelta(minutes=timeSepM)).strftime(f)
         ar = []
         while True:
-
-
             if datetime.datetime.strptime(stimeEnd, f) <= datetime.datetime.strptime(timeEnd, f):
-
-
                 sdate = func.transF1ToTimedateF2(timeStart)
                 edate = func.transF1ToTimedateF2(stimeEnd)
 
                 dataAll = self.cha.searchTimeArea(sdate, edate)
-
 
                 if len(dataAll) < 30:
                     ps = datetime.datetime.strptime(stimeEnd, f)
@@ -821,120 +689,7 @@ class Shipan:
         # print(ar_df)
 
     def getPoint(self, timeStart, timeEnd):
-
         return self.paint.getPoint(timeStart, timeEnd)
-
-        self.getPointCount = self.getPointCount + 1
-        if self.getPointCount > 1:
-            self.getPointCount = 0
-            return None
-
-
-        sdate = func.transF1ToTimedateF2(timeStart)
-        edate = func.transF1ToTimedateF2(timeEnd)
-        dataAll = self.cha.searchTimeArea(sdate, edate)
-
-        if len(dataAll) == 0:
-            return None
-
-        maxPrice = dataAll['price'].astype('float64').max()
-        minPrice = dataAll['price'].astype('float64').min()
-
-        dfmaxRows = dataAll.loc[dataAll.price.astype('float64') == maxPrice]
-
-        if len(dfmaxRows) == 0:
-            return None
-
-        dfmaxRow = dfmaxRows.loc[dfmaxRows.index[0]]
-
-        dfminRows = dataAll.loc[dataAll.price.astype('float64') == minPrice]
-
-        if len(dfminRows) == 0:
-            return None
-
-        dfminRow = dfminRows.loc[dfminRows.index[0]]
-
-        currentRow = dataAll.loc[dataAll.index[-1]]
-        # print(dfmaxRow, dfminRow, currentRow)
-
-        self.lastPointCode = dict(currentRow)
-
-        absMax = abs(float(dfmaxRow.price) - float(currentRow.price))
-        absMin = abs(float(dfminRow.price) - float(currentRow.price))
-
-        print("absMax %f, p %f" % (absMax, absMax / float(dfmaxRow.price)))
-        print("absMin %f, p %f" % (absMin, absMin / float(dfminRow.price)))
-
-        mutiny = False
-
-        like = abs(absMax - absMin) / float(currentRow.price)
-
-        if like < 0.0018:
-            return None
-
-        if absMax > absMin:
-            leftRow = dfmaxRow
-
-            if absMin / float(dfminRow.price) > 0.01:
-                if dfminRow.timedate > dfmaxRow.timedate:
-                    leftRow = dfminRow
-                    mutiny = True
-
-            if mutiny == False:
-                if absMax / float(dfmaxRow.price) < 0.00618:
-                    f = '%Y-%m-%d %H:%M:%S'
-                    psLeft = datetime.datetime.strptime(timeStart, f)
-                    timeLeft = (psLeft+datetime.timedelta(minutes=-60)).strftime(f)
-                    return self.getPoint(timeLeft, timeEnd)
-
-        elif absMax < absMin:
-            leftRow = dfminRow
-
-            if absMax / float(dfmaxRow.price) > 0.01:
-                if dfmaxRow.timedate > dfminRow.timedate:
-                    leftRow = dfmaxRow
-                    mutiny = True
-
-            if mutiny == False:
-                if absMin / float(dfminRow.price) < 0.00618:
-                    f = '%Y-%m-%d %H:%M:%S'
-                    psLeft = datetime.datetime.strptime(timeStart, f)
-                    timeLeft = (psLeft+datetime.timedelta(minutes=-60)).strftime(f)
-                    return self.getPoint(timeLeft, timeEnd)
-
-        elif absMax == absMin:
-            # f = '%Y-%m-%d %H:%M:%S'
-            # psLeft = datetime.datetime.strptime(timeStart, f)
-            # timeLeft = (psLeft+datetime.timedelta(minutes=-60)).strftime(f)
-            # return self.getPoint(timeLeft, timeEnd)
-            return None
-
-
-        sdate = leftRow.timedate
-        edate = func.transF1ToTimedateF2(timeEnd)
-        # print(leftRow)
-        # print(sdate, edate)
-        dataCodeAll = self.cha.searchTimeArea(sdate, edate)
-
-        code = self.drawBaseIndexCode(dataCodeAll, dataCodeAll, ah = 22, aw = 40, kh = 22, kw = 80)
-
-
-        self.getPointCount = 0
-
-        if mutiny == False:
-
-            if absMax > absMin:
-                if code < 260000:
-                    print("code %s not for buy" % code)
-                    return None
-            else:
-                if code > 320000:
-                    print("code %s not for sell" % code)
-                    return None
-        else:
-            print("had mutinied")
-
-        return {"code": code, 'type': currentRow.type,'timedate': currentRow.timedate, "price": currentRow.price, "leftRow": leftRow, 'min': dfminRow.price, 'max': dfmaxRow.price}
 
     def updateNewData(self):
         tdata = self.cha.getLastTimeAreaData()
@@ -972,6 +727,18 @@ class Shipan:
 
             if len(moredata) > 0:
                 self.cha.addCacheData(moredata)
+
+    def doPcRecordToResult(self, pointCode, msg):
+        trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+        self.pingc(pointCode.get("timedate"), pointCode.get('price'), True)
+        objs = {\
+            "open_date": str(trade_result.get("open_date")), \
+            "timedate": pointCode.get("timedate"), \
+            "open_price": str(trade_result.get("open_price")), "end_price": str(pointCode.get('price')), \
+            "amount": str(trade_result.get("amount")), "direct": str(trade_result.get("opt")), \
+            "profit": str(trade_result.get("profit")), "msg": msg \
+        }
+        self.pcRecord(**objs)
 
     def stepOrder(self, timeStart, timeEnd, timeSepM = 1, proxy_list = [], data_share_map = {}, data_share_map_summay = {}):
 
@@ -1014,7 +781,10 @@ class Shipan:
                         self.dumpTrade(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'))
                         db_mysql = Mysql(self.tradeVariety)
                         db_mysql.updatePrice(type = self.lastPointCode.get('type'), price = self.lastPointCode.get('price'), timedate = func.transTimedateToDate(self.lastPointCode.get('timedate')), pair = self.tradeVariety)
-
+                    else:
+                        if len(self.orders) > 0:
+                            lo = self.orders[-1]
+                            self.dumpTrade(func.transF1ToTimedateF2(lo.get('timedate')), lo.get('price'))
                     time.sleep(1)
                     continue
                 pointCode = dict(pc)
@@ -1059,10 +829,28 @@ class Shipan:
                                 if pointPrice > 0.00618:
                                     allNotCompTradesSell = allNotCompTrades.loc[allNotCompTrades.type == 'sell']
                                     if len(allNotCompTradesSell) > 0:
-                                        optres = self.trade.buy(usdT = spendUsdt, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
+
+                                        trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+                                        opt_usdt = spendUsdt
+
+                                        need_pc = False
+                                        stock_usdt = 0
+
+                                        if trade_result.get("opt") == 'sell':
+
+                                            if float(trade_result.get("profit")) > 0:
+                                                stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
+                                                if stock_usdt > 100:
+                                                    opt_usdt = stock_usdt
+                                                    need_pc = True
+
+                                        optres = self.trade.buy(usdT = opt_usdt, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
                                         if optres is not None:
-                                            # self.forcePcLast(pointCode.get('timedate'), optres.get('filledRate'), allNotCompTradesSell.loc[allNotCompTradesSell.index[-1]])
-                                            self.addOrder(optype = 'buy', currency = spendUsdt, code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
+                                            self.addOrder(optype = 'buy', currency = optres.get('deal_money'), code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
+
+                                            if need_pc == True and stock_usdt > 0:
+                                                if float(optres.get('deal_money')) >= stock_usdt - 5:
+                                                    self.doPcRecordToResult(pointCode, "空单止盈平仓")
 
                                     else:
                                         self.addOrder(optype = 'buy', currency = spendUsdt, code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
@@ -1072,16 +860,35 @@ class Shipan:
                                 pointPrice = (float(lastOrder['price']) - float(pointCode.get('price'))) / float(pointCode.get('price'))
                                  # 点差影响
                                 if pointPrice > 0.00818:
-                                    optres = self.trade.buy(usdT = self.initUsdtUint, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
+
+                                    trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+                                    opt_usdt = self.initUsdtUint
+
+                                    need_pc = False
+                                    stock_usdt = 0
+
+                                    if trade_result.get("opt") == 'sell':
+                                        opt_usdt = 2 * self.initUsdtUint
+
+                                        if float(trade_result.get("profit")) > 0:
+                                            stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
+                                            if stock_usdt > 200:
+                                                opt_usdt = stock_usdt
+                                                need_pc = True
+
+                                    optres = self.trade.buy(usdT = opt_usdt, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
                                     if optres is not None:
-                                        self.addOrder(optype = 'buy', code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
+                                        self.addOrder(optype = 'buy', currency = optres.get('deal_money'), code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc=True)
+
+                                        if need_pc == True and stock_usdt > 0:
+                                            if float(optres.get('deal_money')) >= stock_usdt - 5:
+                                                self.doPcRecordToResult(pointCode, "空单反向止盈平仓")
 
                     else:
                         self.addOrder(optype = 'buy', code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
 
 
                 elif pointCode.get('trade_opt') == 'sell':
-
 
                     if len(allNotCompTrades) > 0:
                         lastOrder = dict(allNotCompTrades.loc[allNotCompTrades.index[-1]])
@@ -1106,11 +913,26 @@ class Shipan:
                                 if pointPrice > 0.00618:
                                     allNotCompTradesBuy = allNotCompTrades.loc[allNotCompTrades.type == 'buy']
                                     if len(allNotCompTradesBuy) > 0:
-                                        optres = self.trade.sell(usdT = spendUsdt, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
+
+                                        trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+                                        opt_usdt = spendUsdt
+
+                                        need_pc = False
+                                        stock_usdt = 0
+                                        if trade_result.get("opt") == 'buy':
+                                            if float(trade_result.get("profit")) > 0:
+                                                stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
+                                                if stock_usdt > 100:
+                                                    opt_usdt = stock_usdt
+                                                    need_pc = True
+
+                                        optres = self.trade.sell(usdT = opt_usdt, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
                                         if optres is not None:
-                                            # self.forcePcLast(pointCode.get('timedate'), optres.get('filledRate'), allNotCompTradesBuy.loc[allNotCompTradesBuy.index[-1]])
-                                            # self.forcePcLast(pointCode.get('timedate'), pointCode.get('price'), allNotCompTradesBuy.loc[allNotCompTradesBuy.index[-1]])
-                                            self.addOrder(optype = 'sell', currency = spendUsdt, code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc = True)
+                                            self.addOrder(optype = 'sell', currency = optres.get('deal_money'), code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc = True)
+
+                                            if need_pc == True and stock_usdt > 0:
+                                                if float(optres.get('deal_money')) >= stock_usdt - 5:
+                                                    self.doPcRecordToResult(pointCode, "多单止盈平仓")
                                     else:
                                         self.addOrder(optype = 'sell', currency = spendUsdt, code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
                         else:
@@ -1118,10 +940,27 @@ class Shipan:
                             if float(lastOrder['price']) < float(pointCode.get('price')):
                                 pointPrice = (float(pointCode.get('price')) - float(lastOrder['price'])) / float(lastOrder['price'])
                                 if pointPrice > 0.00818:
-                                    optres = self.trade.sell(usdT = self.initUsdtUint, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
-                                    if optres is not None:
-                                        self.addOrder(optype = 'sell', code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc = True)
 
+                                    trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+                                    opt_usdt = self.initUsdtUint
+
+                                    need_pc = False
+                                    stock_usdt = 0
+                                    if trade_result.get("opt") == 'buy':
+                                        opt_usdt = 2 * self.initUsdtUint
+
+                                        if float(trade_result.get("profit")) > 0:
+                                            stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
+                                            if stock_usdt > 200:
+                                                opt_usdt = stock_usdt
+                                                need_pc = True
+
+                                    optres = self.trade.sell(usdT = opt_usdt, price = pointCode.get('price'), tradeVariety = self.tradeVariety)
+                                    if optres is not None:
+                                        self.addOrder(optype = 'sell', currency = optres.get('deal_money'), code = pointCode.get('code'), price = optres.get('filledRate'), timedate = pointCode.get('timedate'), ispc = True)
+                                        if need_pc == True and stock_usdt > 0:
+                                            if float(optres.get('deal_money')) >= stock_usdt - 5:
+                                                self.doPcRecordToResult(pointCode, "多单反向止盈平仓")
                     else:
                         self.addOrder(optype = 'sell', code = pointCode.get('code'), price = pointCode.get('price'), timedate = pointCode.get('timedate'))
 
@@ -1142,10 +981,12 @@ class Shipan:
                 data_share_map['timedate'] = self.lastPointCode.get('timedate')
                 data_share_map['price'] = self.lastPointCode.get('price')
 
-                objs = self.getTradeObj(pointCode.get('timedate'), pointCode.get('price'))
-                for ok in objs:
-                    data_share_map_summay[ok] = objs[ok]
+                # objs = self.getTradeObj(pointCode.get('timedate'), pointCode.get('price'))
+                # for ok in objs:
+                #     data_share_map_summay[ok] = objs[ok]
 
+                # trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+                # print(trade_result.get("result_str"))
                 self.dumpTrade(pointCode.get('timedate'), pointCode.get('price'))
 
                 print(pointCode.get("trade_msg"), " opt: " + pointCode.get("trade_opt"), ", code: %s\n" % pointCode.get("code"))
@@ -1211,182 +1052,25 @@ class Shipan:
                     break
         return level
 
-
-    def getTradeObjBuyOrders(self, currency):
-        # self.pingc(timedate, price)
-
-        resdata = self.getPcOrders(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'), currency)
-
-        df = pd.DataFrame(list(resdata))
-
-        tradeObj = {}
-        tradeObj['maxStore'] = 0
-        tradeObj['transferRate'] = 0
-        tradeObj['profit'] = 0
-        tradeObj['orderCount'] = 0
-        tradeObj['orderBuyCount'] = 0
-        tradeObj['orderSellCount'] = 0
-        tradeObj['cprice'] = 0
-        tradeObj['summary'] = ""
-        if currency == 0:
-            currency = self.initUsdtUint
-        tradeObj['unit'] = currency
-
-        if len(df) > 0:
-            # print(df)
-            firstData = df.loc[df.index[0]]
-            dataListStr = func.printDataFrame(df)
-            price = float(firstData['pprice'])
-
-            df_succ = df.loc[df.suc == 1]
-            df_fail = df.loc[df.suc == 2]
-
-            df_sell = df.loc[df.type == 'sell']
-            df_buy = df.loc[df.type == 'buy']
-
-            Ebpc = 0
-            Espc = 0
-
-            Ebc = 0
-            Esc = 0
-
-            for gk in range(len(df)):
-                dfrow = df.loc[df.index[gk]]
-
-                # level = self.getOrderLevel(gk)
-                # spendUsdt = self.getLevelPrice(level, currency)
-
-                # dfrow['currency'] = spendUsdt
-
-                if dfrow['type'] == 'buy':
-                    Ebpc = Ebpc + float(dfrow['currency']) / float(dfrow['price'])
-                    Ebc = Ebc + float(dfrow['currency'])
-                else:
-                    Espc = Espc + float(dfrow['currency']) / float(dfrow['price'])
-                    Esc = Esc + float(dfrow['currency'])
-
-            Eamount = abs(Ebpc + (-Espc))
-
-            Ecostusd =  abs(Ebc - Esc)
-
-            self.midcresult['mc'] = (Ecostusd +  self.midcresult['mc']) / 2
-
-            if Ecostusd > self.midcresult['mcMax']:
-                self.midcresult['mcMax'] = Ecostusd
-
-            if Ecostusd < self.midcresult['mcMin']:
-                self.midcresult['mcMin'] = Ecostusd
-
-            c_profit = df['profit'].astype('float64').sum()
-            Eshow = ''
-            if Ebc - Esc > 0:
-                Eshow = "多单:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Ebc - Esc, (Ebc - Esc) / Eamount)
-                pf = (price - (Ebc - Esc) / Eamount) * Eamount
-
-                r_transfer = c_profit / (Ebc - Esc)
-
-            elif Ebc - Esc == 0:
-                Eshow = "空仓:数量0，金额0，成本价0"
-                # pf = ((Esc - Ebc) / Eamount - price) * Eamount
-                r_transfer = 0
-            else:
-                Eshow = "空单:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Esc - Ebc, (Esc - Ebc) / Eamount)
-                pf = ((Esc - Ebc) / Eamount - price) * Eamount
-                r_transfer = c_profit / (Esc - Ebc)
-
-
-            # tradeObj['maxStore'] = ("%.2f" % self.midcresult['mcMax'])
-            tradeObj['transferRate'] = ("%.2f" % (r_transfer * 100))
-            tradeObj['profit'] = ("%.2f" % c_profit)
-            tradeObj['orderCount'] = len(df)
-            tradeObj['orderBuyCount'] = len(df_buy)
-            tradeObj['orderSellCount'] = len(df_sell)
-            tradeObj['cprice'] = price
-            tradeObj['summary'] = Eshow
-
-        return tradeObj
-
-    def getTradeObj(self, timedate, price):
-        self.pingc(timedate, price)
-        df = pd.DataFrame(list(self.orders))
-
-        tradeObj = {}
-        tradeObj['maxStore'] = 0
-        tradeObj['transferRate'] = 0
-        tradeObj['profit'] = 0
-        tradeObj['orderCount'] = 0
-        tradeObj['orderBuyCount'] = 0
-        tradeObj['orderSellCount'] = 0
-        tradeObj['cprice'] = 0
-        tradeObj['summary'] = ""
-        tradeObj['unit'] = self.initUsdtUint
-
-        if len(df) > 0:
-            # print(df)
-            dataListStr = func.printDataFrame(df)
-            price = float(price)
-            df_succ = df.loc[df.suc == 1]
-            df_fail = df.loc[df.suc == 2]
-
-            df_sell = df.loc[df.type == 'sell']
-            df_buy = df.loc[df.type == 'buy']
-
-            Ebpc = 0
-            Espc = 0
-
-            Ebc = 0
-            Esc = 0
-            for gk in range(len(df)):
-                dfrow = df.loc[df.index[gk]]
-                if dfrow['type'] == 'buy':
-                    Ebpc = Ebpc + float(dfrow['currency']) / float(dfrow['price'])
-                    Ebc = Ebc + float(dfrow['currency'])
-                else:
-                    Espc = Espc + float(dfrow['currency']) / float(dfrow['price'])
-                    Esc = Esc + float(dfrow['currency'])
-
-            Eamount = abs(Ebpc + (-Espc))
-
-            Ecostusd =  abs(Ebc - Esc)
-
-            self.midcresult['mc'] = (Ecostusd +  self.midcresult['mc']) / 2
-
-            if Ecostusd > self.midcresult['mcMax']:
-                self.midcresult['mcMax'] = Ecostusd
-
-            if Ecostusd < self.midcresult['mcMin']:
-                self.midcresult['mcMin'] = Ecostusd
-
-            Eshow = ''
-            if Ebc - Esc > 0:
-                Eshow = "做多:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Ebc - Esc, (Ebc - Esc) / Eamount)
-                pf = (price - (Ebc - Esc) / Eamount) * Eamount
-            else:
-                Eshow = "做空:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Esc - Ebc, (Esc - Ebc) / Eamount)
-                pf = ((Esc - Ebc) / Eamount - price) * Eamount
-
-            c_profit = df['profit'].astype('float64').sum()
-
-            r_transfer = c_profit / self.midcresult['mc']
-
-            tradeObj['maxStore'] = ("%.2f" % self.midcresult['mcMax'])
-            tradeObj['transferRate'] = ("%.2f" % (r_transfer * 100))
-            tradeObj['profit'] = ("%.2f" % c_profit)
-            tradeObj['orderCount'] = len(df)
-            tradeObj['orderBuyCount'] = len(df_buy)
-            tradeObj['orderSellCount'] = len(df_sell)
-            tradeObj['cprice'] = price
-            tradeObj['summary'] = Eshow
-            tradeObj['unit'] = self.initUsdtUint
-        return tradeObj
-
-    def getTradeStr(self, timedate, price):
+    def getTradeResult(self, timedate, price):
         self.pingc(timedate, price)
         df = pd.DataFrame(self.orders)
         showStr = ""
         dataListStr = ""
+
+        opt = 'none'
+        amount = 0
+        open_price = 0
+        profit = 0
+        open_date = 'empty'
+
+        df['complete'] = df['complete'].astype(float)
+
+        df = df.loc[df.complete == 0]
+
         if len(df) > 0:
-            # print(df)
+            open_date = df.loc[0]['timedate']
+
             dataListStr = func.printDataFrame(df)
             price = float(price)
             df_succ = df.loc[df.suc == 1]
@@ -1422,88 +1106,62 @@ class Shipan:
                 self.midcresult['mcMin'] = Ecostusd
 
             Eshow = ''
-            if Ebc - Esc > 0:
-                Eshow = "做多:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Ebc - Esc, (Ebc - Esc) / Eamount)
-                pf = (price - (Ebc - Esc) / Eamount) * Eamount
-            else:
-                Eshow = "做空:数量{:.2f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Esc - Ebc, (Esc - Ebc) / Eamount)
-                pf = ((Esc - Ebc) / Eamount - price) * Eamount
+            opt = "none"
+            amount = Eamount
+            open_price = 0
 
+            if Ebc - Esc > 0:
+                open_price = (Ebc - Esc) / Eamount
+                Eshow = "做多:数量{:.4f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Ebc - Esc, open_price)
+                # pf = (price - (Ebc - Esc) / Eamount) * Eamount
+                opt = "buy"
+
+            elif Ebc - Esc < 0:
+                open_price = (Esc - Ebc) / Eamount
+                Eshow = "做空:数量{:.4f}，金额{:.2f}，成本价{:.2f}".format(Eamount, Esc - Ebc, open_price)
+                # pf = ((Esc - Ebc) / Eamount - price) * Eamount
+                opt = "sell"
+            else:
+                pass
 
             c_profit = df['profit'].astype('float64').sum()
+            profit = c_profit
 
             r_transfer = c_profit / self.midcresult['mc']
 
             showStr = showStr + ("最大占用 %.2f" % self.midcresult['mcMax']) + "\n"
-            showStr = showStr + ("最小占用 %.2f" % self.midcresult['mcMin']) + "\n"
+            # showStr = showStr + ("最小占用 %.2f" % self.midcresult['mcMin']) + "\n"
 
             showStr = showStr + ("转化率 %.2f" % (r_transfer * 100)) + "\n"
 
             showStr = showStr + ("总体盈利 %.2f" % c_profit) + "\n"
-
-
-
             showStr = showStr + ("总单数 %d , 多单 %d, 空单 %d" % (len(df), len(df_buy), len(df_sell))) + "\n"
-
-
 
             showStr = showStr + ("当前价格 %.2f" % price) + "\n"
             showStr = showStr + ("方向 %s" % Eshow) + "\n"
-        return dataListStr + "\n" + showStr
+
+        result_str = dataListStr + "\n" + showStr
+
+        return {"result_str": result_str, "opt": opt, "amount": "%.5f" % amount, "open_price": "%.2f" % open_price, "profit": "%.2f" % profit, "open_date": open_date}
 
     def dumpTrade(self, timedate, price):
-        showStr = self.getTradeStr(timedate, price)
-        print(showStr)
+        result_obj = self.getTradeResult(timedate, price)
+        print(result_obj.get("result_str"))
 
-
-    def forcePcLast(self, timedate, price, lastOrder):
-        for ik in range(len(self.orders)):
-            order = dict(self.orders[ik])
-            if order['code'] == lastOrder.get('code'):
-                i = ik
-                break
-        dft = pd.DataFrame(self.orders)
-        if len(dft) > 0:
-            price = float(price)
-            self.orders[i]['currency'] = float(self.orders[i]['currency'])
-
-            absVal = abs(price - self.orders[i]['price'])
-            absP = absVal / price
-            self.orders[i]['complete'] = 1
-            self.orders[i]['pprice'] = price
-            self.orders[i]['ptimedate'] = func.transTimedateToDate(timedate)
-            self.orders[i]['pt'] = absP
-
-            print(self.orders[i], price, lastOrder)
-
-            if self.orders[i]['type'] == 'sell':
-                if float(self.orders[i]['price']) > price:
-                    self.orders[i]['suc'] = 1
-                    self.orders[i]['profit'] = (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-                else:
-                    self.orders[i]['suc'] = 2
-                    self.orders[i]['profit'] = -(price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-            else:
-                if float(self.orders[i]['price']) < price:
-                    self.orders[i]['suc'] = 1
-                    self.orders[i]['profit'] = (price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-
-                    (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-                else:
-                    self.orders[i]['suc'] = 2
-                    self.orders[i]['profit'] = -(float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-
-    def pingcBuyCurrency(self, timedate, price):
-
+    def pingc(self, timedate, price, forcepc = False):
         price = float(price)
-
         for i in range(len(self.orders)):
+            if self.orders[i]['complete'] == 1:
+                continue
             self.orders[i]['currency'] = float(self.orders[i]['currency'])
-
             absVal = abs(price - float(self.orders[i]['price']))
             absP = absVal / price
             # print('absp',absP)
-            self.orders[i]['complete'] = 0
+            if forcepc == True:
+                self.orders[i]['complete'] = 1
+            else:
+                self.orders[i]['complete'] = 0
+
             self.orders[i]['pprice'] = price
             self.orders[i]['ptimedate'] = func.transTimedateToDate(timedate)
             self.orders[i]['pt'] = absP
@@ -1512,12 +1170,9 @@ class Shipan:
                 if float(self.orders[i]['price']) > price:
                     self.orders[i]['suc'] = 1
                     self.orders[i]['profit'] = (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-
                 else:
-
                     self.orders[i]['suc'] = 2
                     self.orders[i]['profit'] = -(price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-
             else:
                 if float(self.orders[i]['price']) < price:
                     self.orders[i]['suc'] = 1
@@ -1531,95 +1186,10 @@ class Shipan:
             self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
             self.orders[i]['profit'] = Decimal(self.orders[i]['profit']).quantize(Decimal('0.000'))
 
-    def pingc(self, timedate, price):
-
-        price = float(price)
-
-        for i in range(len(self.orders)):
-            self.orders[i]['currency'] = float(self.orders[i]['currency'])
-
-            absVal = abs(price - float(self.orders[i]['price']))
-            absP = absVal / price
-            # print('absp',absP)
-            self.orders[i]['complete'] = 0
-            self.orders[i]['pprice'] = price
-            self.orders[i]['ptimedate'] = func.transTimedateToDate(timedate)
-            self.orders[i]['pt'] = absP
-
-            if self.orders[i]['type'] == 'sell':
-                if float(self.orders[i]['price']) > price:
-                    self.orders[i]['suc'] = 1
-                    self.orders[i]['profit'] = (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-
-                else:
-
-                    self.orders[i]['suc'] = 2
-                    self.orders[i]['profit'] = -(price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-
-            else:
-                if float(self.orders[i]['price']) < price:
-                    self.orders[i]['suc'] = 1
-                    self.orders[i]['profit'] = (price - float(self.orders[i]['price'])) / float(self.orders[i]['price']) * self.orders[i]['currency']
-                    (float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-                else:
-                    self.orders[i]['suc'] = 2
-                    self.orders[i]['profit'] = -(float(self.orders[i]['price']) - price) / price * self.orders[i]['currency']
-
-            self.orders[i]['price'] = Decimal(self.orders[i]['price']).quantize(Decimal('0.0000'))
-            self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
-            self.orders[i]['profit'] = Decimal(self.orders[i]['profit']).quantize(Decimal('0.000'))
-
-    def getPcOrders(self, timedate, price, currency):
-
-        price = float(price)
-        orders = list(self.orders)
-
-        print("recv or c", currency)
-
-        for i in range(len(orders)):
-
-            level = self.getOrderLevel(i)
-
-            print('level', level)
-
-            orders[i]['level'] = level
-
-            orders[i]['currency'] = self.getLevelPrice(level, currency)
-
-            absVal = abs(price - float(orders[i]['price']))
-            absP = absVal / price
-            # print('absp',absP)
-            orders[i]['complete'] = 0
-            orders[i]['pprice'] = price
-            orders[i]['ptimedate'] = func.transTimedateToDate(timedate)
-            orders[i]['pt'] = absP
-            orders[i]['pair'] = self.tradeVariety
-
-            if orders[i]['type'] == 'sell':
-                if float(orders[i]['price']) > price:
-                    orders[i]['suc'] = 1
-                    orders[i]['profit'] = (float(orders[i]['price']) - price) / price * orders[i]['currency']
-
-                else:
-
-                    orders[i]['suc'] = 2
-                    orders[i]['profit'] = -(price - float(orders[i]['price'])) / float(orders[i]['price']) * orders[i]['currency']
-
-            else:
-                if float(orders[i]['price']) < price:
-                    orders[i]['suc'] = 1
-                    orders[i]['profit'] = (price - float(orders[i]['price'])) / float(orders[i]['price']) * orders[i]['currency']
-                    (float(orders[i]['price']) - price) / price * orders[i]['currency']
-                else:
-                    orders[i]['suc'] = 2
-                    orders[i]['profit'] = -(float(orders[i]['price']) - price) / price * orders[i]['currency']
-
-            orders[i]['price'] = Decimal(orders[i]['price']).quantize(Decimal('0.0000'))
-            orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
-            orders[i]['profit'] = Decimal(orders[i]['profit']).quantize(Decimal('0.000'))
-
-        return orders
-
+        if forcepc == True:
+            db_mysql = Mysql(self.tradeVariety)
+            db_mysql.updatepcOrders()
+            self.midcresult['mcMax'] = 0
 
     def addOrder(self, optype = 'buy', currency = 0, price = None, timedate = None, code = None, ispc = False):
         if currency == 0:
@@ -1644,7 +1214,6 @@ class Shipan:
                 db_mysql = Mysql(self.tradeVariety)
                 db_mysql.insertOrders(type=optype, currency=order.get('currency'), price=float(order.get('price')), timedate=func.transTimedateToDate(timedate), code=code, complete=0, suc=0, profit=0)
 
-
     # def updateFirstOrder(self, suc = 1, profit = 0):
     #     if len(self.order) == 1:
 
@@ -1655,7 +1224,6 @@ class Shipan:
         # print("%s run sec %.2f" % (showmark, end - start))
 
     def autoStart(self, datalist, data_share_map, data_share_map_summay):
-
         # for i in range(100):
         #     datalist.append(i)
         #     time.sleep(1)
@@ -1671,9 +1239,9 @@ class Shipan:
         self.tradeVariety = tradeVariety
 
         store_orders = func.getOrderFromStore(tradeVariety)
+
         if len(store_orders) > 0:
             self.orders = list(store_orders)
-
 
         f = '%Y-%m-%d %H:%M:%S'
         now = time.strftime(f)
@@ -1681,7 +1249,7 @@ class Shipan:
         self.printRunTime('sys started')
 
         timeStart = now
-        timeEnd = '2020-02-14 09:40:00'
+        # timeEnd = '2020-02-14 09:40:00'
 
         # timeStart = '2019-01-28 11:05:00'
         # timeEnd = '2019-01-28 12:58:00'
@@ -1692,131 +1260,45 @@ class Shipan:
         # p.getDataStr(timeStart, timeEnd, ah = 22, aw = 40, kh = 22, kw = 80)
         # p.drawIndexCode(timeStart, timeEnd, ah = 22, aw = 40, kh = 22, kw = 80, timeSepM = 1)
         # print(p.getPoint(timeStart, timeEnd))
-
-
         self.stepOrder(timeStart, timeStart, timeSepM = 1, proxy_list = datalist, data_share_map = data_share_map, data_share_map_summay=data_share_map_summay)
 
-    def writeDataPipeInfo(self):
+    def pcRecord(self, open_date, timedate, open_price, end_price, amount, direct, profit, msg = ""):
+        variety = self.tradeVariety
+        curpath = os.path.dirname(os.path.realpath(__file__))
+        record_file = os.path.join(curpath, "data/"+"trade_record_" + variety.lower().replace("-", "_") + ".txt")
+        objs = {"variety": variety, "open_date": open_date, "timedate": timedate, "open_price": str(open_price), "end_price": str(end_price), "amount": str(amount), "direct": str(direct), "profit": str(profit), "msg": msg}
+        head_title = ",".join(objs.keys())
 
-        pipe_name = os.path.dirname(os.path.realpath(__file__)) + '/log.sock'
-        if not os.path.exists(pipe_name):
-            os.mkfifo(pipe_name)
+        file_content = ''
         try:
-            datastr = self.getTradeStr(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'))
-
-            bytestr = str.encode(datastr)
-            pipeout = os.open(pipe_name, os.O_WRONLY)
-            os.write(pipeout, bytestr)
-            os.close(pipeout)
+            with open(record_file, 'r', encoding='utf-8') as f:
+                file_content = f.read()
         except Exception as e:
-            print("exception:", e)
+            pass
 
-    def receive_signal(self, signum, stack):
-        print('Received:', signum)
-        if signum == signal.SIGUSR1:
-            print('signal dump datalist')
-            self.writeDataPipeInfo()
+        cal_profit = 0
+        if len(file_content) > 0:
+            split_content = file_content.split("\n")
+            for i in range(len(split_content)):
+                if i > 0 and i < len(split_content) - 1:
+                    row = split_content[i]
+                    cal_profit = cal_profit + float(row.split(",")[-2])
 
-    def registerSignal(self):
-        # 注册信号处理程序
-        signal.signal(signal.SIGUSR1, self.receive_signal)
-        signal.signal(signal.SIGUSR2, self.receive_signal)
+            cal_profit = cal_profit + float(profit)
+            last_row_str = "合计盈利：%.2f" % cal_profit
 
-    def resetPidFile(self):
-        pidFileName = os.path.dirname(os.path.realpath(__file__)) + '/Shipan.pid'
-        with open(pidFileName, 'w') as f:
-            f.write(str(os.getpid()))
+            del(split_content[-1])
+            with open(record_file, 'w', encoding='utf-8') as f:
+                f.write("\n".join(split_content) + "\n")
+                f.write(",".join(objs.values()))
+        else:
+            last_row_str = "合计盈利：%.2f" % float(profit)
+            with open(record_file, 'w', encoding='utf-8') as f:
+                f.write(head_title + "\n")
+                f.write(",".join(objs.values()))
 
-    def ws_message_received(self, client, server, message):
-        try:
-            jsonobj = json.loads(message)
-            if jsonobj.get('code') is None:
-                client['handler'].finish()
-                server.send_message(client, "code error")
-            else:
-                code = jsonobj.get('code')
-                response = {"code": code}
-
-                if code == 'login':
-
-                    response['errmsg'] = ''
-                    mac = jsonobj.get('mac')
-                    register_code = jsonobj.get('register_code')
-
-                    # if mac is None :
-                    #     response['errmsg'] = 'mac error'
-
-                    # if register_code is None:
-                    #     response['errmsg'] = 'register_code error'
-                    # else:
-                    #     if register_code != 'A12315':
-                    #         response['errmsg'] = 'register_code check error'
-
-
-
-                    # if len(response['errmsg']) > 0:
-                    #     responseStr = json.dumps(response, cls=DecimalEncoder)
-                    #     server.send_message(client, responseStr)
-
-                    #     client['handler'].finish()
-                    #     return
-                    # else:
-                    #     client['is_check'] = 1
-                    client['is_check'] = 1
-                else:
-                    if client['is_check'] == 0:
-                        # not check
-                        # response['errmsg'] = 'check error'
-
-                        # responseStr = json.dumps(response, cls=DecimalEncoder)
-                        # server.send_message(client, responseStr)
-
-                        # client['handler'].finish()
-                        # return
-                        client['is_check'] = 1
-
-                if code == "get_list":
-                    currency = jsonobj.get('currency')
-                    if currency is None:
-                        currency = 0
-
-                    resdata = self.getPcOrders(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'), float(currency))
-
-                    if len(resdata) == 0:
-                        resdata = []
-                    resdata = list(resdata)
-
-                    response["data"] = resdata
-                elif code == "get_summary":
-                    # summary = dict(self.summary)
-                    currency = jsonobj.get('currency')
-                    if currency is None:
-                        currency = 0
-                    summary = self.getTradeObjBuyOrders(float(currency))
-                    response["data"] = summary
-
-                elif code == "ping":
-                    response['msg'] = "pong"
-                elif code == "close":
-                    pass
-                elif code == "show_pipetrade":
-                    self.writeDataPipeInfo()
-
-                responseStr = json.dumps(response, cls=DecimalEncoder)
-                server.send_message(client, responseStr)
-
-        except Exception as e:
-            print(e)
-            server.send_message(client, "msg error:" + message)
-            # muti exception
-            server.close()
-            # print(server,client)
-            # client_handler = client['handler']
-            # client_handler.finish()
-
-        # print(self.orders)
-        # sp.ws_server.send_message_to_all("xxxhhhhhhhhhhhhhhhhhh")
-        print("Client(%d) said: %s" % (client['id'], message))
+        with open(record_file, 'a', encoding='utf-8') as f:
+            f.write("\n" + last_row_str)
 
 
 class DecimalEncoder(json.JSONEncoder):
@@ -1827,9 +1309,6 @@ class DecimalEncoder(json.JSONEncoder):
             return obj.strftime("%Y-%m-%d %H:%M:%S")
         else:
             return json.JSONEncoder.default(self,obj)
-
-        # super(DecimalEncoder, self).default(obj)
-
 
 if __name__ == "__main__":
     if (len(sys.argv) < 3) :
@@ -1842,89 +1321,14 @@ if __name__ == "__main__":
         exit()
     tradeVariety = sys.argv[2]
 
-    # p.join()
-    PORT = 12315
-    if tradeVariety == 'ETH-USDT':
-        PORT = 12315
-    elif tradeVariety == 'EOS-USDT':
-        PORT = 12316
-    elif tradeVariety == 'BTC-USDT':
-        PORT = 12317
-    else:
-        print("trade pair %s is not opening" % tradeVariety)
-        # exit()
-
-    print("parent process:", os.getpid())
+    # tradeVariety  'ETH-USDT' 'EOS-USDT' 'BTC-USDT':
 
     sp = Shipan(tradeVariety)
     sp.initUsdtUint = initUsdtUint
     sp.tradeVariety = tradeVariety
 
-
     while True:
         print('starting main thread...')
         sp.autoStart(datalist = [], data_share_map = {}, data_share_map_summay = {})
         print('main thread stoped')
-
-
-    exit()
-    # not for use
-
-
-    with multiprocessing.Manager() as MG:   #重命名
-
-        sp = Shipan(tradeVariety)
-
-
-        sp.initUsdtUint = initUsdtUint
-        sp.tradeVariety = tradeVariety
-
-        sp.resetPidFile()
-
-        sp.autoStart(datalist = [], data_share_map = {}, data_share_map_summay = {})
-        exit()
-
-
-        # 多线程地方
-        # 被Socket server 阻塞，不处理信号
-        # sp.registerSignal()
-
-        sp.orders = multiprocessing.Manager().list([])   #主进程与子进程共享这个List
-        sp.lastPointCode = multiprocessing.Manager().dict()
-        sp.summary = multiprocessing.Manager().dict()
-
-        p = multiprocessing.Process(target=sp.autoStart,args=(sp.orders, sp.lastPointCode, sp.summary))
-
-        p.start()
-
-        sp.ws_server = WebsocketServer(PORT, host="0.0.0.0")
-
-        sp.ws_server.set_fn_new_client(new_client)
-        sp.ws_server.set_fn_client_left(client_left)
-        sp.ws_server.set_fn_message_received(sp.ws_message_received)
-        sp.ws_server.run_forever()
-
-        # isInitWs = False
-
-        # while True:
-        #     # print("listdata----------------", data_share_list)
-        #     if isInitWs == False:
-        #         print("init websocket")
-
-
-
-
-            #     isInitWs = True
-
-            #     pass
-            # sp.orders = list(data_share_list)
-            # sp.lastPointCode = dict(data_share_map)
-
-
-            # print(sp.data_share_list)
-
-            # time.sleep(1)
-
-
-
 
