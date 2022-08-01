@@ -418,17 +418,37 @@ gunzip -c *.tar.gz | docker load
 
 # 【更新日志】
 
-## 2022/07/29 
+## 2022/08/01 交易参数配置
+conf.ini配置: 
+```
+[trade]
+# 反向减仓unit倍数
+SHIPAN_FXJC_INDEX = 2
+# 最大交易unit倍数
+SHIPAN_TRADE_MAX_UNIT_INDEX = 3
+
+# 触发正向盈利平仓仓位
+SHIPAN_PC_ZX_USDTAMOUNT_LINE = 30
+# 触发反向盈利平仓仓位
+SHIPAN_PC_FX_USDTAMOUNT_LINE = 200
+
+# 每次加仓价格波动率
+SHIPAN_CON_GRID_INC_LEVEL_POINT = 0.00618
+# 每次减仓价格波动率
+SHIPAN_CON_GRID_DEC_LEVEL_POINT = 0.00818
+```
+
+## 2022/07/29 交易日志
 * 增加文件平仓日志 csv 格式
 * 更新数据来源 LiveWebSocketGtNew.py
 * 清除冗余代码
 
-## 2022/07/21 
+## 2022/07/21 增加币安交易
 * 增加 binace margin trade
 
 安装扩展: `pip install binance-connector`
 
-conf.ini相关配置: 
+conf.ini配置: 
 ```
 ; 交易所 binance | okex | gateio
 TRADE_TYPE = binance

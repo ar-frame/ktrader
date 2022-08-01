@@ -340,12 +340,22 @@ class Trade:
             open_orders = self.gate_trade.margin_open_orders()
             if len(open_orders) > 0:
                 print("clear orders")
-                self.gate_trade.margin_open_orders_cancellation(cpair)
-
-                if opt == 'BUY':
-                    return self.buy(usdT, price, trytime - 1, tradeVariety = tradeVariety)
-                else:
-                    return self.sell(usdT, price, trytime - 1, tradeVariety = tradeVariety)
+                try:
+                    self.gate_trade.margin_open_orders_cancellation(cpair)
+                    if opt == 'BUY':
+                        return self.buy(usdT, price, trytime - 1, tradeVariety = tradeVariety)
+                    else:
+                        return self.sell(usdT, price, trytime - 1, tradeVariety = tradeVariety)
+                except Exception as e:
+                    print(e, str(e).find('Unknown order sent') > 0)
+                    if str(e).find('Unknown order sent') > 0:
+                        print("cancel time trade")
+                        show_order = self.gate_trade.margin_order(symbol = cpair, orderId = new_order['orderId'])
+                        print(show_order)
+                        order = {"deal_money": show_order['cummulativeQuoteQty'], "filledRate": show_order['price']}
+                        return order
+                    else:
+                        return None
             else:
                 print("empty time trade")
                 show_order = self.gate_trade.margin_order(symbol = cpair, orderId = new_order['orderId'])

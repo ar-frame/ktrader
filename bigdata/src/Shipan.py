@@ -44,30 +44,46 @@ class Shipan:
     def __init__(self, tradeVariety):
         self.midcresult = {"mc": 0, "mcMax": 0, "mcMin": 0}
         self.tradeVariety = tradeVariety
-        pass
+        self.config = cfg.getCfg()
 
+
+        # 反向减仓unit倍数
+        # SHIPAN_FXJC_INDEX = 2
+        # # 最大交易unit倍数
+        # SHIPAN_TRADE_MAX_UNIT_INDEX = 3
+
+        # # 触发正向盈利平仓仓位
+        # SHIPAN_PC_ZX_USDTAMOUNT_LINE = 30
+        # # 触发反向盈利平仓仓位
+        # SHIPAN_PC_FX_USDTAMOUNT_LINE = 200
+
+        # # 每次加仓价格波动率
+        # SHIPAN_CON_GRID_INC_LEVEL_POINT = self.SHIPAN_CON_GRID_INC_LEVEL_POINT
+        # # 每次减仓价格波动率
+        # SHIPAN_CON_GRID_DEC_LEVEL_POINT = self.SHIPAN_CON_GRID_DEC_LEVEL_POINT
+
+        self.SHIPAN_FXJC_INDEX = float(self.config.get('trade', 'SHIPAN_FXJC_INDEX'))
+        self.SHIPAN_TRADE_MAX_UNIT_INDEX = float(self.config.get('trade', 'SHIPAN_TRADE_MAX_UNIT_INDEX'))
+        
+        self.SHIPAN_PC_ZX_USDTAMOUNT_LINE = float(self.config.get('trade', 'SHIPAN_PC_ZX_USDTAMOUNT_LINE'))
+        self.SHIPAN_PC_FX_USDTAMOUNT_LINE = float(self.config.get('trade', 'SHIPAN_PC_FX_USDTAMOUNT_LINE'))
+
+        self.SHIPAN_CON_GRID_INC_LEVEL_POINT = float(self.config.get('trade', 'SHIPAN_CON_GRID_INC_LEVEL_POINT'))
+        self.SHIPAN_CON_GRID_DEC_LEVEL_POINT = float(self.config.get('trade', 'SHIPAN_CON_GRID_DEC_LEVEL_POINT'))
+        
     def initResoure(self, tradeVariety):
         self.startTime = time.time()
-
         nowHour = datetime.datetime.now().strftime('%Y%m%d%H')
 
-        # print(nowHour)
-        # self.db_bigdata = MongoDB('bigdata', 'gataio_eth_trades_h' + nowHour)
-        # self.db_bigdata = MongoDB('bigdata', 'gataio_eth_trades_h2019011918')
         mongo = cfg.getMongo(tradeVariety)
         self.db_bigdata = MongoDB(mongo.get('DB'), 'gataio_eth_trades_h' + nowHour, mongo.get('DB_HOST'), mongo.get('DB_USER'), mongo.get('DB_PASS'))
 
         self.paint = Paint(tradeVariety)
-
         self.sim = self.paint.sim
         self.cha = self.paint.cha
-
         self.ts = TradeSave()
-
         self.trade = Trade()
-
         self.threads = []
-
         self.orders = []
         self.getPointCount = 0
         self.lastPointCode = None
@@ -733,9 +749,9 @@ class Shipan:
         self.pingc(pointCode.get("timedate"), pointCode.get('price'), True)
         objs = {\
             "open_date": str(trade_result.get("open_date")), \
-            "timedate": pointCode.get("timedate"), \
-            "open_price": str(trade_result.get("open_price")), "end_price": str(pointCode.get('price')), \
-            "amount": str(trade_result.get("amount")), "direct": str(trade_result.get("opt")), \
+            "close_date": func.transTimedateToDate(pointCode.get("timedate")), \
+            "open_price": str(trade_result.get("open_price")), "close_price": str(pointCode.get('price')), \
+            "usdt_amount": str(trade_result.get("usdt_amount")), "direct": str(trade_result.get("opt")), \
             "profit": str(trade_result.get("profit")), "msg": msg \
         }
         self.pcRecord(**objs)
@@ -826,7 +842,7 @@ class Shipan:
                             if float(lastOrder['price']) > float(pointCode.get('price')):
                                 pointPrice = (float(lastOrder['price']) - float(pointCode.get('price'))) / float(pointCode.get('price'))
                                 # 点差影响
-                                if pointPrice > 0.00618:
+                                if pointPrice > self.SHIPAN_CON_GRID_INC_LEVEL_POINT:
                                     allNotCompTradesSell = allNotCompTrades.loc[allNotCompTrades.type == 'sell']
                                     if len(allNotCompTradesSell) > 0:
 
@@ -840,7 +856,7 @@ class Shipan:
 
                                             if float(trade_result.get("profit")) > 0:
                                                 stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
-                                                if stock_usdt > 100:
+                                                if stock_usdt > self.SHIPAN_PC_ZX_USDTAMOUNT_LINE:
                                                     opt_usdt = stock_usdt
                                                     need_pc = True
 
@@ -859,7 +875,7 @@ class Shipan:
                             if float(lastOrder['price']) > float(pointCode.get('price')):
                                 pointPrice = (float(lastOrder['price']) - float(pointCode.get('price'))) / float(pointCode.get('price'))
                                  # 点差影响
-                                if pointPrice > 0.00818:
+                                if pointPrice > self.SHIPAN_CON_GRID_DEC_LEVEL_POINT:
 
                                     trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
                                     opt_usdt = self.initUsdtUint
@@ -868,11 +884,11 @@ class Shipan:
                                     stock_usdt = 0
 
                                     if trade_result.get("opt") == 'sell':
-                                        opt_usdt = 2 * self.initUsdtUint
+                                        opt_usdt = self.SHIPAN_FXJC_INDEX * self.initUsdtUint
 
                                         if float(trade_result.get("profit")) > 0:
                                             stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
-                                            if stock_usdt > 200:
+                                            if stock_usdt > self.SHIPAN_PC_FX_USDTAMOUNT_LINE:
                                                 opt_usdt = stock_usdt
                                                 need_pc = True
 
@@ -910,7 +926,7 @@ class Shipan:
                             # 加空单
                             if float(lastOrder['price']) < float(pointCode.get('price')):
                                 pointPrice = (float(pointCode.get('price')) - float(lastOrder['price'])) / float(lastOrder['price'])
-                                if pointPrice > 0.00618:
+                                if pointPrice > self.SHIPAN_CON_GRID_INC_LEVEL_POINT:
                                     allNotCompTradesBuy = allNotCompTrades.loc[allNotCompTrades.type == 'buy']
                                     if len(allNotCompTradesBuy) > 0:
 
@@ -922,7 +938,7 @@ class Shipan:
                                         if trade_result.get("opt") == 'buy':
                                             if float(trade_result.get("profit")) > 0:
                                                 stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
-                                                if stock_usdt > 100:
+                                                if stock_usdt > self.SHIPAN_PC_ZX_USDTAMOUNT_LINE:
                                                     opt_usdt = stock_usdt
                                                     need_pc = True
 
@@ -939,7 +955,7 @@ class Shipan:
                             # 反向单
                             if float(lastOrder['price']) < float(pointCode.get('price')):
                                 pointPrice = (float(pointCode.get('price')) - float(lastOrder['price'])) / float(lastOrder['price'])
-                                if pointPrice > 0.00818:
+                                if pointPrice > self.SHIPAN_CON_GRID_DEC_LEVEL_POINT:
 
                                     trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
                                     opt_usdt = self.initUsdtUint
@@ -947,11 +963,11 @@ class Shipan:
                                     need_pc = False
                                     stock_usdt = 0
                                     if trade_result.get("opt") == 'buy':
-                                        opt_usdt = 2 * self.initUsdtUint
+                                        opt_usdt = self.SHIPAN_FXJC_INDEX * self.initUsdtUint
 
                                         if float(trade_result.get("profit")) > 0:
                                             stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
-                                            if stock_usdt > 200:
+                                            if stock_usdt > self.SHIPAN_PC_FX_USDTAMOUNT_LINE:
                                                 opt_usdt = stock_usdt
                                                 need_pc = True
 
@@ -1027,8 +1043,8 @@ class Shipan:
 
             levelPrice = startLevelPrice + level * (rel * startLevelPrice / maxLevel)
 
-            if levelPrice > 3 * startLevelPrice:
-                levelPrice = 3 * startLevelPrice
+            if levelPrice > self.SHIPAN_TRADE_MAX_UNIT_INDEX * startLevelPrice:
+                levelPrice = self.SHIPAN_TRADE_MAX_UNIT_INDEX * startLevelPrice
 
         return float("%.2f" % levelPrice)
 
@@ -1069,7 +1085,7 @@ class Shipan:
         df = df.loc[df.complete == 0]
 
         if len(df) > 0:
-            open_date = df.loc[0]['timedate']
+            open_date = df.loc[df.index[0]]['timedate']
 
             dataListStr = func.printDataFrame(df)
             price = float(price)
@@ -1142,7 +1158,8 @@ class Shipan:
 
         result_str = dataListStr + "\n" + showStr
 
-        return {"result_str": result_str, "opt": opt, "amount": "%.5f" % amount, "open_price": "%.2f" % open_price, "profit": "%.2f" % profit, "open_date": open_date}
+        usdt_amount = "%.2f" % (amount * open_price)
+        return {"result_str": result_str, "opt": opt, "amount": "%.5f" % amount, "usdt_amount": usdt_amount, "open_price": "%.2f" % open_price, "profit": "%.2f" % profit, "open_date": open_date}
 
     def dumpTrade(self, timedate, price):
         result_obj = self.getTradeResult(timedate, price)
@@ -1185,6 +1202,7 @@ class Shipan:
             self.orders[i]['price'] = Decimal(self.orders[i]['price']).quantize(Decimal('0.0000'))
             self.orders[i]['pt'] = Decimal(absP).quantize(Decimal('0.00000'))
             self.orders[i]['profit'] = Decimal(self.orders[i]['profit']).quantize(Decimal('0.000'))
+            self.orders[i]['currency'] = Decimal(self.orders[i]['currency']).quantize(Decimal('0.0000'))
 
         if forcepc == True:
             db_mysql = Mysql(self.tradeVariety)
@@ -1262,11 +1280,11 @@ class Shipan:
         # print(p.getPoint(timeStart, timeEnd))
         self.stepOrder(timeStart, timeStart, timeSepM = 1, proxy_list = datalist, data_share_map = data_share_map, data_share_map_summay=data_share_map_summay)
 
-    def pcRecord(self, open_date, timedate, open_price, end_price, amount, direct, profit, msg = ""):
+    def pcRecord(self, open_date, close_date, open_price, close_price, usdt_amount, direct, profit, msg = ""):
         variety = self.tradeVariety
         curpath = os.path.dirname(os.path.realpath(__file__))
-        record_file = os.path.join(curpath, "data/"+"trade_record_" + variety.lower().replace("-", "_") + ".txt")
-        objs = {"variety": variety, "open_date": open_date, "timedate": timedate, "open_price": str(open_price), "end_price": str(end_price), "amount": str(amount), "direct": str(direct), "profit": str(profit), "msg": msg}
+        record_file = os.path.join(curpath, "data/"+"trade_record_" + variety.lower().replace("-", "_") + ".csv")
+        objs = {"variety": variety, "open_date": open_date, "close_date": close_date, "open_price": str(open_price), "close_price": str(close_price), "usdt_amount": str(usdt_amount), "direct": str(direct), "profit": str(profit), "msg": msg}
         head_title = ",".join(objs.keys())
 
         file_content = ''
