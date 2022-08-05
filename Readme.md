@@ -14,6 +14,7 @@ Ktrader 将包括Python，Java，PHP, nodejs , H5 , react，安卓，linux，mon
 一套体系全部用一个docker 镜像打包集成。
 KTrader核心集成了数字货币交易，改改前端，策略改变以下，买卖接口一换可以做任何期货交易对品种的回测实盘。
 
+核心交易程序： https://gitee.com/ar-frame/ktrader/blob/master/bigdata/reademe.md
 
 # 系统截图
 
