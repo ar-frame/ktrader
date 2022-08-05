@@ -345,6 +345,10 @@ def getPoint(self, timeStart, timeEnd):
 ```
 
 # 【6.实盘篇】
+## 说明
+本项目包含，运营，后台WEB，API服务，客户端等模块，如果仅需关注实盘交易，请参考核心交易bigdata部分，核心全为python编写，windows下也安装方便。
+
+## 配置
 系统集成了binance , okex , gateio 
 配置及密钥修改:conf.ini
 ```
@@ -363,21 +367,27 @@ TRADE_TYPE = binance
 ...
 
 ```
-实盘启动
+## 实盘启动
 python | 脚本 | 网格单元金额 | 品种
+
 `python3 /var/yp/source/bigdata/src/Shipan.py 10 BTC-USDT`
 
 策略和回测的地方保持一致即可
 
+
 # 【7.运营篇】
 
+## 客户端打包
+### trader center H5 端
+启动 
 
-# 客户端打包
-## trader center H5 端
-启动 npm start
-编译 npm run build
+`npm start`
 
-## trader client 安卓端 TraderClientAndroid
+编译 
+
+`npm run build`
+
+### trader client 安卓端 TraderClientAndroid
 android-studio  Build>generate signed apk    release版本
 
 签名文件 tradestrategy.jks
@@ -385,9 +395,8 @@ android-studio  Build>generate signed apk    release版本
 key pass / key store pass:   123456
 key alias : test
 
-# 代理管理
+## 代理管理
 ./create_registercode.sh 生成代理激活码
-
 
 # 【8.杂篇】
 
@@ -417,6 +426,25 @@ gunzip -c *.tar.gz | docker load
 ```
 
 # 【更新日志】
+
+## 2022/08/05 store mongodb 支持
+```
+; DB_TYPE mongodb | mysql
+SHIPAN_DB_TYPE = mongodb
+
+[trade]
+# & 触发平仓盈利条件
+SHIPAN_CON_PROFIT_USDT = 0.5
+
+[mongo_store]
+DB_HOST = 127.0.0.1
+DB = store
+DB_PASS =
+DB_USER =
+
+```
+windows 环境只需要mongodb即可
+
 
 ## 2022/08/01 交易参数配置
 conf.ini配置: 
@@ -463,6 +491,9 @@ httpProxies = ************
 
 ---
 【MIT】
-Copyright © 2022 dpbtrader, v: kozdpb
+* Copyright © 2022 dpbtrader, v: kozdpb
+* ktrader学习交流q群: `259956472`
 
-技术交流q群: `259956472`
+
+---
+*申明：本项目仅为交流学习作用，切勿用作第三方商业使用，鉴于网络，参数，品种的各种不确定性，没有100%赚钱的量化软件，使用此软件造成的损失与我方无关，交易有风险，投资需谨慎。*

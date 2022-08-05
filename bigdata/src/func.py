@@ -5,6 +5,9 @@ import datetime
 from decimal import Decimal
 import pandas as pd
 from Mysql import Mysql
+from dbconn import MongoDB
+import cfg
+
 def transTimeToTimedate(tstime):
     f2 = '%Y%m%d%H%M%S'
     tm_s_stu = time.gmtime(tstime)
@@ -43,6 +46,12 @@ def transF1ToTimedateF2(dateFormatF1):
 
 def printDataFrame(df):
     if len(df) > 0 :
+        filter_ids = ['_id', 'id']
+
+        for ids in filter_ids:
+            if ids in df:
+                del(df[ids])
+
         dumpstr = ""
         joinConnector = " "
         columns = df.columns.insert(0, 'index')
@@ -51,6 +60,7 @@ def printDataFrame(df):
             if index == 0:
                 header = []
                 for col in columns:
+
                     if str(col) in ['ptimedate', 'timedate']:
                         header.append(str(col).ljust(19))
                     else:
@@ -60,6 +70,7 @@ def printDataFrame(df):
 
             vals = [str(index).ljust(padLen)]
             for item in dict(row).values():
+
                 vals.append(str(item).ljust(padLen))
             # dict(row).values()
             rowstr = joinConnector . join(vals)
@@ -92,10 +103,15 @@ def getOrderFromStore(tradeVariety):
     #                 return []
     # else:
     #     return []
-
-    db_mysql = Mysql(tradeVariety)
-    resdata = db_mysql.getOrders(rowCount=100)
-    return resdata
+    db_type = cfg.getCfg().get('set', 'SHIPAN_DB_TYPE')
+    if db_type == 'mysql':
+        db_mysql = Mysql(tradeVariety)
+        resdata = db_mysql.getOrders(rowCount=100)
+        return resdata
+    else:
+        mongo_store = cfg.getMongo('store')
+        db_mongo_store = MongoDB(mongo_store.get('DB'), 'orders', mongo_store.get('DB_HOST'), mongo_store.get('DB_USER'), mongo_store.get('DB_PASS'))
+        return list(db_mongo_store.query_all(con = {"complete": {"$eq": '0'}})) + list(db_mongo_store.query_all(con = {"complete": {"$eq": 0}}))
 
 def getTradeObjByOrders(resdata, price, currency = 2):
     df = pd.DataFrame(list(resdata))

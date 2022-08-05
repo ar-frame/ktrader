@@ -1,0 +1,10 @@
+binance-connector 
+matplotlib        
+numpy             
+pandas             
+pymongo            
+PyMySQL           
+python-dateutil    
+requests           
+websocket         
+websocket-client   

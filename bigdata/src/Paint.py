@@ -1144,8 +1144,10 @@ class Paint:
             showStr = self.getTradeStr(self.lastRealPointCode.get('timedate'), self.lastRealPointCode.get('price'))
             res_str = "<pre>command:\n%s\n%s\n%s\n%s</pre>" % (cmdstr, "%s ~ %s" % (timeStart, timeEnd), showStr, nd_point_str)
 
-            pushobj = self.fetch.getObject('service.ctl.bestplan.data', 'pushPaintRecord', [self.tradeVariety, "%s ~ %s" % (timeStart, timeEnd), cmdstr, res_str])
-            print(type(pushobj), pushobj)
+            db_type = self.config.get('set', 'SHIPAN_DB_TYPE')
+            if db_type == 'mysql':
+                pushobj = self.fetch.getObject('service.ctl.bestplan.data', 'pushPaintRecord', [self.tradeVariety, "%s ~ %s" % (timeStart, timeEnd), cmdstr, res_str])
+                print(type(pushobj), pushobj)
         except Exception as e:
             print(e)
 
@@ -1321,7 +1323,8 @@ class Paint:
 
         self.orders.append(order)
 
-        if self.config.get('set', 'PUSH_TO_SHIPAN_RECORD') == 'yes':
+        db_type = self.config.get('set', 'SHIPAN_DB_TYPE')
+        if db_type == 'mysql' and self.config.get('set', 'PUSH_TO_SHIPAN_RECORD') == 'yes':
             db_mysql = Mysql(self.tradeVariety)
             db_mysql.insertOrders(type=type, currency=currency, price=float(price), timedate=func.transTimedateToDate(timedate), code=code, complete=0, suc=0, profit=0)
 

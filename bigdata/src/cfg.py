@@ -20,19 +20,20 @@ def getMongo(tradeVariety = None):
             mongo = 'eos'
         elif tradeVariety == "BTC-USDT":
             mongo = 'btc'
+        else:
+            mongo = tradeVariety.lower()
 
+    # cpair = tradeVariety[0:-5]
 
-    cpair = tradeVariety[0:-5]
-    
-    # DB = cfg.get('mongo_' + mongo, 'DB')
-    # DB_PASS = cfg.get('mongo_' + mongo, 'DB_PASS')
-    # DB_HOST = cfg.get('mongo_' + mongo, 'DB_HOST')
-    # DB_USER = cfg.get('mongo_' + mongo, 'DB_USER')
+    DB = cfg.get('mongo_' + mongo, 'DB')
+    DB_PASS = cfg.get('mongo_' + mongo, 'DB_PASS')
+    DB_HOST = cfg.get('mongo_' + mongo, 'DB_HOST')
+    DB_USER = cfg.get('mongo_' + mongo, 'DB_USER')
 
-    DB = 'bigdata-' + cpair.lower()
-    DB_PASS = ''
-    DB_HOST = '127.0.0.1'
-    DB_USER = ''
+    # DB = 'bigdata-' + cpair.lower()
+    # DB_PASS = ''
+    # DB_HOST = '127.0.0.1'
+    # DB_USER = ''
 
     return {"DB": DB, "DB_PASS": DB_PASS, "DB_USER": DB_USER, "DB_HOST": DB_HOST}
 
@@ -47,6 +48,6 @@ def getMysql():
     return {"DB": DB, "DB_PASS": DB_PASS, "DB_USER": DB_USER, "DB_HOST": DB_HOST, "DB_PORT":DB_PORT}
 
 if __name__ == "__main__":
-   
+
     mongo = getMongo()
     print(mongo)

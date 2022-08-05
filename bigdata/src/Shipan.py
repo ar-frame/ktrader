@@ -46,37 +46,26 @@ class Shipan:
         self.tradeVariety = tradeVariety
         self.config = cfg.getCfg()
 
-
-        # 反向减仓unit倍数
-        # SHIPAN_FXJC_INDEX = 2
-        # # 最大交易unit倍数
-        # SHIPAN_TRADE_MAX_UNIT_INDEX = 3
-
-        # # 触发正向盈利平仓仓位
-        # SHIPAN_PC_ZX_USDTAMOUNT_LINE = 30
-        # # 触发反向盈利平仓仓位
-        # SHIPAN_PC_FX_USDTAMOUNT_LINE = 200
-
-        # # 每次加仓价格波动率
-        # SHIPAN_CON_GRID_INC_LEVEL_POINT = self.SHIPAN_CON_GRID_INC_LEVEL_POINT
-        # # 每次减仓价格波动率
-        # SHIPAN_CON_GRID_DEC_LEVEL_POINT = self.SHIPAN_CON_GRID_DEC_LEVEL_POINT
-
         self.SHIPAN_FXJC_INDEX = float(self.config.get('trade', 'SHIPAN_FXJC_INDEX'))
         self.SHIPAN_TRADE_MAX_UNIT_INDEX = float(self.config.get('trade', 'SHIPAN_TRADE_MAX_UNIT_INDEX'))
-        
+
         self.SHIPAN_PC_ZX_USDTAMOUNT_LINE = float(self.config.get('trade', 'SHIPAN_PC_ZX_USDTAMOUNT_LINE'))
         self.SHIPAN_PC_FX_USDTAMOUNT_LINE = float(self.config.get('trade', 'SHIPAN_PC_FX_USDTAMOUNT_LINE'))
 
         self.SHIPAN_CON_GRID_INC_LEVEL_POINT = float(self.config.get('trade', 'SHIPAN_CON_GRID_INC_LEVEL_POINT'))
         self.SHIPAN_CON_GRID_DEC_LEVEL_POINT = float(self.config.get('trade', 'SHIPAN_CON_GRID_DEC_LEVEL_POINT'))
-        
-    def initResoure(self, tradeVariety):
+
+        self.SHIPAN_CON_PROFIT_USDT = float(self.config.get('trade', 'SHIPAN_CON_PROFIT_USDT'))
+
+    def initResource(self, tradeVariety):
         self.startTime = time.time()
         nowHour = datetime.datetime.now().strftime('%Y%m%d%H')
 
         mongo = cfg.getMongo(tradeVariety)
         self.db_bigdata = MongoDB(mongo.get('DB'), 'gataio_eth_trades_h' + nowHour, mongo.get('DB_HOST'), mongo.get('DB_USER'), mongo.get('DB_PASS'))
+
+        mongo_store = cfg.getMongo('store')
+        self.db_mongo_store = MongoDB(mongo_store.get('DB'), 'orders', mongo_store.get('DB_HOST'), mongo_store.get('DB_USER'), mongo_store.get('DB_PASS'))
 
         self.paint = Paint(tradeVariety)
         self.sim = self.paint.sim
@@ -88,6 +77,8 @@ class Shipan:
         self.getPointCount = 0
         self.lastPointCode = None
         self.initUsdtUint = 0
+
+        self.tick_data = {}
 
     def drawBase(self, data, dataBase, ah, aw, kh, kw):
 
@@ -718,6 +709,12 @@ class Shipan:
             df_hdata = pd.DataFrame(currentHouerData)
             new_df_hdata = df_hdata.loc[df_hdata.timedate.astype('int64') >= int(tdata['timedate'])]
 
+            # print(new_df_hdata, )
+            now_tick_data = new_df_hdata.loc[new_df_hdata.index[-1]]
+            self.tick_data['timedate'] = now_tick_data['timedate']
+            self.tick_data['price'] = now_tick_data['price']
+            # exit()
+
             moredata = []
             if len(new_df_hdata) > 0:
                 # listdata = list(new_df_hdata)
@@ -745,7 +742,7 @@ class Shipan:
                 self.cha.addCacheData(moredata)
 
     def doPcRecordToResult(self, pointCode, msg):
-        trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'))
+        trade_result = self.getTradeResult(pointCode.get('timedate'), pointCode.get('price'), ispc = True)
         self.pingc(pointCode.get("timedate"), pointCode.get('price'), True)
         objs = {\
             "open_date": str(trade_result.get("open_date")), \
@@ -784,23 +781,24 @@ class Shipan:
 
                 pc = self.getPoint(timeLeft, timeRight)
 
-
                 # ps = datetime.datetime.strptime(stimeEnd, f)
                 # stimeEnd = (ps+datetime.timedelta(minutes=timeSepM)).strftime(f)
 
                 if pc is None:
                     print("point code none, last dump")
 
-                    if self.lastPointCode is not None:
-                        data_share_map['timedate'] = self.lastPointCode.get('timedate')
-                        data_share_map['price'] = self.lastPointCode.get('price')
-                        self.dumpTrade(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'))
-                        db_mysql = Mysql(self.tradeVariety)
-                        db_mysql.updatePrice(type = self.lastPointCode.get('type'), price = self.lastPointCode.get('price'), timedate = func.transTimedateToDate(self.lastPointCode.get('timedate')), pair = self.tradeVariety)
-                    else:
-                        if len(self.orders) > 0:
-                            lo = self.orders[-1]
-                            self.dumpTrade(func.transF1ToTimedateF2(lo.get('timedate')), lo.get('price'))
+                    self.dumpTrade(self.tick_data['timedate'], self.tick_data['price'])
+
+                    # if self.lastPointCode is not None:
+                    #     data_share_map['timedate'] = self.lastPointCode.get('timedate')
+                    #     data_share_map['price'] = self.lastPointCode.get('price')
+                    #     self.dumpTrade(self.lastPointCode.get('timedate'), self.lastPointCode.get('price'))
+                    #     # db_mysql = Mysql(self.tradeVariety)
+                    #     # db_mysql.updatePrice(type = self.lastPointCode.get('type'), price = self.lastPointCode.get('price'), timedate = func.transTimedateToDate(self.lastPointCode.get('timedate')), pair = self.tradeVariety)
+                    # else:
+                    #     if len(self.orders) > 0:
+                    #         lo = self.orders[-1]
+                    #         self.dumpTrade(func.transF1ToTimedateF2(lo.get('timedate')), lo.get('price'))
                     time.sleep(1)
                     continue
                 pointCode = dict(pc)
@@ -854,7 +852,7 @@ class Shipan:
 
                                         if trade_result.get("opt") == 'sell':
 
-                                            if float(trade_result.get("profit")) > 0:
+                                            if float(trade_result.get("profit")) > self.SHIPAN_CON_PROFIT_USDT:
                                                 stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
                                                 if stock_usdt > self.SHIPAN_PC_ZX_USDTAMOUNT_LINE:
                                                     opt_usdt = stock_usdt
@@ -886,7 +884,7 @@ class Shipan:
                                     if trade_result.get("opt") == 'sell':
                                         opt_usdt = self.SHIPAN_FXJC_INDEX * self.initUsdtUint
 
-                                        if float(trade_result.get("profit")) > 0:
+                                        if float(trade_result.get("profit")) > self.SHIPAN_CON_PROFIT_USDT:
                                             stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
                                             if stock_usdt > self.SHIPAN_PC_FX_USDTAMOUNT_LINE:
                                                 opt_usdt = stock_usdt
@@ -936,7 +934,7 @@ class Shipan:
                                         need_pc = False
                                         stock_usdt = 0
                                         if trade_result.get("opt") == 'buy':
-                                            if float(trade_result.get("profit")) > 0:
+                                            if float(trade_result.get("profit")) > self.SHIPAN_CON_PROFIT_USDT:
                                                 stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
                                                 if stock_usdt > self.SHIPAN_PC_ZX_USDTAMOUNT_LINE:
                                                     opt_usdt = stock_usdt
@@ -965,7 +963,7 @@ class Shipan:
                                     if trade_result.get("opt") == 'buy':
                                         opt_usdt = self.SHIPAN_FXJC_INDEX * self.initUsdtUint
 
-                                        if float(trade_result.get("profit")) > 0:
+                                        if float(trade_result.get("profit")) > self.SHIPAN_CON_PROFIT_USDT:
                                             stock_usdt = float(trade_result.get("amount")) * float(pointCode.get('price'))
                                             if stock_usdt > self.SHIPAN_PC_FX_USDTAMOUNT_LINE:
                                                 opt_usdt = stock_usdt
@@ -991,8 +989,8 @@ class Shipan:
 
                 self.lastPointCode = pointCode
 
-                db_mysql = Mysql(self.tradeVariety)
-                db_mysql.updatePrice(type = self.lastPointCode.get('type'), price = self.lastPointCode.get('price'), timedate = func.transTimedateToDate(self.lastPointCode.get('timedate')), pair = self.tradeVariety)
+                # db_mysql = Mysql(self.tradeVariety)
+                # db_mysql.updatePrice(type = self.lastPointCode.get('type'), price = self.lastPointCode.get('price'), timedate = func.transTimedateToDate(self.lastPointCode.get('timedate')), pair = self.tradeVariety)
 
                 data_share_map['timedate'] = self.lastPointCode.get('timedate')
                 data_share_map['price'] = self.lastPointCode.get('price')
@@ -1068,9 +1066,16 @@ class Shipan:
                     break
         return level
 
-    def getTradeResult(self, timedate, price):
+    def getTradeResult(self, timedate, price, ispc = False):
         self.pingc(timedate, price)
-        df = pd.DataFrame(self.orders)
+
+        result_orders = self.orders
+        if ispc:
+            if len(self.orders) > 0:
+                result_orders = self.orders[0:-1]
+
+        df = pd.DataFrame(result_orders)
+
         showStr = ""
         dataListStr = ""
 
@@ -1205,19 +1210,30 @@ class Shipan:
             self.orders[i]['currency'] = Decimal(self.orders[i]['currency']).quantize(Decimal('0.0000'))
 
         if forcepc == True:
-            db_mysql = Mysql(self.tradeVariety)
-            db_mysql.updatepcOrders()
+            db_type = self.config.get('set', 'SHIPAN_DB_TYPE')
+
+            if db_type == 'mysql':
+                db_mysql = Mysql(self.tradeVariety)
+                db_mysql.updatepcOrders()
+            else:
+                self.db_mongo_store.update(con = {"complete": {"$eq": 0}}, data = {"complete": 1})
+
             self.midcresult['mcMax'] = 0
 
     def addOrder(self, optype = 'buy', currency = 0, price = None, timedate = None, code = None, ispc = False):
         if currency == 0:
             currency = self.initUsdtUint
+        db_type = self.config.get('set', 'SHIPAN_DB_TYPE')
+
         if ispc == True:
             order = {"type": optype, "currency": currency, "price": price, "timedate": func.transTimedateToDate(timedate), "code": code, "complete": 0, "suc": 0, "profit": 0}
             self.orders.append(order)
 
-            db_mysql = Mysql(self.tradeVariety)
-            db_mysql.insertOrders(type=optype, currency=order.get('currency'), price=float(order.get('price')), timedate=func.transTimedateToDate(timedate), code=code, complete=0, suc=0, profit=0)
+            if db_type == 'mysql':
+                db_mysql = Mysql(self.tradeVariety)
+                db_mysql.insertOrders(type=optype, currency=order.get('currency'), price=float(order.get('price')), timedate=func.transTimedateToDate(timedate), code=code, complete=0, suc=0, profit=0)
+            else:
+                self.db_mongo_store.insert(order)
 
         else:
             if optype == 'buy':
@@ -1229,11 +1245,11 @@ class Shipan:
                 order = {"type": optype, "currency": optres.get('deal_money'), "price": optres.get('filledRate'), "timedate": func.transTimedateToDate(timedate), "code": code, "complete": 0, "suc": 0, "profit": 0}
                 self.orders.append(order)
 
-                db_mysql = Mysql(self.tradeVariety)
-                db_mysql.insertOrders(type=optype, currency=order.get('currency'), price=float(order.get('price')), timedate=func.transTimedateToDate(timedate), code=code, complete=0, suc=0, profit=0)
-
-    # def updateFirstOrder(self, suc = 1, profit = 0):
-    #     if len(self.order) == 1:
+                if db_type == 'mysql':
+                    db_mysql = Mysql(self.tradeVariety)
+                    db_mysql.insertOrders(type=optype, currency=order.get('currency'), price=float(order.get('price')), timedate=func.transTimedateToDate(timedate), code=code, complete=0, suc=0, profit=0)
+                else:
+                    self.db_mongo_store.insert(order)
 
     def printRunTime(self, showmark = "run time:"):
         start = self.startTime
@@ -1251,12 +1267,17 @@ class Shipan:
         tradeVariety = sys.argv[2]
 
 
-        self.initResoure(tradeVariety)
+        self.initResource(tradeVariety)
 
         self.initUsdtUint = initUsdtUint
         self.tradeVariety = tradeVariety
 
         store_orders = func.getOrderFromStore(tradeVariety)
+
+        # self.db_mongo_store.insert(store_orders)
+
+        # print(store_orders)
+        # exit()
 
         if len(store_orders) > 0:
             self.orders = list(store_orders)

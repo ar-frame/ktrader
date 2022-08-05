@@ -1,2 +1,5 @@
 gateio/data/tradend/nd_*
 *.pid
+/src/conf/conf.ini
+/src/data/trade_record_eth_usdt.txt
+trade_record_*_usdt.csv
