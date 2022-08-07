@@ -1,8 +1,5 @@
 # 【Ktrader 数字货币开源量化系统 v2.1】
 
-您可以在遵循MIT协议下自由修改和发布此软件。
-
-
 开源初衷：
 这是之前团队在做外包的同时完善的内部产品。
 上上策，一款开源数字货币量化交易系统。经过两年实战完善，系统已经包含策略模块，实盘模块，后台系统，网站端，安卓客户端模块。
@@ -14,7 +11,6 @@ Ktrader 将包括Python，Java，PHP, nodejs , H5 , react，安卓，linux，mon
 一套体系全部用一个docker 镜像打包集成。
 KTrader核心集成了数字货币交易，改改前端，策略改变以下，买卖接口一换可以做任何期货交易对品种的回测实盘。
 
-核心交易程序： https://gitee.com/ar-frame/bigdata
 
 # 系统截图
 
@@ -348,6 +344,11 @@ def getPoint(self, timeStart, timeEnd):
 # 【6.实盘篇】
 ## 说明
 本项目包含，运营，后台WEB，API服务，客户端等模块，如果仅需关注实盘交易，请参考核心交易bigdata部分，核心全为python编写，windows下也安装方便。
+
+核心交易程序仓库： https://gitee.com/ar-frame/bigdata （纯python）
+
+核心框架安装参考：[windows系统图文安装ktrader教程](https://zhuanlan.zhihu.com/p/550871253 "数字货币开源量化系统ktrader安装")
+
 
 ## 配置
 系统集成了binance , okex , gateio 
